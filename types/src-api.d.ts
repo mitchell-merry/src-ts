@@ -1,15 +1,5 @@
 type Data<T> = { data: T; };
 
-interface Pagination {
-    offset: number;
-    max: number;
-    size: number;
-    links: [
-        RelLink<"next">,
-        RelLink<"prev">
-    ]
-}
-
 interface Names {
     international: string;
     japanese: string | null;
@@ -462,14 +452,4 @@ interface Publisher {
         RelLink<"self">,
         RelLink<"games">
     ];
-}
-
-
-interface GameResponse {
-    data: Game;
-}
-
-interface GamesResponse {
-    data: Game[];
-    pagination: Pagination;
 }

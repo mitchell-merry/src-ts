@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import * as SRC from "../types/src-api";
+import * as SRC from "../types";
 
 const BASE = "https://www.speedrun.com/api/v1";
 
