@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "tsc && node examples"
+    "start": "tsc && node lib/examples"
   },
   "keywords": [],
   "author": "",

@@ -1,12 +1,14 @@
 import fetch from "node-fetch";
-import * as SRC from "./src-api";
+import * as SRC from "../types/src-api";
 
 const BASE = "https://www.speedrun.com/api/v1";
 
 const GAME = "kdkmy721"; // will you snail
 
-const WillYouSnail = await fetch(`${BASE}/games/${GAME}?embed=categories.variables,levels`)
-    .then(res => res.json())
+const req = `${BASE}/games/${GAME}?embed=categories.variables,levels`;
+
+console.log(req);
+const WillYouSnail = await fetch(req).then(res => res.json())
     .then(res => (res as SRC.GameResponse).data);
 
 // Use response as you normally would, except with TS linting
