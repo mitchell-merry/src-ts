@@ -1,36 +1,62 @@
 import fetch from "node-fetch";
-import * as SRC from "../types";
+import { GameCategoriesResponse, GameResponse, GameVariablesResponse, Run, RunsResponse } from "../types";
+
+// code that i'm using to test the types
 
 const BASE = "https://www.speedrun.com/api/v1";
 
 const GAME = "kdkmy721"; // will you snail
+const CATEGORY = "9d8lw472"; // all collectibles
+const VARIABLES = [
+    {
+        id: "onvvwz7n",             // difficulty
+        value: "zqo6235q"           // infinitely easy
+    }
+];
 
-const req = `${BASE}/games/${GAME}?embed=categories.variables,levels`;
+const options = {
+    "game": GAME,
+    "category": CATEGORY,
+    "orderby": "submitted",   
+    "status": "verified",
+    "direction": "asc",
+    "embed": "categories.variables",
+};
 
-console.log(req);
-const WillYouSnail = await fetch(req).then(res => res.json())
-    .then(res => (res as SRC.GameResponse).data);
+function buildGETRequest(baseURL: string, options: Record<string, string> = {}) {
+    return baseURL + "?" +  
+        Object.entries(options).map(([k, v]) => `${k}=${v}`).join('&');
+}
 
-// Use response as you normally would, except with TS linting
-if(WillYouSnail.categories) {
-    WillYouSnail.categories.data.filter(category => category.type === "per-game")
-    .forEach(category => {
-        console.log(category.name)
-        
-        if(!category.variables) return;
-        
-        category.variables.data.forEach(variable => {
-            console.log(`\t${variable.name} - Default: ${variable.values.default}`);
-
-            Object.entries(variable.values.values).forEach(([id, name]) => {
-                console.log(`\t\t${id}: ${name.label}`);
-            });
+function filterRunsByVariables(runs: Run[], variables: { id: string, value: string }[]): Run[] {
+    return runs.filter(run => {
+        return !variables.some(({id, value}) => {
+            return run.values?.[id] !== value;
         });
     });
 }
 
-if(WillYouSnail.levels) {
-    WillYouSnail.levels.data.forEach(level => {
-        console.log(level.name)
-    });
+const req = buildGETRequest(`${BASE}/runs`, options);
+
+console.log(req);
+const wys = await fetch(req).then(res => res.json()) as RunsResponse;
+
+if(wys.data) {
+    // let r = buildGETRequest(`${BASE}/games/${GAME}/variables`);
+    // const wys_categories = await fetch(r).then(res => res.json()) as GameVariablesResponse;
+    
+    // const cat_names = wys_categories.data
+    //     .filter(variable => variable.category === CATEGORY)
+    //     .forEach(variable => {
+    //         console.log(`${variable.id}: ${variable.name}`);
+
+    //         Object.entries(variable.values.values).forEach(value => {
+    //             console.log(`\t${value[0]}: ${value[1].label}`);
+    //         })
+    //     });
+    // console.log(cat_names);
+
+    const wys_cat_runs = filterRunsByVariables(wys.data, VARIABLES);
+    console.log(wys_cat_runs);
+    
 }
