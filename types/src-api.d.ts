@@ -234,19 +234,16 @@ interface Level {
     variables?: Data<Variable[]>;
 }
 
-// TODO rethink variable scope system
 interface VariableScopeSingleLevel {
     type: "single-level";
     level: string;
 }
 
-type VariableScopeType = "global" | "full-game" | "all-levels";
-
-interface VariableScopeOther {
-    type: VariableScopeType;
+interface VariableScopeGeneral {
+    type: "global" | "full-game" | "all-levels";
 }
 
-type VariableScope = VariableScopeSingleLevel | VariableScopeOther;
+type VariableScope = VariableScopeSingleLevel | VariableScopeGeneral;
 
 interface VariableValue {
     label: string;
