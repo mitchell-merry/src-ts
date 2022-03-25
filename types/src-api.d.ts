@@ -1,17 +1,17 @@
-type Data<T> = { data: T; };
+export type Data<T> = { data: T; };
 
-interface Names {
+export interface Names {
     international: string;
     japanese: string | null;
 }
 
-interface Asset {
+export interface Asset {
     uri: string;
     width: number;
     height: number;
 }
 
-interface Assets {
+export interface Assets {
     logo: Asset;
     "cover-tiny": Asset;
     "cover-small": Asset;
@@ -26,10 +26,10 @@ interface Assets {
     "foreground": Asset | null;
 }
 
-type CategoryType = "per-game" | "per-level";
-type CategoryPlayerType = "exactly" | "up-to";
+export type CategoryType = "per-game" | "per-level";
+export type CategoryPlayerType = "exactly" | "up-to";
 
-interface RelLink<rel> {
+export interface RelLink<rel> {
     rel: rel;
     uri: string;
 }
@@ -41,7 +41,7 @@ export interface Category {
     type: CategoryType;
     rules: string;
     players: {
-        "type": CategoryPlayerType;
+        type: CategoryPlayerType;
         value: number;
     };
     miscellaneous: boolean;
@@ -58,15 +58,15 @@ export interface Category {
     variables?: Data<Variable[]>;
 }
 
-interface GameNames {
+export interface GameNames {
     international: string;
     japanese: string;
     twitch: string;
 }
 
-type GameRulesetRunTime = "realtime" | "realtime_noloads" | "ingame";
+export type GameRulesetRunTime = "realtime" | "realtime_noloads" | "ingame";
 
-interface GameRuleset {
+export interface GameRuleset {
     'show-milliseconds': boolean;
     'require-verification': boolean;
     'require-video': boolean;
@@ -75,15 +75,15 @@ interface GameRuleset {
     'emulators-allowed': boolean;
 }
 
-type ModeratorType = "super-moderator" | "moderator"; // "verifier" should realistically be an option, but they only show as "super-moderator"s.
+export type ModeratorType = "super-moderator" | "moderator"; // "verifier" should realistically be an option, but they only show as "super-moderator"s.
 
-type Moderators = {
+export type Moderators = {
     [key: string]: string;
 } & { data?: never };
 
-type EmbeddableModerators = Moderators | Data<User[]>;
+export type EmbeddableModerators = Moderators | Data<User[]>;
 
-interface Game {
+export interface Game {
     id: string;
     names: GameNames;
     abbreviation: string;
@@ -121,12 +121,12 @@ interface Game {
     categories?: Data<Category[]>;
 }
 
-interface RankedRun {
+export interface RankedRun {
     place: number;
     run: Run;
 }
 
-interface Leaderboard {
+export interface Leaderboard {
     weblink: string;
     game: string | Data<Game>;
     category: string | Data<Category>;
@@ -149,29 +149,29 @@ interface Leaderboard {
     variables?: Data<Variable[]>;
 }
 
-type Link = { uri: string; };
+export type Link = { uri: string; };
 
-interface Color {
+export interface Color {
     light: string;
     dark: string;
 }
 
-interface NameStyleSolid {
+export interface NameStyleSolid {
     style: "solid";
     color: Color;
 }
 
-interface NameStyleGradient {
+export interface NameStyleGradient {
     style: "gradient";
     "color-to": Color;
     "color-from": Color;
 }
 
-type NameStyle = NameStyleSolid | NameStyleGradient;
+export type NameStyle = NameStyleSolid | NameStyleGradient;
 
-type UserRole = "banned" | "user" | "trusted" | "moderator" | "admin" | "programmer";
+export type UserRole = "banned" | "user" | "trusted" | "moderator" | "admin" | "programmer";
 
-interface UserLocation {
+export interface UserLocation {
     country: {
         code: string;
         names: Names;
@@ -182,7 +182,7 @@ interface UserLocation {
     } | null;
 }
 
-interface User { 
+export interface User { 
     rel?: "user";
     id: string;
     names: Names;
@@ -204,9 +204,9 @@ interface User {
     ];
 }
 
-type Profile = User;
+export type Profile = User;
 
-interface Guest {
+export interface Guest {
     name: string;
     rel?: "guest";
     links: [
@@ -215,9 +215,9 @@ interface Guest {
     ];
 }
 
-type Player = (User | Guest);
+export type Player = (User | Guest);
 
-interface Level {
+export interface Level {
     id: string;
     name: string;
     weblink: string;
@@ -234,18 +234,18 @@ interface Level {
     variables?: Data<Variable[]>;
 }
 
-interface VariableScopeSingleLevel {
+export interface VariableScopeSingleLevel {
     type: "single-level";
     level: string;
 }
 
-interface VariableScopeGeneral {
+export interface VariableScopeGeneral {
     type: "global" | "full-game" | "all-levels";
 }
 
-type VariableScope = VariableScopeSingleLevel | VariableScopeGeneral;
+export type VariableScope = VariableScopeSingleLevel | VariableScopeGeneral;
 
-interface VariableValue {
+export interface VariableValue {
     label: string;
     rules: string;
     flags: {
@@ -253,12 +253,12 @@ interface VariableValue {
     }
 }
 
-interface VariableValues {
+export interface VariableValues {
     values: Record<string, VariableValue>;
     default: string | null;
 }
 
-interface Variable {
+export interface Variable {
     id: string;
     name: string;
     category: string | null;
@@ -274,44 +274,44 @@ interface Variable {
     ];
 }
 
-interface RunVideos {
+export interface RunVideos {
     text: string;
     links: { uri: string; }[];
 }
 
-interface RunStatusVerified {
+export interface RunStatusVerified {
     status: "verified";
     examiner: string;
     "verify-date": string;
 }
 
-interface RunStatusNew {
+export interface RunStatusNew {
     status: "new";
 }
 
-interface RunStatusRejected {
+export interface RunStatusRejected {
     status: "rejected";
     examiner: string;
     reason: string;
 }
 
-type RunStatus = RunStatusVerified | RunStatusNew | RunStatusRejected;
+export type RunStatus = RunStatusVerified | RunStatusNew | RunStatusRejected;
 
-interface RunPlayerUser {
+export interface RunPlayerUser {
     rel: "user";
     id: string;
     uri: string;
 }
 
-interface RunPlayerGuest {
+export interface RunPlayerGuest {
     rel: "guest";
     name: string;
     uri: string;
 }
 
-type RunPlayer = RunPlayerUser | RunPlayerGuest;
+export type RunPlayer = RunPlayerUser | RunPlayerGuest;
 
-interface RunTimes {
+export interface RunTimes {
     primary: string;
     primary_t: number;
     realtime: string | null;
@@ -322,18 +322,18 @@ interface RunTimes {
     ingame_t: number | null;
 }
 
-interface RunSystem {
+export interface RunSystem {
     platform: string;
     emulated: boolean;
     region: string | null;
 }
 
-interface Splits {
+export interface Splits {
     rel: string;
     uri: string;
 }
 
-interface Run {
+export interface Run {
     id: string;
     weblink: string;
     game: string | Data<Game>;
@@ -362,7 +362,7 @@ interface Run {
     platform?: Data<Platform>;
 }
 
-interface Series {
+export interface Series {
     id: string;
     names: Names;
     abbreviation: string;
@@ -376,7 +376,7 @@ interface Series {
     ];
 }
 
-interface Notification {
+export interface Notification {
     id: string;
     created: string;
     status: "read" | "unread";
@@ -385,7 +385,7 @@ interface Notification {
     links: [ RelLink<"run"> | RelLink<"game"> | null];
 }
 
-interface GameType {
+export interface GameType {
     id: string;
     name: string;
     "allows-base-game": boolean;
@@ -395,7 +395,7 @@ interface GameType {
     ];
 }
 
-interface Platform {
+export interface Platform {
     id: string;
     name: string;
     released: number;
@@ -406,7 +406,7 @@ interface Platform {
     ];
 }
 
-interface Region {
+export interface Region {
     id: string;
     name: string;
     links: [
@@ -416,7 +416,7 @@ interface Region {
     ];
 }
 
-interface Genre {
+export interface Genre {
     id: string;
     name: string;
     links: [
@@ -425,7 +425,7 @@ interface Genre {
     ];
 }
 
-interface Engine {
+export interface Engine {
     id: string;
     name: string;
     links: [
@@ -434,7 +434,7 @@ interface Engine {
     ];
 }
 
-interface Developer {
+export interface Developer {
     id: string;
     name: string;
     links: [
@@ -443,7 +443,7 @@ interface Developer {
     ];
 }
 
-interface Publisher {
+export interface Publisher {
     id: string;
     name: string;
     links: [
