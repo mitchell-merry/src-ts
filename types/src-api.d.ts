@@ -43,7 +43,7 @@ export interface Category {
     players: {
         "type": CategoryPlayerType;
         value: number;
-    }
+    };
     miscellaneous: boolean;
     links: [
         RelLink<"self">,
@@ -121,7 +121,7 @@ interface Game {
     categories?: Data<Category[]>;
 }
 
-interface LeaderboardRun {
+interface RankedRun {
     place: number;
     run: Run;
 }
@@ -137,7 +137,7 @@ interface Leaderboard {
     'video-only': boolean;
     timing: GameRulesetRunTime;
     values: Record<string, string>;
-    runs: LeaderboardRun[];
+    runs: RankedRun[];
     links: [
         RelLink<"game">,
         RelLink<"category">,
@@ -391,6 +391,7 @@ interface Notification {
 interface GameType {
     id: string;
     name: string;
+    "allows-base-game": boolean;
     links: [
         RelLink<"self">,
         RelLink<"games">
