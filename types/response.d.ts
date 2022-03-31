@@ -98,6 +98,8 @@ export type GameTypesParams = SortParams<"name">;
 export type GameTypeResponse = Data<GameType>;             // GET /gametypes/{id}
 
 export type GenresResponse = Paginated<Genre[]>;           // GET /genres
+export type GenresParams = SortParams<"name">;
+
 export type GenreResponse = Data<Genre>;                   // GET /genres/{id}
 
 export type GuestResponse = Data<Guest>;                   // GET /guests/{name}
