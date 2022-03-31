@@ -50,7 +50,7 @@ export type EnginesParams = SortParams<"name">;
 export type EngineResponse = Data<Engine>;                 // GET /engines/{id}
 
 export type GamesResponse = Paginated<Game[]>;             // GET /games
-export type GamesParams = {
+export type GamesFilter = {
     name?: string;
     abbreviation?: string;
     released?: number;
@@ -65,7 +65,8 @@ export type GamesParams = {
     romhack?: boolean;
     _bulk?: boolean;    // TODO better bulk access support
     max?: number;
-} & Embed & SortParams<"name.int" | "name.jap" | "abbreviation" | "released" | "created" | "similarity">;
+}
+export type GamesParams = GamesFilter & Embed & SortParams<"name.int" | "name.jap" | "abbreviation" | "released" | "created" | "similarity">;
 
 export type GameResponse = Data<Game>;                     // GET /games/{id}
 export type GameParams = Embed;
@@ -171,13 +172,37 @@ export type RunsParams = {
 } & SortParams<"game" | "category" | "level" | "platform" | "region" | "emulated" | "date" | "submitted" | "status" | "verify-date"> & Embed;
 
 export type RunResponse = Data<Run>;                       // GET /runs/{id}
+export type RunParams = Embed;
 
 export type SeriesAllResponse = Paginated<Series[]>;       // GET /series
+export type SeriesAllParams = {
+    name?: string;
+    abbreviation?: string;
+    moderator?: string;
+} & SortParams<"name.int" | "name.jap" | "abbreviation" | "created"> & Embed;
+
 export type SeriesResponse = Data<Series>;                 // GET /series/{id}
+export type SeriesParams = Embed;
+
 export type SeriesGamesResponse = Paginated<Game[]>;       // GET /series/{id}/games
+export type SeriesGamesParams = GamesParams;
 
 export type UsersResponse = Paginated<User[]>;             // GET /users - this query returns a 400 response unless you provide filters
+export type UsersParams = {
+    lookup?: string;
+    name?: string;
+    twitch?: string;
+    hitbox?: string;
+    twitter?: string;
+    speedrunslive?: string;
+} & SortParams<"name.int" | "name.jap" | "signup" | "role"> & Embed;
+
 export type UserResponse = Data<User>;                     // GET /users/{id}
 export type UserPersonalBestsResponse = Data<RankedRun[]>; // GET /users/{id}/personal-bests
+export type UserPersonalBestsParams = {
+    top?: number;
+    series?: string;
+    game?: string;
+} & Embed;
 
 export type VariableResponse = Data<Variable>;             // GET /variables/{id}
