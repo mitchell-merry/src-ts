@@ -105,7 +105,19 @@ export type GenreResponse = Data<Genre>;                   // GET /genres/{id}
 export type GuestResponse = Data<Guest>;                   // GET /guests/{name}
 
 export type LeaderboardResponse = Data<Leaderboard>;       // GET /leaderboards/{game}/category/{category}
+export type LeaderboardParams = {
+    top?: number;
+    platform?: string;
+    region?: string;
+    emulators?: boolean;
+    'video-only'?: boolean;
+    timing?: string;
+    date?: string;
+    [key: `var-${string}`]: string;
+} & Embed;
+
 export type LeaderboardLevelResponse = Data<Leaderboard>;  // GET /leaderboards/{game}/level/{level}/{category}
+export type LeaderboardLevelParams = LeaderboardParams;
 
 export type LevelResponse = Data<Level>;                   // GET /levels/{id}
 export type LevelCategoriesResponse = Data<Category[]>;    // GET /levels/{id}/categories
