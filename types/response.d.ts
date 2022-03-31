@@ -137,19 +137,39 @@ export type LevelLeaderboardParamas = {
 } & Embed;
 
 export type NotificationsResponse = Data<Notification[]>;  // GET /notifications
+export type NotificationsParams = SortParams<"created">;
 
 export type PlatformsResponse = Paginated<Platform[]>;     // GET /platforms
+export type PlatformsParams = SortParams<"name" | "released">;
+
 export type PlatformResponse = Data<Platform>;             // GET /platforms/{id}
 
 export type ProfileResponse = Data<Profile>;               // GET /profile
 
 export type PublishersResponse = Paginated<Publisher[]>;   // GET /publishers
+export type PublishsersParams = SortParams<"name">;
+
 export type PublisherResponse = Data<Publisher>;           // GET /publishers/{id}
 
 export type RegionsResponse = Paginated<Region[]>;         // GET /regions
+export type RegionsParams = SortParams<"name">;
+
 export type RegionResponse = Data<Region>;                 // GET /regions/{id}
 
 export type RunsResponse = Paginated<Run[]>;               // GET /runs
+export type RunsParams = {
+    user?: string;
+    guest?: string;
+    examiner?: string;
+    game?: string;
+    level?: string;
+    category?: string;
+    platform?: string;
+    region?: string;
+    emulated?: boolean | "yes" | true;
+    status?: "new" | "verified" | "rejected";
+} & SortParams<"game" | "category" | "level" | "platform" | "region" | "emulated" | "date" | "submitted" | "status" | "verify-date"> & Embed;
+
 export type RunResponse = Data<Run>;                       // GET /runs/{id}
 
 export type SeriesAllResponse = Paginated<Series[]>;       // GET /series
