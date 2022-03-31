@@ -120,9 +120,21 @@ export type LeaderboardLevelResponse = Data<Leaderboard>;  // GET /leaderboards/
 export type LeaderboardLevelParams = LeaderboardParams;
 
 export type LevelResponse = Data<Level>;                   // GET /levels/{id}
+export type LevelParams = Embed;
+
 export type LevelCategoriesResponse = Data<Category[]>;    // GET /levels/{id}/categories
+export type LevelCategoriesParams = {
+    miscellaneous?: boolean;
+} & SortParams<"name" | "miscellaneous" | "pos"> & Embed;
+
 export type LevelVariablesResponse = Data<Variable[]>;     // GET /levels/{id}/variables
+export type LevelVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos"> & Embed;
+
 export type LevelLeaderboardResponse = Paginated<Leaderboard[]>;   // GET /levels/{id}/records
+export type LevelLeaderboardParamas = {
+    top?: number;
+    "skip-empty"?: boolean;
+} & Embed;
 
 export type NotificationsResponse = Data<Notification[]>;  // GET /notifications
 
