@@ -15,23 +15,82 @@ export interface Paginated<T> {
     pagination: Pagination;
 }
 
+export interface SortParams<orderby> {
+    direction?: "asc" | "desc";
+    orderby?: orderby;
+}
+
+// I'd really like to make this more complex for each possible
+// comma-separated list of embeds. Unfortunately, there are 11 options
+// for Game and thus I can't support it.
+export interface Embed {
+    embed?: string;
+}
+
 export type CategoryResponse = Data<Category>;             // GET /categories/{id}
+export type CategoryParams = Embed;
+
 export type CategoryVariablesResponse = Data<Variable[]>;  // GET /categories/{id}/variables
+export type CategoryVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos"> & Embed;
+
 export type CategoryRecordsResponse = Paginated<Leaderboard[]>;    // GET /categories/{id}/records
+export type CategoryRecordsParams = {
+    top?: number;
+    "skip-empty"?: boolean;
+} & Embed;
 
 export type DevelopersResponse = Paginated<Developer[]>;   // GET /developers
+export type DevelopersParams = SortParams<"name">;
+
 export type DeveloperResponse = Data<Developer>;           // GET /developers/{id}
 
 export type EnginesResponse = Paginated<Engine[]>;         // GET /engines
+export type EnginesParams = SortParams<"name">;         
+
 export type EngineResponse = Data<Engine>;                 // GET /engines/{id}
 
 export type GamesResponse = Paginated<Game[]>;             // GET /games
+export type GamesParams = {
+    name?: string;
+    abbreviation?: string;
+    released?: number;
+    gametype?: string;
+    platform?: string;
+    region?: string;
+    genre?: string;
+    engine?: string;
+    developer?: string;
+    publisher?: string;
+    moderator?: string;
+    romhack?: boolean;
+    _bulk?: boolean;    // TODO better bulk access support
+    max?: number;
+} & Embed & SortParams<"name.int" | "name.jap" | "abbreviation" | "released" | "created" | "similarity">;
+
 export type GameResponse = Data<Game>;                     // GET /games/{id}
+export type GameParams = Embed;
+
 export type GameCategoriesResponse = Data<Category[]>;     // GET /games/{id}/categories
+export type GameCategoriesParams = {
+    miscellaneous: boolean;
+} & Embed & SortParams<"name" | "miscellaneous" | "pos">;
+
 export type GameLevelsResponse = Data<Level[]>;            // GET /games/{id}/levels
+export type GameLevelsParams = SortParams<"name" | "pos"> & Embed;
+
 export type GameVariablesResponse = Data<Variable[]>;      // GET /games/{id}/variables
+export type GameVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos" > & Embed;
+
 export type GameDerivedGamesResponse = Paginated<Game[]>;  // GET /games/{id}/derived-games
+export type GameDerivedGamesParams = GameParams & { romhack: undefined; };
+
 export type GameRecordsResponse =  Paginated<Leaderboard[]>;   // GET /games/{id}/records
+export type GameRecordsParams = {
+    top?: number;
+    scope?: string;
+    miscellaneous?: boolean;
+    "skip-empty"?: boolean;
+} & Embed;
 
 export type GameTypesResponse = Paginated<GameType[]>;     // GET /gametypes
 export type GameTypeResponse = Data<GameType>;             // GET /gametypes/{id}
