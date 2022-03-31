@@ -93,6 +93,8 @@ export type GameRecordsParams = {
 } & Embed;
 
 export type GameTypesResponse = Paginated<GameType[]>;     // GET /gametypes
+export type GameTypesParams = SortParams<"name">;
+
 export type GameTypeResponse = Data<GameType>;             // GET /gametypes/{id}
 
 export type GenresResponse = Paginated<Genre[]>;           // GET /genres
