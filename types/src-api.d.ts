@@ -344,7 +344,7 @@ export interface Run {
     status: RunStatus;
     players: RunPlayer[] | Data<Player[]>;
     date: string | null;
-    submitted: null;
+    submitted: string | null;
     times: RunTimes;
     system: RunSystem;
     splits: Splits | null;
