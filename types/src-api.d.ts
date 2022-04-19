@@ -232,6 +232,7 @@ export interface Game {
 
     levels?: Data<Level[]>;
     categories?: Data<Category[]>;
+    variables?: Data<Variable[]>;
 }
 
 export interface BulkGame {
