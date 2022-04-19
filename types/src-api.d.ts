@@ -231,7 +231,7 @@ export interface RankedRun {
 export interface Leaderboard {
     weblink: string;
     game: string | Data<Game>;
-    category: string | Data<Category>;
+    category: string | Data<Category> | Data<never[]>;
     level: string | null | Data<Level>;
     platform: string | null;
     region: string | null;
