@@ -101,19 +101,19 @@ export interface Game {
     moderators: EmbeddableModerators;
     created: string | null;
     assets: Assets;
-    links: [
-        RelLink<"self">,
-        RelLink<"runs">,
-        RelLink<"levels">,
-        RelLink<"categories">,
-        RelLink<"variables">,
-        RelLink<"records">,
-        RelLink<"series">,
-        RelLink<"base-game">,
-        RelLink<"dervived-games">,
-        RelLink<"romhacks">,
-        RelLink<"leaderboard">,
-    ];
+    links: (
+        RelLink<"self"> |
+        RelLink<"runs"> |
+        RelLink<"levels"> |
+        RelLink<"categories"> |
+        RelLink<"variables"> |
+        RelLink<"records"> |
+        RelLink<"series"> |
+        RelLink<"base-game"> |
+        RelLink<"dervived-games"> |
+        RelLink<"romhacks"> |
+        RelLink<"leaderboard">
+    )[];
 
     levels?: Data<Level[]>;
     categories?: Data<Category[]>;
