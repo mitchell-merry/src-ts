@@ -235,7 +235,7 @@ export interface Leaderboard {
     level: string | null | Data<Level>;
     platform: string | null;
     region: string | null;
-    emulators: string | null;
+    emulators: boolean | null;
     "video-only": boolean;
     timing: GameRulesetRunTime;
     values: Record<string, string>;
