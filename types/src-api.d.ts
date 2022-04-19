@@ -65,14 +65,7 @@ export interface Category {
     /** Flags categories that are usually not shown directly on the leaderboards, but are otherwise nothing special. */
     miscellaneous: boolean;
     /** A set of associated resource links. */
-    links: [
-        RelLink<"self">,
-        RelLink<"game">,
-        RelLink<"variables">,
-        RelLink<"records">,
-        RelLink<"runs">,
-        RelLink<"leaderboard">,
-    ];
+    links: RelLink<"self" | "game" | "variables" | "records" | "runs" | "leaderboard">;
 
     /** The game the category belongs to. (if embedded). */
     game?: Data<Game>;
@@ -216,19 +209,7 @@ export interface Game {
      * 
      * `series` can appear multiple times, as games can be in multiple series.
      */
-    links: (
-        RelLink<"self"> |
-        RelLink<"runs"> |
-        RelLink<"levels"> |
-        RelLink<"categories"> |
-        RelLink<"variables"> |
-        RelLink<"records"> |
-        RelLink<"series"> |
-        RelLink<"base-game"> |
-        RelLink<"dervived-games"> |
-        RelLink<"romhacks"> |
-        RelLink<"leaderboard">
-    )[];
+    links: RelLink<"self" | "runs" | "levels" | "categories" | "variables" | "records" | "series" | "base-game" | "derived-games" | "romhacks" | "leaderboard">[];
 
     levels?: Data<Level[]>;
     categories?: Data<Category[]>;
@@ -259,10 +240,7 @@ export interface Leaderboard {
     timing: GameRulesetRunTime;
     values: Record<string, string>;
     runs: RankedRun[];
-    links: [
-        RelLink<"game">,
-        RelLink<"category">,
-    ];
+    links: RelLink<"game" | "category">[];
 
     players?: Data<User[]>;
     regions?: Data<Region[]>;
@@ -317,12 +295,7 @@ export interface User {
     youtube: Link | null;
     twitter: Link | null;
     speedrunslive: Link | null;
-    links: [
-        RelLink<"self">,
-        RelLink<"runs">,
-        RelLink<"games">,
-        RelLink<"personal-bests">,
-    ];
+    links: RelLink<"self" | "runs" | "games" | "personal-bests">[];
 }
 
 export type Profile = User;
@@ -330,10 +303,7 @@ export type Profile = User;
 export interface Guest {
     name: string;
     rel?: "guest";
-    links: [
-        RelLink<"self">,
-        RelLink<"runs">
-    ];
+    links: RelLink<"self" | "runs">[];
 }
 
 export type Player = (User | Guest);
@@ -343,13 +313,7 @@ export interface Level {
     name: string;
     weblink: string;
     rules: string | null;
-    links: [
-        RelLink<"self">,
-        RelLink<"game">,
-        RelLink<"categories">,
-        RelLink<"variables">,
-        RelLink<"runs">,
-    ];
+    links: RelLink<"self" | "game" | "categories" | "variables" | "runs">[];
 
     categories?: Data<Category[]>;
     variables?: Data<Variable[]>;
@@ -389,10 +353,7 @@ export interface Variable {
     obsoletes: boolean;
     values: VariableValues;
     "is-subcategory": boolean;
-    links: [
-        RelLink<"self">,
-        RelLink<"game">,
-    ];
+    links: RelLink<"self" | "game">[];
 }
 
 export interface RunVideos {
@@ -470,14 +431,7 @@ export interface Run {
     system: RunSystem;
     splits: Splits | null;
     values: Record<string, string>;
-    links: [
-        RelLink<"self">,
-        RelLink<"game">,
-        RelLink<"category">,
-        RelLink<"level">,
-        RelLink<"platform">,
-        RelLink<"examiner">,
-    ];
+    links: RelLink<"self" | "game" | "category" | "level" | "platform" | "examiner">;
 
     region?: Data<Region>;
     platform?: Data<Platform>;
@@ -521,10 +475,7 @@ export interface Series {
     moderators: EmbeddableModerators;
     created: string | null;
     assets: Assets;
-    links: [
-        RelLink<"self">,
-        RelLink<"games">
-    ];
+    links: RelLink<"self" | "games">[];
 }
 
 export interface Notification {
@@ -532,73 +483,50 @@ export interface Notification {
     created: string;
     status: "read" | "unread";
     text: string;
-    item: RelLink<"post"> | RelLink<"run"> | RelLink<"game"> | RelLink<"guide">;
-    links: [ RelLink<"run"> | RelLink<"game"> | null];
+    item: RelLink<"post" | "run" | "game" | "guide">;
+    links: [ RelLink<"run" | "game"> | null];
 }
 
 export interface GameType {
     id: string;
     name: string;
     "allows-base-game": boolean;
-    links: [
-        RelLink<"self">,
-        RelLink<"games">
-    ];
+    links: RelLink<"self" | "games">[];
 }
 
 export interface Platform {
     id: string;
     name: string;
     released: number;
-    links: [
-        RelLink<"self">,
-        RelLink<"games">,
-        RelLink<"runs">,
-    ];
+    links: RelLink<"self" | "games" | "runs">[];
 }
 
 export interface Region {
     id: string;
     name: string;
-    links: [
-        RelLink<"self">,
-        RelLink<"games">,
-        RelLink<"runs">,
-    ];
+    links: RelLink<"self" | "games" | "runs">[];
 }
 
 export interface Genre {
     id: string;
     name: string;
-    links: [
-        RelLink<"self">,
-        RelLink<"games">
-    ];
+    links: RelLink<"self" | "games">[];
 }
 
 export interface Engine {
     id: string;
     name: string;
-    links: [
-        RelLink<"self">,
-        RelLink<"games">
-    ];
+    links: RelLink<"self" | "games">[];
 }
 
 export interface Developer {
     id: string;
     name: string;
-    links: [
-        RelLink<"self">,
-        RelLink<"games">
-    ];
+    links: RelLink<"self" | "games">[];
 }
 
 export interface Publisher {
     id: string;
     name: string;
-    links: [
-        RelLink<"self">,
-        RelLink<"games">
-    ];
+    links: RelLink<"self" | "games">[];
 }
