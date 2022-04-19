@@ -7,8 +7,6 @@ export interface Names {
 
 export interface Asset {
     uri: string;
-    width: number;
-    height: number;
 }
 
 export interface Assets {
