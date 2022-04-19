@@ -54,7 +54,7 @@ export interface Category {
     /** Either "per-game" (for full game categories) or "per-level" (for level categories). */
     type: CategoryType;
     /**  Freeform text with some basic, undocumented speedrun.com markup. */
-    rules: string;
+    rules: string | null;
     /** The number of participants per run in this category. */
     players: {
         /** Type of restriction on the number of players for the category. */
@@ -341,7 +341,7 @@ export interface Level {
     id: string;
     name: string;
     weblink: string;
-    rules: string;
+    rules: string | null;
     links: [
         RelLink<"self">,
         RelLink<"game">,
@@ -367,7 +367,7 @@ export type VariableScope = VariableScopeSingleLevel | VariableScopeGeneral;
 
 export interface VariableValue {
     label: string;
-    rules: string;
+    rules: string | null;
     flags: {
         miscellaneous: false;
     }
