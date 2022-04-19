@@ -91,7 +91,7 @@ export interface Game {
     discord: string;
     released: number;
     'release-date': string;
-    ruleset: GameRulesetRunTime;
+    ruleset: GameRuleset;
     romhack: boolean;
     gametypes: string[] | Data<GameType[]>;
     platforms: string[] | Data<Platform[]>;
