@@ -369,6 +369,36 @@ export interface Run {
     platform?: Data<Platform>;
 }
 
+// need better names??
+export type SendUser = Omit<RunPlayerUser, "uri">;
+export type SendGuest = Omit<RunPlayerGuest, "uri">;
+
+export interface PostRun {
+    category: string;
+    level?: string;
+    date?: string;
+    region?: string;
+    platform?: string;
+    verified?: boolean;
+    times: {
+        realtime?: number;
+        realtime_noloads?: number;
+        ingame?: number;
+    };
+    players?: (SendUser | SendGuest)[];
+    emulated?: boolean;
+    video?: string;
+    comment?: string;
+    splitsio?: string;
+    variables?: {
+        [key: string]: {
+            type: "pre-defined" | "user-defined";
+            value: string;
+        };
+    }[];
+
+}
+
 export interface Series {
     id: string;
     names: Names;

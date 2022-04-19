@@ -1,4 +1,4 @@
-import { BulkGame, Category, Data, Developer, Engine, Game, GameType, Genre, Guest, Leaderboard, Level, Notification, Platform, Profile, Publisher, RankedRun, Region, RelLink, Run, Series, User, Variable } from "./src-api";
+import { BulkGame, Category, Data, Developer, Engine, Game, GameType, Genre, Guest, Leaderboard, Level, Notification, Platform, Profile, Publisher, RankedRun, Region, RelLink, Run, SendGuest, SendUser, Series, User, Variable } from "./src-api";
 
 export interface Pagination {
     offset: number;
@@ -189,6 +189,27 @@ export type RunsParams = {
 
 export type RunResponse = Data<Run>;                       // GET /runs/{id}
 export type RunParams = Embed & Callback;
+
+export type PostRunResponse = Data<Run> | (
+    Error & { errors: string[]; }
+);
+
+export type PutRunStatus = {
+    status: {
+        status: "verified";
+    } | {
+        status: "rejected";
+        reason: string;
+    };
+};
+
+export type PutRunPlayers = {
+    players: (SendUser | SendGuest)[];
+};
+export type PutRunPlayersResponse = Data<Run>;
+
+// No request body
+export type DeleteRunResponse = Data<Run>;
 
 export type SeriesAllResponse = Paginated<Series[]>;       // GET /series
 export type SeriesAllParams = {
