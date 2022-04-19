@@ -76,7 +76,7 @@ export interface GameRuleset {
 export type ModeratorType = "super-moderator" | "moderator"; // "verifier" should realistically be an option, but they only show as "super-moderator"s.
 
 export type Moderators = {
-    [key: string]: string;
+    [key: string]: ModeratorType;
 } & { data?: never };
 
 export type EmbeddableModerators = Moderators | Data<User[]>;
