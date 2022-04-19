@@ -28,6 +28,12 @@ export interface Embed {
     embed?: string;
 }
 
+export interface Error {
+    status: number;
+    message: string;
+    links: [ RelLink<"support">, RelLink<"report-issues"> ];
+}
+
 export type CategoryResponse = Data<Category>;             // GET /categories/{id}
 export type CategoryParams = Embed;
 
