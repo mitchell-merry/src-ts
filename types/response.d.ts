@@ -127,7 +127,7 @@ export type LeaderboardParams = {
     platform?: string;
     region?: string;
     emulators?: boolean;
-    'video-only'?: boolean;
+    "video-only"?: boolean;
     timing?: string;
     date?: string;
     [key: `var-${string}`]: string;

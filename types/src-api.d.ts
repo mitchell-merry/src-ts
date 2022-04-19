@@ -1,4 +1,4 @@
-/** Wrapper for a pattern in the src API where response objects are contained within a 'data' property. */
+/** Wrapper for a pattern in the src API where response objects are contained within a "data" property. */
 export type Data<T> = { data: T; };
 
 export interface RelLink<rel> {
@@ -93,17 +93,17 @@ export type GameRulesetRunTime = "realtime" | "realtime_noloads" | "ingame";
  */
 export interface GameRuleset {
     /** If milliseconds are shown on the leaderboard. */
-    'show-milliseconds': boolean;
+    "show-milliseconds": boolean;
     /** If the game requires moderators to verify a submission before it appears on the leaderboard. */
-    'require-verification': boolean;
+    "require-verification": boolean;
     /** If video is required in a submission. */
-    'require-video': boolean;
+    "require-video": boolean;
     /** A list of times that can/should be given for any run of that game and can be contain any combination of "realtime", "realtime_noloads" and "ingame".  */
-    'run-times': GameRulesetRunTime[];
+    "run-times": GameRulesetRunTime[];
     /** Determines the primary timing method for the game (one of the options in `run-times`). */
-    'default-time': GameRulesetRunTime;
+    "default-time": GameRulesetRunTime;
     /** If emulator submissions are allowed. */
-    'emulators-allowed': boolean;
+    "emulators-allowed": boolean;
 }
 
 /** Possible values for the type of moderator a user is.
@@ -113,7 +113,7 @@ export interface GameRuleset {
 export type ModeratorType = "super-moderator" | "moderator"; 
 
 /**
- * A mapping of user IDs to ModeratorType. 'data' is not allowed as a key to allow for narrowing.
+ * A mapping of user IDs to ModeratorType. "data" is not allowed as a key to allow for narrowing.
  */
 export type Moderators = {
     [key: string]: ModeratorType;
@@ -144,7 +144,7 @@ export interface Game {
     /** Legacy value representing the year the game was released. */
     released: number;
     /** An [ISO_8601](https://en.wikipedia.org/wiki/ISO_8601) encoded datetime representing when the game was released. */
-    'release-date': string;
+    "release-date": string;
     /** Contains extra flags for the game's ruleset. */
     ruleset: GameRuleset;
     /** Legacy value superceded by `gametype`. */
@@ -254,7 +254,7 @@ export interface Leaderboard {
     platform: string | null;
     region: string | null;
     emulators: string | null;
-    'video-only': boolean;
+    "video-only": boolean;
     timing: GameRulesetRunTime;
     values: Record<string, string>;
     runs: RankedRun[];
