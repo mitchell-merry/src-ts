@@ -1,4 +1,10 @@
+/** Wrapper for a pattern in the src API where response objects are contained within a 'data' property. */
 export type Data<T> = { data: T; };
+
+export interface RelLink<rel> {
+    rel: rel;
+    uri: string;
+}
 
 export interface Names {
     international: string;
@@ -24,25 +30,41 @@ export interface Assets {
     "foreground": Asset | null;
 }
 
+/** Defines the type of a category, where "per-game" refers to full-game categories, and "per-level" refers to level categories. */
 export type CategoryType = "per-game" | "per-level";
+/** Defines restrictions on the number of players that can submit to a category for a single run. "exactly" defines an exact quantity, and "up-to" defines an upper limit. */
 export type CategoryPlayerType = "exactly" | "up-to";
 
-export interface RelLink<rel> {
-    rel: rel;
-    uri: string;
-}
-
+/**
+ * https://github.com/speedruncomorg/api/blob/master/version1/categories.md#structure
+ * 
+ * Categories are the different rulesets for speedruns.
+ */
 export interface Category {
+    /** ID values can vary in length, and uniquely represent a category. */
     id: string;
+    /** The name of the category. */
     name: string;
+    /** The URL to the category leaderboard on speedrun.com. 
+     * 
+     * Note that for per-level categories, the `weblink` only points to the game page, because the link depends on the chosen level.
+     * However, when fetching categories in the context of a level (e.g. by requesting /api/v1/levels/<level id>/categories), the weblink will be set to the category leaderboard for that level.
+     */
     weblink: string;
+    /** Either "per-game" (for full game categories) or "per-level" (for level categories). */
     type: CategoryType;
+    /**  Freeform text with some basic, undocumented speedrun.com markup. */
     rules: string;
+    /** The number of participants per run in this category. */
     players: {
+        /** Type of restriction on the number of players for the category. */
         type: CategoryPlayerType;
+        /** Associated limit for the restriction of players. */
         value: number;
     };
+    /** Flags categories that are usually not shown directly on the leaderboards, but are otherwise nothing special. */
     miscellaneous: boolean;
+    /** A set of associated resource links. */
     links: [
         RelLink<"self">,
         RelLink<"game">,
@@ -52,7 +74,9 @@ export interface Category {
         RelLink<"leaderboard">,
     ];
 
+    /** The game the category belongs to. (if embedded). */
     game?: Data<Game>;
+    /** The applicable variables for this category. (if embedded). */
     variables?: Data<Variable[]>;
 }
 
@@ -64,43 +88,134 @@ export interface GameNames {
 
 export type GameRulesetRunTime = "realtime" | "realtime_noloads" | "ingame";
 
+/**
+ * Flags defining certain rules of a game.
+ */
 export interface GameRuleset {
+    /** If milliseconds are shown on the leaderboard. */
     'show-milliseconds': boolean;
+    /** If the game requires moderators to verify a submission before it appears on the leaderboard. */
     'require-verification': boolean;
+    /** If video is required in a submission. */
     'require-video': boolean;
+    /** A list of times that can/should be given for any run of that game and can be contain any combination of "realtime", "realtime_noloads" and "ingame".  */
     'run-times': GameRulesetRunTime[];
+    /** Determines the primary timing method for the game (one of the options in `run-times`). */
     'default-time': GameRulesetRunTime;
+    /** If emulator submissions are allowed. */
     'emulators-allowed': boolean;
 }
 
-export type ModeratorType = "super-moderator" | "moderator"; // "verifier" should realistically be an option, but they only show as "super-moderator"s.
+/** Possible values for the type of moderator a user is.
+ * 
+ * "verifier" should realistically be an option, but they are set as "super-moderator"s.
+ */
+export type ModeratorType = "super-moderator" | "moderator"; 
 
+/**
+ * A mapping of user IDs to ModeratorType. 'data' is not allowed as a key to allow for narrowing.
+ */
 export type Moderators = {
     [key: string]: ModeratorType;
 } & { data?: never };
 
 export type EmbeddableModerators = Moderators | Data<User[]>;
 
+/**
+ * https://github.com/speedruncomorg/api/blob/master/version1/games.md#structure
+ * 
+ * Games are the things users do speedruns in. 
+ * 
+ * Games are associated with regions (US, Europe, ...), platforms (consoles, handhelds, ...), genres, engines, developers, game types, publishers, categories, levels and custom variables (like speed=50/100/150cc in Mario Kart games).
+ * 
+ * Games that are not part of a series are categorized in the "N/A" series for backwards compatibility.
+ */
 export interface Game {
+    /** ID values can vary in length, and uniquely represent a game. */
     id: string;
+    /** Assigned names for the game. */
     names: GameNames;
+    /** Abbreviation of the game name. For example, Super Mario Sunshine = sms. */
     abbreviation: string;
+    /** The URL to the game on speedrun.com. */
     weblink: string;
+    /** Invite link to the community's discord server. Empty string for games without a discord link set. */
     discord: string;
+    /** Legacy value representing the year the game was released. */
     released: number;
+    /** An [ISO_8601](https://en.wikipedia.org/wiki/ISO_8601) encoded datetime representing when the game was released. */
     'release-date': string;
+    /** Contains extra flags for the game's ruleset. */
     ruleset: GameRuleset;
+    /** Legacy value superceded by `gametype`. */
     romhack: boolean;
+    /** 
+     * A list of game types IDs set for the game. This list can be empty.
+     * 
+     * Alternatively embeds all assigned gametypes.
+     */
     gametypes: string[] | Data<GameType[]>;
+    /** 
+     * A list of platform IDs the game can be played on. This list can be empty.
+     * 
+     * Alternatively embeds all assigned regions. 
+     */
     platforms: string[] | Data<Platform[]>;
+    /** 
+     * A list of region IDs the game is available in. This list can be empty.
+     * 
+     * Alternatively embeds all assigned regions. 
+     */
     regions: string[] | Data<Region[]>;
+    /** 
+     * A list of genre IDs set for the game. This list can be empty.
+     * 
+     * Alternatively embeds all assigned genres.
+     */
     genres: string[] | Data<Genre[]>;
+    /** 
+     * A list of engine IDs set for the game. This list can be empty.
+     * 
+     * Alternatively embeds all assigned engines.
+     */
     engines: string[] | Data<Engine[]>;
+    /**
+     * A list of developer IDs set for the game. This list can be empty.
+     * 
+     * Alternative embeds all assigned developers.
+     */
     developers: string[] | Data<Developer[]>;
+    /**
+     * A list of publisher IDs set for the game. This list can be empty.
+     * 
+     * Alternatively embeds the assigned publishers. 
+     */
     publishers: string[] | Data<Publisher[]>;
+    /**
+     * A mapping of user IDs to their roles within the game. 
+     * Possible roles are moderator and super-moderator (super moderators can appoint other users as moderators).
+     * 
+     * Note that the API will falsely flag the role for verifiers as `super-moderator`. Be careful with trusting this value.
+     * 
+     * Alternatively embeds the users as full user resources.
+     */
     moderators: EmbeddableModerators;
+    /** 
+     * An [ISO_8601](https://en.wikipedia.org/wiki/ISO_8601) encoded datetime representing when the game was added to speedrun.com.
+     * 
+     * Can be null for games that have been added in the early days of speedrun.com.
+     */
     created: string | null;
+    /** Links to images that are used for the game on speedrun.com */
     assets: Assets;
+    /**
+     * 
+     * `base-game` is only returned for games that have a base game set.
+     * 
+     * `romhacks` is a legacy value. New code should use derived-games instead.
+     * 
+     * `series` can appear multiple times, as games can be in multiple series.
+     */
     links: (
         RelLink<"self"> |
         RelLink<"runs"> |
