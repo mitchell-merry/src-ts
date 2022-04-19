@@ -121,6 +121,13 @@ export interface Game {
     categories?: Data<Category[]>;
 }
 
+export interface BulkGame {
+    id: string;
+    names: Names;
+    abbreviation: string;
+    weblink: string;
+}
+
 export interface RankedRun {
     place: number;
     run: Run;
