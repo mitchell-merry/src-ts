@@ -284,6 +284,16 @@ export type UserPronouns = "" | null | Pronouns
                     | `${Pronouns},${Pronouns}`
                     | `${Pronouns},${Pronouns},${Pronouns}`;
 
+export type NullableAsset = {
+    uri: string | null;
+}
+
+export interface UserAssets {
+    icon: NullableAsset;
+    supporterIcon: Asset | null;
+    image: NullableAsset; 
+}
+
 export interface User { 
     rel?: "user";
     id: string;
@@ -300,6 +310,7 @@ export interface User {
     youtube: Link | null;
     twitter: Link | null;
     speedrunslive: Link | null;
+    assets: UserAssets;
     links: RelLink<"self" | "runs" | "games" | "personal-bests">[];
 }
 
