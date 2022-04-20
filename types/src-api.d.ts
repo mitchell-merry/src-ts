@@ -279,10 +279,17 @@ export interface UserLocation {
     } | null;
 }
 
+export type Pronouns = "He/Him" | "She/Her" | "They/Them";
+export type UserPronouns = "" | null | Pronouns
+                    | `${Pronouns},${Pronouns}`
+                    | `${Pronouns},${Pronouns},${Pronouns}`;
+
 export interface User { 
     rel?: "user";
     id: string;
     names: Names;
+    supporterAnimation: boolean;
+    pronouns: UserPronouns;
     weblink: string;
     "name-style": NameStyle;
     role: UserRole;
