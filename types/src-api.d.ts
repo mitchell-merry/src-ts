@@ -294,8 +294,7 @@ export interface UserAssets {
     image: NullableAsset; 
 }
 
-export interface User { 
-    rel?: "user";
+export interface User {
     id: string;
     names: Names;
     supporterAnimation: boolean;
@@ -318,11 +317,10 @@ export type Profile = User;
 
 export interface Guest {
     name: string;
-    rel?: "guest";
     links: RelLink<"self" | "runs">[];
 }
 
-export type Player = (User | Guest);
+export type Player = (User & { rel: "user"; }) | (Guest & { rel: "guest"; });
 
 export interface Level {
     id: string;
