@@ -65,7 +65,7 @@ export interface Category {
     /** Flags categories that are usually not shown directly on the leaderboards, but are otherwise nothing special. */
     miscellaneous: boolean;
     /** A set of associated resource links. */
-    links: RelLink<"self" | "game" | "variables" | "records" | "runs" | "leaderboard">;
+    links: RelLink<"self" | "game" | "variables" | "records" | "runs" | "leaderboard">[];
 
     /** The game the category belongs to. (if embedded). */
     game?: Data<Game>;
@@ -429,7 +429,7 @@ export interface Run {
     system: RunSystem;
     splits: Splits | null;
     values: Record<string, string>;
-    links: RelLink<"self" | "game" | "category" | "level" | "platform" | "examiner">;
+    links: RelLink<"self" | "game" | "category" | "level" | "platform" | "examiner">[];
 
     region?: Data<Region>;
     platform?: Data<Platform>;
