@@ -228,9 +228,9 @@ export interface RankedRun {
 
 export interface Leaderboard {
     weblink: string;
-    game: string | Data<Game>;
+    game: string | Data<Game> | Data<never[]>;
     category: string | Data<Category> | Data<never[]>;
-    level: string | null | Data<Level>;
+    level: string | null | Data<Level> | Data<never[]>;
     platform: string | null;
     region: string | null;
     emulators: boolean | null;
@@ -416,9 +416,9 @@ export interface Splits {
 export interface Run {
     id: string;
     weblink: string;
-    game: string | Data<Game>;
-    level: string | null | Data<Level>;
-    category: string | Data<Category>;
+    game: string | Data<Game> | Data<never[]>;
+    level: string | null | Data<Level> | Data<never[]>;
+    category: string | Data<Category> | Data<never[]>;
     videos: RunVideos | null;
     comment: string;
     status: RunStatus;
@@ -431,8 +431,8 @@ export interface Run {
     values: Record<string, string>;
     links: RelLink<"self" | "game" | "category" | "level" | "platform" | "examiner">[];
 
-    region?: Data<Region>;
-    platform?: Data<Platform>;
+    region?: Data<Region> | Data<never[]>;
+    platform?: Data<Platform> | Data<never[]>;
 }
 
 // need better names??
