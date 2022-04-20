@@ -108,9 +108,7 @@ export type ModeratorType = "super-moderator" | "moderator";
 /**
  * A mapping of user IDs to ModeratorType. "data" is not allowed as a key to allow for narrowing.
  */
-export type Moderators = {
-    [key: string]: ModeratorType;
-} & { data?: never };
+export type Moderators = Record<string, ModeratorType> & { data?: never };
 
 export type EmbeddableModerators = Moderators | Data<User[]>;
 
