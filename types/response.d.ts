@@ -1,4 +1,4 @@
-import { BulkGame, Category, Data, Developer, Engine, Game, GameType, Genre, Guest, Leaderboard, Level, Notification, Platform, Profile, Publisher, RankedRun, Region, RelLink, Run, SendGuest, SendUser, Series, User, Variable } from "./src-api";
+import { BulkGame, Category, Data, Developer, Engine, Game, GameType, Genre, Guest, Leaderboard, Level, Notification, Platform, Profile, Publisher, RankedRun, Region, RelLink, Run, SendGuest, SendUser, Series, User, Variable } from ".";
 
 export interface Pagination {
     offset: number;
