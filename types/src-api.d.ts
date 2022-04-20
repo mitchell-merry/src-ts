@@ -332,7 +332,7 @@ export interface VariableValue {
     label: string;
     rules: string | null;
     flags: {
-        miscellaneous: false;
+        miscellaneous: boolean | null;
     }
 }
 
