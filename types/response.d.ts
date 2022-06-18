@@ -156,7 +156,7 @@ export type LeaderboardParams = {
 
 /** GET /leaderboards/{game}/level/{level}/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamelevellevelcategory */
 export type LeaderboardLevelResponse = Data<Leaderboard>;
-export type LeaderboardLevelParams = LeaderboardParams & Callback;
+export type LeaderboardLevelParams = LeaderboardParams;
 
 /** GET /levels/{id} https://github.com/speedruncomorg/api/blob/master/version1/levels.md#get-levelsid */
 export type LevelResponse = Data<Level>;
