@@ -29,7 +29,7 @@ export interface Embed {
     embed?: string;
 }
 
-export interface Error {
+export interface SRCError {
     status: number;
     message: string;
     links: [ RelLink<"support">, RelLink<"report-issues"> ];
@@ -228,7 +228,7 @@ export type RunParams = Embed & Callback;
 
 /** https://github.com/speedruncomorg/api/blob/master/version1/runs.md#post-runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#post-runs */
 export type PostRunResponse = Data<Run> | (
-    Error & { errors: string[]; }
+    SRCError & { errors: string[]; }
 );
 
 export type PutRunStatus = {
