@@ -18,19 +18,6 @@ export * from './game';
 export * from './category';
 export * from './leaderboard';
 
-export function buildLeaderboardName(gameName: string, categoryName: string, variableNames: string[], levelName?: string) {
-	let name = `${gameName}`;
-	if(levelName) name += `: ${levelName}`;
-	name += ` - ${categoryName}`;
-	
-	if(variableNames.length !== 0)
-	{
-		name += ` (${variableNames.join(', ')})`;
-	}
-
-	return name;
-}
-
 /** Generic GET request generator. Bottlenecks itself to 100 requests a minute. */
 export async function get<Response>(url: string, options: Record<string, any> = {}): Promise<Response | SRCError> {
 	url = `${BASE_URL}${url}`;
