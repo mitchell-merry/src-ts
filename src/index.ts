@@ -27,9 +27,7 @@ export async function get<Response>(url: string, options: Record<string, any> = 
 	}
 
 	console.log(`[SRC] Fetching "${url}"`);
-	const res = await fetchSRC(url).then(res => res.json()) as Response | SRCError;
-	
-	return res;
+	return fetchSRC(url).then(res => res.json()) as Promise<Response | SRCError>;
 }
 
 /** Checks if the given object is an SRCError or not. SRC responses will never have a status object in them at the root level. */
