@@ -2,7 +2,7 @@ import { errorOrData, get } from ".";
 import { Leaderboard, LeaderboardLevelParams, LeaderboardLevelResponse, LeaderboardParams, LeaderboardResponse, SRCError } from "../types";
 
 /** Build the name of a leaderboard from the name of the game, category, and if applicable, variables and levels. */
-export function buildLeaderboardName(gameName: string, categoryName: string, variableNames: string[], levelName?: string) {
+export function buildLeaderboardName(gameName: string, categoryName: string, variableNames: string[] = [], levelName?: string) {
 	let name = `${gameName}`;
 	if(levelName) name += `: ${levelName}`;
 	name += ` - ${categoryName}`;
