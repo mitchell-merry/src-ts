@@ -1,7 +1,7 @@
 import { errorOrData, get } from '.';
-import { SRCError, User, UserResponse } from '../types';
+import { UserResponse } from '../types';
 
 /** Get a User. */
-export async function getUser(user: string): Promise<User | SRCError> {
+export async function getUser(user: string) {
 	return get<UserResponse>(`/users/${user}`).then(errorOrData);
 }

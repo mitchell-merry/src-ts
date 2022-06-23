@@ -37,6 +37,6 @@ export function isError(obj: any): obj is SRCError {
 }
 
 /** Decapsulates a data object if it is one, otherwise returns the error. */
-export function errorOrData<T>(obj: Data<T> | SRCError): T | SRCError {
+export function errorOrData<T>(obj: Data<T> | SRCError) {
 	return isError(obj) ? obj : obj.data;
 }
