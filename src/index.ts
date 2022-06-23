@@ -1,6 +1,6 @@
 import Bottleneck from 'bottleneck';
 import fetch from 'node-fetch';
-import { SRCError } from '../types';
+import { Data, SRCError } from '../types';
 
 const fetchSRC = new Bottleneck({
 	reservoir: 100,
@@ -47,4 +47,8 @@ export async function get<Response>(url: string, options: Record<string, any> = 
 export function isError(obj: any): obj is SRCError {
 	return !!obj && typeof obj === "object"
 		&& 'status' in obj;
+}
+
+export function errorOrData<T>(obj: Data<T> | SRCError): T | SRCError {
+	return isError(obj) ? obj : obj.data;
 }
