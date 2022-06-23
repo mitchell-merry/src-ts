@@ -1,25 +1,25 @@
 {
   "name": "src-ts",
-  "version": "2.0.0",
+  "version": "1.1.0",
   "description": "A TypeScript library with type definitions for the speedrun.com REST API, with some common utility functions.",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "build": "rimraf ./lib && tsc"
   },
   "main": "./lib/index.js",
   "files": [
-    "/lib",
-    "/types"
+    "/lib"
   ],
   "keywords": [],
   "author": "Mitchell Merry <mitchellmerry145@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "bottleneck": "^2.19.5",
-    "node-fetch": "^3.2.6"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
+    "@types/node-fetch": "^2.6.2",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4"
   }

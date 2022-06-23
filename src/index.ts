@@ -17,7 +17,6 @@ export * from './user';
 export * from './game';
 export * from './category';
 export * from './leaderboard';
-export * from '../types';
 
 export function buildLeaderboardName(gameName: string, categoryName: string, variableNames: string[], levelName?: string) {
 	let name = `${gameName}`;
