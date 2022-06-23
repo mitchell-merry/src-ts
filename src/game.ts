@@ -1,10 +1,12 @@
 import { errorOrData, get } from '.';
 import { Category, SRCError, Game, GameCategoriesResponse, GameParams, GameResponse, GameCategoriesParams } from '../types';
 
-export async function getGame(game_id: string, options?: GameParams): Promise<Game | SRCError> {
-	return get<GameResponse>(`/games/${game_id}`, options).then(errorOrData);
+/** Get a Game. */
+export async function getGame(game: string, options?: GameParams): Promise<Game | SRCError> {
+	return get<GameResponse>(`/games/${game}`, options).then(errorOrData);
 }
 
-export async function getGameCategories(game_id: string, options?: GameCategoriesParams): Promise<Category[] | SRCError> {
-	return get<GameCategoriesResponse>(`/games/${game_id}/categories`, options).then(errorOrData);
+/** Get all categories that belong to a game. Does not filter by category type. */
+export async function getGameCategories(game: string, options?: GameCategoriesParams): Promise<Category[] | SRCError> {
+	return get<GameCategoriesResponse>(`/games/${game}/categories`, options).then(errorOrData);
 }
