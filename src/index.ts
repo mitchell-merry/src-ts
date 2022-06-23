@@ -31,6 +31,7 @@ export function buildLeaderboardName(gameName: string, categoryName: string, var
 	return name;
 }
 
+/** Generic GET request generator. Bottlenecks itself to 100 requests a minute. */
 export async function get<Response>(url: string, options: Record<string, any> = {}): Promise<Response | SRCError> {
 	url = `${BASE_URL}${url}`;
 	
@@ -44,11 +45,13 @@ export async function get<Response>(url: string, options: Record<string, any> = 
 	return res;
 }
 
+/** Checks if the given object is an SRCError or not. SRC responses will never have a status object in them at the root level. */
 export function isError(obj: any): obj is SRCError {
 	return !!obj && typeof obj === "object"
 		&& 'status' in obj;
 }
 
+/** Decapsulates a data object if it is one, otherwise returns the error. */
 export function errorOrData<T>(obj: Data<T> | SRCError): T | SRCError {
 	return isError(obj) ? obj : obj.data;
 }
