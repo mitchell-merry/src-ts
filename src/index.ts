@@ -2,6 +2,11 @@ import Bottleneck from 'bottleneck';
 import fetch from 'node-fetch';
 import { Data, SRCError } from '../types';
 
+export * from './user';
+export * from './game';
+export * from './category';
+export * from './leaderboard';
+
 const fetchSRC = new Bottleneck({
 	reservoir: 100,
 	reservoirRefreshAmount: 100,
@@ -12,11 +17,6 @@ const fetchSRC = new Bottleneck({
 }).wrap(fetch);
 
 const BASE_URL = "https://www.speedrun.com/api/v1";
-
-export * from './user';
-export * from './game';
-export * from './category';
-export * from './leaderboard';
 
 /** Generic GET request generator. Bottlenecks itself to 100 requests a minute. */
 export async function get<Response>(url: string, options: Record<string, any> = {}): Promise<Response | SRCError> {
