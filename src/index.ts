@@ -1,6 +1,6 @@
 import Bottleneck from 'bottleneck';
 import fetch from 'node-fetch';
-import { Data, SRCError } from '../types';
+import { Data, Paginated, PaginatedData, PaginatedParams, RunsResponse, SRCError } from '../types';
 
 export * from './user';
 export * from './game';
@@ -18,6 +18,25 @@ const fetchSRC = new Bottleneck({
 	minTime: 333
 }).wrap(fetch);
 
+/** GET from url and paginate through results to return entire dataset */
+export async function paginatedGet<T extends Paginated<unknown>>(url: string, options?: PaginatedParams & Record<string, any>): Promise<unknown[] | SRCError> {
+	let data: unknown[] = [];
+	let next, response;
+
+	do {
+		response = next 
+			? await rawGet<T>(next)
+			: await get<T>(url, options); // initial request
+		
+		if(isError(response)) return response;
+
+		data = [...data, ...response.data];
+	}
+	while(next = response.pagination.links.find(link => link.rel === 'next')?.uri);
+
+	return data;
+}
+
 /** Generic GET request generator. Bottlenecks itself to 100 requests a minute. */
 export async function get<Response>(url: string, options: Record<string, any> = {}): Promise<Response | SRCError> {
 	url = `${BASE_URL}${url}`;
@@ -25,8 +44,12 @@ export async function get<Response>(url: string, options: Record<string, any> = 
 	if(Object.entries(options).length != 0) {
 		url += `?${Object.entries(options).map(([k, v]) => `${k}=${v}`).join('&')}`;
 	}
+	return rawGet(url);
+}
 
+export async function rawGet<Response>(url: string) {
 	console.log(`[SRC] Fetching "${url}"`);
+
 	return fetchSRC(url).then(res => res.json()) as Promise<Response | SRCError>;
 }
 
