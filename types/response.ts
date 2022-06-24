@@ -12,6 +12,9 @@ export interface Paginated<T> {
     pagination: Pagination;
 }
 
+/** Unwraps the Paginated type, i.e. PaginatedData<Paginated<T>> = T */
+export type PaginatedData<T extends Paginated<any>> = T extends Paginated<infer S> ? S : never;
+
 export interface PaginatedParams {
     offset?: number;
     max?: number;
