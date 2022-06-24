@@ -370,7 +370,6 @@ export interface Variable {
 }
 
 export interface RunVideos {
-    text: string;
     links: { uri: string; }[];
 }
 
