@@ -435,7 +435,7 @@ export type RunTimes = {
 } & RealTime & RealTimeNoLoads & InGameTime;
 
 export interface RunSystem {
-    platform: string;
+    platform: string | null;
     emulated: boolean;
     region: string | null;
 }
