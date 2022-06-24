@@ -223,7 +223,7 @@ export interface BulkGame {
 
 export interface RankedRun {
     place: number;
-    run: Omit<Run, 'players'> & { players: RunPlayer[] };
+    run: Omit<Run, 'players' | 'links'> & { players: RunPlayer[] };
 }
 
 export interface Leaderboard {
