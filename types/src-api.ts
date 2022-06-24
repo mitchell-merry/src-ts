@@ -268,15 +268,14 @@ export type NameStyle = NameStyleSolid | NameStyleGradient;
 
 export type UserRole = "banned" | "user" | "trusted" | "moderator" | "admin" | "programmer";
 
+export interface Location {
+	code: string;
+	names: Names;
+}
+
 export interface UserLocation {
-    country: {
-        code: string;
-        names: Names;
-    };
-    region?: {
-        code: string;
-        names: Names;
-    };
+    country: Location;
+    region?: Location;
 }
 
 export type Pronouns = "He/Him" | "She/Her" | "They/Them";
