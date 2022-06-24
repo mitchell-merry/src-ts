@@ -8,7 +8,7 @@ export interface Pagination {
 }
 
 export interface Paginated<T> {
-    data: T;
+    data: T[];
     pagination: Pagination;
 }
 
@@ -51,28 +51,28 @@ export type CategoryVariablesResponse = Data<Variable[]>;
 export type CategoryVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos"> & Embed & Callback;
 
 /** GET /categories/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/categories.md#get-categoriesidrecords */
-export type CategoryRecordsResponse = Paginated<Leaderboard[]>;
+export type CategoryRecordsResponse = Paginated<Leaderboard>;
 export type CategoryRecordsParams = {
     top?: number;
     "skip-empty"?: boolean;
 } & Embed & PaginatedParams & Callback;
 
 /** GET /developers https://github.com/speedruncomorg/api/blob/master/version1/developers.md#get-developers */
-export type DevelopersResponse = Paginated<Developer[]>;
+export type DevelopersResponse = Paginated<Developer>;
 export type DevelopersParams = SortParams<"name"> & PaginatedParams & Callback;
 
 /** GET /developers/{id} https://github.com/speedruncomorg/api/blob/master/version1/developers.md#get-developersid */
 export type DeveloperResponse = Data<Developer>;
 
 /** GET /engines https://github.com/speedruncomorg/api/blob/master/version1/engines.md#get-engines */
-export type EnginesResponse = Paginated<Engine[]>;
+export type EnginesResponse = Paginated<Engine>;
 export type EnginesParams = SortParams<"name"> & PaginatedParams & Callback;    
 
 /** GET /engines/{id} https://github.com/speedruncomorg/api/blob/master/version1/engines.md#get-enginesid */
 export type EngineResponse = Data<Engine>;
 
 /** GET /games https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-games */
-export type GamesResponse = Paginated<Game[]>;
+export type GamesResponse = Paginated<Game>;
 export type GamesFilter = {
     name?: string;
     abbreviation?: string;
@@ -91,7 +91,7 @@ export type GamesFilter = {
 export type GamesParams = GamesFilter & Embed & SortParams<"name.int" | "name.jap" | "abbreviation" | "released" | "created" | "similarity"> & PaginatedParams & Callback;
 
 /** GET /games?_bulk=yes https://github.com/speedruncomorg/api/blob/master/version1/games.md#bulk-access */
-export type BulkGamesResponse = Paginated<BulkGame[]>;
+export type BulkGamesResponse = Paginated<BulkGame>;
 export type BulkGamesParams = Omit<GamesParams, "_bulk" | "embed"> & { 
     _bulk: true; // bulk mode must be enabled
 }
@@ -115,11 +115,11 @@ export type GameVariablesResponse = Data<Variable[]>;
 export type GameVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos" > & Embed & Callback;
 
 /** GET /games/{id}/derived-games https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidderived-games */
-export type GameDerivedGamesResponse = Paginated<Game[]>;
+export type GameDerivedGamesResponse = Paginated<Game>;
 export type GameDerivedGamesParams = GameParams & { romhack: undefined; } & PaginatedParams & Callback;
 
 /** GET /games/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidrecords */
-export type GameRecordsResponse =  Paginated<Leaderboard[]>;
+export type GameRecordsResponse =  Paginated<Leaderboard>;
 export type GameRecordsParams = {
     top?: number;
     scope?: string;
@@ -128,14 +128,14 @@ export type GameRecordsParams = {
 } & Embed & PaginatedParams & Callback;
 
 /** GET /gametypes https://github.com/speedruncomorg/api/blob/master/version1/gametypes.md#get-gametypes */
-export type GameTypesResponse = Paginated<GameType[]>;
+export type GameTypesResponse = Paginated<GameType>;
 export type GameTypesParams = SortParams<"name"> & PaginatedParams & Callback;
 
 /** GET /gametypes/{id} https://github.com/speedruncomorg/api/blob/master/version1/gametypes.md#get-gametypesid */
 export type GameTypeResponse = Data<GameType>;
 
 /** GET /genres https://github.com/speedruncomorg/api/blob/master/version1/genres.md#get-genres */
-export type GenresResponse = Paginated<Genre[]>;
+export type GenresResponse = Paginated<Genre>;
 export type GenresParams = SortParams<"name"> & PaginatedParams & Callback;
 
 /** GET /genres/{id} https://github.com/speedruncomorg/api/blob/master/version1/genres.md#get-genresid */
@@ -176,7 +176,7 @@ export type LevelVariablesResponse = Data<Variable[]>
 export type LevelVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos"> & Embed & Callback;
 
 /** GET /levels/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/levels.md#get-levelsidrecords */
-export type LevelLeaderboardResponse = Paginated<Leaderboard[]>;
+export type LevelLeaderboardResponse = Paginated<Leaderboard>;
 export type LevelLeaderboardParams = {
     top?: number;
     "skip-empty"?: boolean;
@@ -187,7 +187,7 @@ export type NotificationsResponse = Data<Notification[]>;
 export type NotificationsParams = SortParams<"created"> & Callback;
 
 /** GET /platforms https://github.com/speedruncomorg/api/blob/master/version1/platforms.md#get-platforms */
-export type PlatformsResponse = Paginated<Platform[]>;
+export type PlatformsResponse = Paginated<Platform>;
 export type PlatformsParams = SortParams<"name" | "released"> & PaginatedParams & Callback;
 
 /** GET /platforms/{id} https://github.com/speedruncomorg/api/blob/master/version1/platforms.md#get-platformsid */
@@ -197,21 +197,21 @@ export type PlatformResponse = Data<Platform>;
 export type ProfileResponse = Data<Profile>;
 
 /** GET /publishers https://github.com/speedruncomorg/api/blob/master/version1/publishers.md#get-publishers */
-export type PublishersResponse = Paginated<Publisher[]>;
+export type PublishersResponse = Paginated<Publisher>;
 export type PublishsersParams = SortParams<"name"> & PaginatedParams & Callback;
 
 /** GET /publishers/{id} https://github.com/speedruncomorg/api/blob/master/version1/publishers.md#get-publishersid */
 export type PublisherResponse = Data<Publisher>;
 
 /** GET /regions https://github.com/speedruncomorg/api/blob/master/version1/regions.md#get-regions */
-export type RegionsResponse = Paginated<Region[]>;
+export type RegionsResponse = Paginated<Region>;
 export type RegionsParams = SortParams<"name"> & PaginatedParams & Callback;
 
 /** GET /regions/{id} https://github.com/speedruncomorg/api/blob/master/version1/regions.md#get-regionsid */
 export type RegionResponse = Data<Region>;
 
 /** GET /runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runs */
-export type RunsResponse = Paginated<Run[]>;
+export type RunsResponse = Paginated<Run>;
 export type RunsParams = {
     user?: string;
     guest?: string;
@@ -253,7 +253,7 @@ export type PutRunPlayersResponse = Data<Run>;
 export type DeleteRunResponse = Data<Run>;
 
 /** GET /series https://github.com/speedruncomorg/api/blob/master/version1/series.md#get-series */
-export type SeriesAllResponse = Paginated<Series[]>;
+export type SeriesAllResponse = Paginated<Series>;
 export type SeriesAllParams = {
     name?: string;
     abbreviation?: string;
@@ -265,11 +265,11 @@ export type SeriesResponse = Data<Series>;
 export type SeriesParams = Embed & Callback;
 
 /** GET /series/{id}/games https://github.com/speedruncomorg/api/blob/master/version1/series.md#get-seriesidgames */
-export type SeriesGamesResponse = Paginated<Game[]>;
+export type SeriesGamesResponse = Paginated<Game>;
 export type SeriesGamesParams = GamesParams & PaginatedParams & Callback;
 
 /** GET /users - This query returns a 400 response unless you provide filters. https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-users */
-export type UsersResponse = Paginated<User[]>;
+export type UsersResponse = Paginated<User>;
 export type UsersParams = {
     lookup?: string;
     name?: string;
