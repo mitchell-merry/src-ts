@@ -434,7 +434,7 @@ export interface Run {
     level: string | null | Data<Level> | Data<never[]>;
     category: string | Data<Category> | Data<never[]>;
     videos: RunVideos | null;
-    comment: string;
+    comment: string | null;
     status: RunStatus;
     players: RunPlayer[] | Data<Player[]>;
     date: string | null;
