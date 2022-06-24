@@ -1,10 +1,7 @@
-import { Variable, SRCError, CategoryVariablesResponse, CategoryVariablesParams } from '../types';
-import { get, isError } from '.';
+import { errorOrData, get } from '.';
+import { CategoryVariablesResponse, CategoryVariablesParams } from '../types';
 
-export async function getCategoryVariables(category_id: string, options?: CategoryVariablesParams): Promise<Variable[] | SRCError> {
-	const res = await get<CategoryVariablesResponse>(`/categories/${category_id}/variables`, options);
-
-	if(isError(res)) return res;
-
-	return res.data;
+/** Get all the variables associated to a category. */
+export async function getCategoryVariables(category: string, options?: CategoryVariablesParams) {
+	return get<CategoryVariablesResponse>(`/categories/${category}/variables`, options).then(errorOrData);
 }
