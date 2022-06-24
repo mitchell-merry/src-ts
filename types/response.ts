@@ -88,7 +88,7 @@ export type GamesFilter = {
 export type GamesParams = GamesFilter & Embed & SortParams<"name.int" | "name.jap" | "abbreviation" | "released" | "created" | "similarity"> & PaginatedParams & Callback;
 
 /** GET /games?_bulk=yes https://github.com/speedruncomorg/api/blob/master/version1/games.md#bulk-access */
-export type BulkGamesResponse = Paginated<BulkGame>;
+export type BulkGamesResponse = Paginated<BulkGame[]>;
 export type BulkGamesParams = Omit<GamesParams, "_bulk" | "embed"> & { 
     _bulk: true; // bulk mode must be enabled
 }
