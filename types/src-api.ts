@@ -405,16 +405,34 @@ export interface RunPlayerGuest {
 
 export type RunPlayer = RunPlayerUser | RunPlayerGuest;
 
-export interface RunTimes {
+export type RealTime = {
+    realtime: string;
+    realtime_t: number;
+} | {
+	realtime: null;
+	realtime_t: 0;
+};
+
+export type RealTimeNoLoads = {
+    realtime_noloads: string;
+    realtime_noloads_t: number;
+} | {
+	realtime_noloads: null;
+	realtime_noloads_t: 0;
+};
+
+export type InGameTime = {
+    ingame: string;
+    ingame_t: number;
+} | {
+	ingame: null;
+	ingame_t: 0;
+};
+
+export type RunTimes = {
     primary: string;
     primary_t: number;
-    realtime: string | null;
-    realtime_t: number | null;
-    realtime_noloads: string | null;
-    realtime_noloads_t: number | null;
-    ingame: string | null;
-    ingame_t: number | null;
-}
+} & RealTime & RealTimeNoLoads & InGameTime;
 
 export interface RunSystem {
     platform: string;
