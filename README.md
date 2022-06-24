@@ -18,16 +18,20 @@ Import or require from 'src-ts' and you will have access to everything.
 
 I recommend you use an identifier such as `SRC` to house the library, like so:
 ```js
-import * as SRC from 'src-ts';	// Modules
-const SRC = require('src-ts');	// CommonJS
+// Modules
+import * as SRC from 'src-ts';
+// CommonJS
+const SRC = require('src-ts');	
 
 SRC.getGame('wys');	// returns a promise
 ```
 
 But nothing stops you from doing it like so:
 ```js
-import { getGame } from 'src-ts';		// Modules
-const { getGame } = require('src-ts');	// CommonJS
+// Modules
+import { getGame } from 'src-ts';
+// CommonJS
+const { getGame } = require('src-ts');
 
 getGame('wys');
 ```
@@ -52,19 +56,24 @@ Clone or fork the repository, and then run the `build` npm script:
 ```bash
 git clone https://github.com/mitchell-merry/src-ts.git
 npm install
-npm run build					# Build library files
-npm pack				 		# Pack the tarball
+
+# Build library files & pack to tarball
+npm run build
+npm pack
 ```
 
-To test-install it in another project (run after `npm run build` on src-ts):
+To install the tarball in another project:
 ```bash
-npm install <path-to-tarball>	# Install the tarball in the current project
+npm install <path-to-tarball>
 ```
 
 For example, if I have a project `test-p` next to my clone of `src-ts`:
 ```bash
-src-ts> npm run build		# Creates /lib folder in src-ts
-src-ts> npm pack			# Creates 'src-ts-1.1.1.tgz' in src-ts
-src-ts> cd ../test
-test-p> npm install ../src-ts/src-ts-1.1.1.tgz	# Installs local src-ts
+# Creates /lib folder in src-ts
+src-ts> npm run build
+# Creates 'src-ts-<version>.tgz' in src-ts
+src-ts> npm pack
+src-ts> cd ../test-p
+# Installs the local package
+test-p> npm install ../src-ts/src-ts-<version>.tgz
 ```
