@@ -238,7 +238,7 @@ export interface Leaderboard {
     timing: GameRulesetRunTime;
     values: Record<string, string>;
     runs: RankedRun[];
-    links: RelLink<"game" | "category">[];
+    links: RelLink<"game" | "category" | "level">[];
 
     players?: Data<User[]>;
     regions?: Data<Region[]>;
