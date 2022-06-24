@@ -513,7 +513,7 @@ export interface Notification {
     status: "read" | "unread";
     text: string;
     item: RelLink<"post" | "run" | "game" | "guide">;
-    links: [ RelLink<"run" | "game"> | null];
+    links?: [ RelLink<"run" | "game"> ];
 }
 
 export interface GameType {
