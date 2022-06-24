@@ -4,7 +4,8 @@
   "description": "A TypeScript library with type definitions for the speedrun.com REST API, with some common utility functions.",
   "type": "commonjs",
   "scripts": {
-    "build": "rimraf ./lib && tsc"
+    "build": "rimraf ./lib && tsc",
+	"build:pack": "npm run build && npm pack"
   },
   "main": "./lib/index.js",
   "files": [
