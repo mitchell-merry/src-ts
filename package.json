@@ -1,6 +1,6 @@
 {
   "name": "src-ts",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A TypeScript library with type definitions for the speedrun.com REST API, with some common utility functions.",
   "type": "commonjs",
   "scripts": {
