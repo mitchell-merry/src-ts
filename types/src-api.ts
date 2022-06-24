@@ -488,12 +488,10 @@ export interface PostRun {
     video?: string;
     comment?: string;
     splitsio?: string;
-    variables?: {
-        [key: string]: {
-            type: "pre-defined" | "user-defined";
-            value: string;
-        };
-    }[];
+    variables?: Record<string, {
+		type: "pre-defined" | "user-defined";
+		value: string;
+    }>[];
 
 }
 
