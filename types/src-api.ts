@@ -378,7 +378,7 @@ export interface RunVideos {
 export interface RunStatusVerified {
     status: "verified";
     examiner: string;
-    "verify-date": string;
+    "verify-date": string | null;
 }
 
 export interface RunStatusNew {
