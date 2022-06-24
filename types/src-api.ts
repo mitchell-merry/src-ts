@@ -461,7 +461,7 @@ export interface Run {
     system: RunSystem;
     splits: Splits | null;
     values: Record<string, string>;
-    links: RelLink<"self" | "game" | "category" | "level" | "platform" | "examiner">[];
+    links: RelLink<"self" | "game" | "category" | "level" | "platform" | "region" | "examiner">[];
 
     region?: Data<Region> | Data<never[]>;
     platform?: Data<Platform> | Data<never[]>;
