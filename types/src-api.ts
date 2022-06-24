@@ -273,10 +273,10 @@ export interface UserLocation {
         code: string;
         names: Names;
     };
-    region: {
+    region?: {
         code: string;
         names: Names;
-    } | null;
+    };
 }
 
 export type Pronouns = "He/Him" | "She/Her" | "They/Them";
