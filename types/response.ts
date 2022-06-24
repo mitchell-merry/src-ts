@@ -4,7 +4,7 @@ export interface Pagination {
     offset: number;
     max: number;
     size: number;
-    links: (RelLink<"next"> | RelLink<"prev">)[]
+    links: RelLink<"next" | "prev">[]
 }
 
 export interface Paginated<T> {
