@@ -4,6 +4,8 @@ A TypeScript library providing functions to interface with and to describe the s
 - Types are defined under `/types`.
 - Other utilities are defined under `/src`.
 
+Find the package on npmjs.com [here](https://www.npmjs.com/package/src-ts).
+
 ## Installation
 With Node and npm installed (or equivalent):
 ```
