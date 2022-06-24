@@ -326,7 +326,7 @@ export interface Level {
     name: string;
     weblink: string;
     rules: string | null;
-    links: RelLink<"self" | "game" | "categories" | "variables" | "runs">[];
+    links: RelLink<"self" | "game" | "categories" | "variables" | "records" | "runs" | "leaderboard">[];
 
     categories?: Data<Category[]>;
     variables?: Data<Variable[]>;
