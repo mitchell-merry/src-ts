@@ -476,7 +476,8 @@ export interface PostRun {
     level?: string;
     date?: string;
     region?: string;
-    platform?: string;
+    /** This is documented as being optional, but the json schema requires it. */
+	platform: string;
     verified?: boolean;
     times: {
         realtime?: number;
