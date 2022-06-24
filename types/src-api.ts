@@ -366,7 +366,7 @@ export interface Variable {
     obsoletes: boolean;
     values: VariableValues;
     "is-subcategory": boolean;
-    links: RelLink<"self" | "game">[];
+    links: RelLink<"self" | "game" | "category">[];
 }
 
 export interface RunVideos {
