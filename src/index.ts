@@ -20,6 +20,12 @@ const fetchSRC = new Bottleneck({
 	minTime: 333
 }).wrap(fetch);
 
+/** Configuration options to use for the project. Change as soon as you can in your project. */
+export const CONFIG = {
+	/** Whether or not to log the queries performed by src-ts. */
+	log: true
+};
+
 /** GET from url and paginate through results to return entire dataset */
 export async function paginatedGet<T extends Paginated<any>>(url: string, options?: PaginatedParams & Record<string, any>): Promise<PaginatedData<T>[] | SRCError> {
 	let data: PaginatedData<T>[] = [];
@@ -50,7 +56,7 @@ export async function get<Response>(url: string, options: Record<string, any> = 
 }
 
 export async function rawGet<Response>(url: string) {
-	console.log(`[SRC] Fetching "${url}"`);
+	if(CONFIG.log) console.log(`[SRC] Fetching "${url}"`);
 
 	return fetchSRC(url).then(res => res.json()) as Promise<Response | SRCError>;
 }
