@@ -1,5 +1,5 @@
 import { errorOrData, get } from ".";
-import { LeaderboardLevelParams, LeaderboardLevelResponse, LeaderboardParams, LeaderboardResponse } from "../types";
+import { LeaderboardParams, LeaderboardResponse } from "../types";
 
 /** This will return a full-game leaderboard. The game and category can be either IDs (e.g. xldev513) or the respective abbreviations.
  * 
