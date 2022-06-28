@@ -6,6 +6,7 @@ export * from './user';
 export * from './game';
 export * from './category';
 export * from './leaderboard';
+export * from './runs';
 
 const BASE_URL = "https://www.speedrun.com/api/v1";
 
