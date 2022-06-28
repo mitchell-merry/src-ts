@@ -144,7 +144,10 @@ export type GenreResponse = Data<Genre>;
 /** GET /guests/{name} https://github.com/speedruncomorg/api/blob/master/version1/guests.md#get-guestsname */
 export type GuestResponse = Data<Guest>;
 
-/** GET /leaderboards/{game}/category/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamecategorycategory */
+/** **Full-game**: GET /leaderboards/{game}/category/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamecategorycategory
+ * 
+ * **Levels**: GET /leaderboards/{game}/level/{level}/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamelevellevelcategory
+ */
 export type LeaderboardResponse = Data<Leaderboard>;
 export type LeaderboardParams = {
     top?: number;
