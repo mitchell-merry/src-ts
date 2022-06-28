@@ -19,8 +19,8 @@ const fetchSRC = new Bottleneck({
 }).wrap(fetch);
 
 /** GET from url and paginate through results to return entire dataset */
-export async function paginatedGet<T extends Paginated<unknown>>(url: string, options?: PaginatedParams & Record<string, any>): Promise<unknown[] | SRCError> {
-	let data: unknown[] = [];
+export async function paginatedGet<T extends Paginated<any>>(url: string, options?: PaginatedParams & Record<string, any>): Promise<PaginatedData<T>[] | SRCError> {
+	let data: PaginatedData<T>[] = [];
 	let next, response;
 
 	do {
