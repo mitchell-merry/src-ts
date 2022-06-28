@@ -56,7 +56,7 @@ export async function get<Response>(url: string, options: Record<string, any> = 
 }
 
 export async function rawGet<Response>(url: string) {
-	if(CONFIG.log) console.log(`[SRC] Fetching "${url}"`);
+	if(CONFIG.log) console.log(`[src-ts] Fetching "${url}"`);
 
 	return fetchSRC(url).then(res => res.json()) as Promise<Response | SRCError>;
 }
