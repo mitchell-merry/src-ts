@@ -157,8 +157,11 @@ export type LeaderboardParams = {
     [key: `var-${string}`]: string;
 } & Embed & Callback;
 
-/** GET /leaderboards/{game}/level/{level}/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamelevellevelcategory */
+/** GET /leaderboards/{game}/level/{level}/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamelevellevelcategory 
+* @deprecated Use LeaderboardResponse instead. They are the same type.
+*/
 export type LeaderboardLevelResponse = Data<Leaderboard>;
+/** @deprecated Use LeaderboardParams instead. They are the same type. */
 export type LeaderboardLevelParams = LeaderboardParams;
 
 /** GET /levels/{id} https://github.com/speedruncomorg/api/blob/master/version1/levels.md#get-levelsid */
