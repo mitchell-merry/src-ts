@@ -2,12 +2,12 @@ import Bottleneck from 'bottleneck';
 import fetch from 'node-fetch';
 import { Data, Paginated, PaginatedData, PaginatedParams, RunsResponse, SRCError } from '../types';
 
-export * from './user';
-export * from './game';
-export * from './category';
-export * from './leaderboard';
+export * from './users';
+export * from './games';
+export * from './categories';
+export * from './leaderboards';
 export * from './runs';
-export * from './variable';
+export * from './variables';
 
 const BASE_URL = "https://www.speedrun.com/api/v1";
 
