@@ -15,7 +15,7 @@ export async function getUser(user: string) {
 	return get<UserResponse>(`/users/${user}`).then(errorOrData);
 }
 
-/** This will return a list of users. You can filter the result using these query string parameters:
+/** This will return a list of users.
  * 
  * This query returns a 400 response unless you provide filters.
  * 
