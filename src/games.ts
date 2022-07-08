@@ -1,4 +1,4 @@
-import { errorOrData, get } from '.';
+import { errorOrData, get, paginatedGet } from '.';
 import { GameCategoriesResponse, GameParams, GameResponse, GameCategoriesParams, GameLevelsParams, GameLevelsResponse, GamesParams, GamesResponse } from '../types';
 
 /** This will return a list of all games.
@@ -9,8 +9,8 @@ import { GameCategoriesResponse, GameParams, GameResponse, GameCategoriesParams,
  * 
  * @param options Optional query paramters to pass to the GET request.
 */
-export async function getGames(options?: GamesParams) {
-	return get<GamesResponse>(`/games`, options).then(errorOrData);
+export async function getAllGames(options?: GamesParams) {
+	return paginatedGet<GamesResponse>(`/games`, options);
 }
 
 /** This will retrieve a single game, identified by its ID. Instead of the game's ID, you can also specify the game's abbreviation.

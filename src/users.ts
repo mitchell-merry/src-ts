@@ -1,4 +1,4 @@
-import { errorOrData, get } from '.';
+import { errorOrData, get, paginatedGet } from '.';
 import { Player, User, UserLocation, UserResponse, UsersParams, UsersResponse } from '../types';
 
 /** This will retrieve a single user, identified by their ID. Instead of the ID, the username can be used as well
@@ -23,8 +23,8 @@ export async function getUser(user: string) {
  * 
  * @param options Optional query paramters to pass to the GET request.
  */
-export async function getUsers(options?: UsersParams) {
-	return get<UsersResponse>(`/users`, options).then(errorOrData);
+export async function getAllUsers(options?: UsersParams) {
+	return paginatedGet<UsersResponse>(`/users`, options);
 }
 
 /** Type guard to determine if a Player object is embedded from a Leaderboard resource. */
