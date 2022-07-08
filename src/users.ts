@@ -1,5 +1,5 @@
 import { errorOrData, get } from '.';
-import { Player, User, UserLocation, UserResponse } from '../types';
+import { Player, User, UserLocation, UserResponse, UsersParams, UsersResponse } from '../types';
 
 /** This will retrieve a single user, identified by their ID. Instead of the ID, the username can be used as well
  * (but this is only recommended for quick lookups, as usernames can change over time), so GET /users/Pac is possible
@@ -13,6 +13,18 @@ import { Player, User, UserLocation, UserResponse } from '../types';
  */
 export async function getUser(user: string) {
 	return get<UserResponse>(`/users/${user}`).then(errorOrData);
+}
+
+/** This will return a list of users. You can filter the result using these query string parameters:
+ * 
+ * This query returns a 400 response unless you provide filters.
+ * 
+ * GET /users  https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-users
+ * 
+ * @param options Optional query paramters to pass to the GET request.
+ */
+export async function getUsers(options?: UsersParams) {
+	return get<UsersResponse>(`/users`, options).then(errorOrData);
 }
 
 /** Type guard to determine if a Player object is embedded from a Leaderboard resource. */
