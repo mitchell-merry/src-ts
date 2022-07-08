@@ -15,6 +15,18 @@ export async function getUser(user: string) {
 	return get<UserResponse>(`/users/${user}`).then(errorOrData);
 }
 
+/** This will return the first page of users, with the pagination data.
+ * 
+ * This query returns a 400 response unless you provide filters.
+ * 
+ * GET /users  https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-users
+ * 
+ * @param options Optional query paramters to pass to the GET request.
+ */
+ export async function getUsers(options?: UsersParams) {
+	return get<UsersResponse>(`/users`, options);
+}
+
 /** This will return a list of users.
  * 
  * This query returns a 400 response unless you provide filters.
