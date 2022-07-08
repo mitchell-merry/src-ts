@@ -277,11 +277,17 @@ export type SeriesGamesParams = GamesParams & PaginatedParams & Callback;
 /** GET /users - This query returns a 400 response unless you provide filters. https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-users */
 export type UsersResponse = Paginated<User>;
 export type UsersParams = {
+	/** when given, searches the value (case-insensitive exact-string match) across user names, URLs and social profiles; all other query string filters are disabled when this is given */
     lookup?: string;
+	/** only returns users whose name/URL contains the given value; the comparision is case-insensitive */
     name?: string;
+	/** searches for Twitch usernames */
     twitch?: string;
+	/** searches for Hitbox usernames */
     hitbox?: string;
+	/** searches for Twitter usernames */
     twitter?: string;
+	/** searches for SpeedRunsLive usernames */
     speedrunslive?: string;
 } & SortParams<"name.int" | "name.jap" | "signup" | "role"> & Embed & PaginatedParams & Callback;
 
