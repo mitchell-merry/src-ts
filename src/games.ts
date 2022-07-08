@@ -1,5 +1,17 @@
 import { errorOrData, get } from '.';
-import { GameCategoriesResponse, GameParams, GameResponse, GameCategoriesParams, GameLevelsParams, GameLevelsResponse } from '../types';
+import { GameCategoriesResponse, GameParams, GameResponse, GameCategoriesParams, GameLevelsParams, GameLevelsResponse, GamesParams, GamesResponse } from '../types';
+
+/** This will return a list of all games.
+ *
+ * Note that giving invalid values for `platform`, `region` or `moderator` to `options` will result in an HTTP 404 error instead of an empty list. 
+ * 
+ * GET /games https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-games
+ * 
+ * @param options Optional query paramters to pass to the GET request.
+*/
+export async function getGames(options?: GamesParams) {
+	return get<GamesResponse>(`/games`, options).then(errorOrData);
+}
 
 /** This will retrieve a single game, identified by its ID. Instead of the game's ID, you can also specify the game's abbreviation.
  * 
