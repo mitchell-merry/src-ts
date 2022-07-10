@@ -19,6 +19,7 @@ export async function getLeaderboard(game: string, category: string, options?: L
  * GET /leaderboards/{game}/level/{level}/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamelevellevelcategory
  * 
  * @param game The game's ID or abbreviation.
+ * @param level The level's ID or abbreviation.
  * @param category The category's ID or abbreviation.
  * @param options Optional query paramters to pass to the GET request.
  */
