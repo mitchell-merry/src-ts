@@ -126,6 +126,10 @@ export interface Game {
     id: string;
     /** Assigned names for the game. */
     names: GameNames;
+	/** The total number of boosts this game has received. "Boosts" on the game's page. */
+	boostReceived: number;
+	/** The number of users who have boosted the game. "Boosters" on the game's page. */
+	boostDistinctDonors: number;
     /** Abbreviation of the game name. For example, Super Mario Sunshine = sms. */
     abbreviation: string;
     /** The URL to the game on speedrun.com. */
