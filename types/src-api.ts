@@ -2,16 +2,21 @@
 export type Data<T> = { data: T; };
 
 export interface RelLink<rel> {
+	/** The relation this link has to the parent */
 	rel: rel;
+	/** The link. */
 	uri: string;
 }
 
 export interface Names {
+	/** International name. */
 	international: string;
+	/** Japanese name, if applicable. Null if not. */
 	japanese: string | null;
 }
 
 export interface Asset {
+	/** The URI to the desired asset. */
 	uri: string;
 }
 
@@ -74,8 +79,11 @@ export interface Category {
 }
 
 export interface GameNames {
+	/** International name for the game. */
 	international: string;
-	japanese: string;
+	/** Japanese name for the game. If none are set, null. */
+	japanese: string | null;
+	/** Twitch name for the game. If none are set, empty string. */
 	twitch: string;
 }
 
@@ -91,7 +99,7 @@ export interface GameRuleset {
 	"require-verification": boolean;
 	/** If video is required in a submission. */
 	"require-video": boolean;
-	/** A list of times that can/should be given for any run of that game and can be contain any combination of "realtime", "realtime_noloads" and "ingame".  */
+	/** A list of times that can/should be given for any run of that game.  */
 	"run-times": GameRulesetRunTime[];
 	/** Determines the primary timing method for the game (one of the options in `run-times`). */
 	"default-time": GameRulesetRunTime;
@@ -108,7 +116,7 @@ export type ModeratorType = "super-moderator" | "moderator";
 /**
  * A mapping of user IDs to ModeratorType. "data" is not allowed as a key to allow for narrowing.
  */
-export type Moderators = Record<string, ModeratorType> & { data?: never };
+export type Moderators = Omit<Record<string, ModeratorType>, 'data'>;
 
 export type EmbeddableModerators = Moderators | Data<User[]>;
 
@@ -136,13 +144,16 @@ export interface Game {
 	weblink: string;
 	/** Invite link to the community's discord server. Empty string for games without a discord link set. */
 	discord: string;
-	/** Legacy value representing the year the game was released. */
+	/** The year the game was released.
+	 * 
+	 * @deprecated superceded by release-date
+	*/
 	released: number;
 	/** An [ISO_8601](https://en.wikipedia.org/wiki/ISO_8601) encoded datetime representing when the game was released. */
 	"release-date": string;
 	/** Contains extra flags for the game's ruleset. */
 	ruleset: GameRuleset;
-	/** Legacy value superceded by `gametype`. */
+	/** @deprecated superceded by `gametypes`. */
 	romhack: boolean;
 	/** 
 	 * A list of game types IDs set for the game. This list can be empty.
@@ -213,40 +224,77 @@ export interface Game {
 	 */
 	links: RelLink<"self" | "runs" | "levels" | "categories" | "variables" | "records" | "series" | "base-game" | "derived-games" | "romhacks" | "leaderboard">[];
 
+	/** all levels defined for the game (if embedded) */
 	levels?: Data<Level[]>;
+	/** all defined categories for the game (if embedded) */
 	categories?: Data<Category[]>;
+	/** all defined variables for the game (if embedded) */
 	variables?: Data<Variable[]>;
 }
 
 export interface BulkGame {
+	/** The id of the game */
 	id: string;
+	/** The names of the game */
 	names: Names;
+	/** The abbreviation of the game */
 	abbreviation: string;
+	/** Link to the game's page on speedrun.com */
 	weblink: string;
 }
 
 export interface RankedRun {
+	/** The place this run has on the related leaderbord. */
 	place: number;
+	/** The run object */
 	run: Omit<Run, 'players' | 'links'> & { players: RunPlayer[] };
 }
 
 export interface Leaderboard {
+	/** A link to the leaderboard on speedrun.com */
 	weblink: string;
+	/** The id of the game the leaderboard belongs to.
+	 * 
+	 * Alternatively, the Data<Game> resource when embedded.
+	 * 
+	 * Data<never[]>: https://github.com/speedruncomorg/api/issues/118
+	 */
 	game: string | Data<Game> | Data<never[]>;
+	/** The id of the category the leaderboard belongs to.
+	 * 
+	 * Alternatively, the Data<Category> resource when embedded.
+	 * 
+	 * Data<never[]>: https://github.com/speedruncomorg/api/issues/118
+	 */
 	category: string | Data<Category> | Data<never[]>;
+	/** The id of the level the leaderboard belongs to (null if full game).
+	 * 
+	 * Alternatively, the Data<Level> resource when embedded.
+	 * 
+	 * Data<never[]>: https://github.com/speedruncomorg/api/issues/118
+	 */
 	level: string | null | Data<Level> | Data<never[]>;
+	/** platform ID, when set. `null` otherwise */
 	platform: string | null;
+	/** region ID, when set. `null` otherwise */
 	region: string | null;
 	emulators: boolean | null;
 	"video-only": boolean;
 	timing: GameRulesetRunTime;
+	/** A mapping between variable ID and value ID applicable to this leaderbord. */
 	values: Record<string, string>;
+	/** A list of runs on the leaderboard. */
 	runs: RankedRun[];
+	/** Related links to other resources. */
 	links: RelLink<"game" | "category" | "level">[];
 
+	/** If `players` is embedded, a flat list of all players of all runs on the leaderboard. */
 	players?: Data<User[]>;
+	/** If `regions` is embedded, a list of all used regions. */
 	regions?: Data<Region[]>;
+	/** If `platforms` is embedded, a list of all used platforms. */
 	platforms?: Data<Platform[]>;
+	/** If `variables` is embedded, a list of all applicable variables for the chosen level/category. */
 	variables?: Data<Variable[]>;
 }
 
