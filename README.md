@@ -6,6 +6,8 @@ A TypeScript library providing functions to interface with and to describe the s
 
 Find the package on npmjs.com [here](https://www.npmjs.com/package/src-ts).
 
+DISCLAIMER: Functions that perform API requests are only added as I need them / they are requested. If one is missing, open an issue and I'll add it for you.
+
 ## Installation
 With Node and npm installed (or equivalent):
 ```
