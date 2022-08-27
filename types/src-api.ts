@@ -544,7 +544,7 @@ export interface PostRun {
 	variables?: Record<string, {
 		type: "pre-defined" | "user-defined";
 		value: string;
-	}>[];
+	}>;
 
 }
 
