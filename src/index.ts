@@ -85,8 +85,10 @@ export async function rawPost<Response>(url: string, body: any, headers: Record<
 
 /** Checks if the given object is an SRCError or not. SRC responses will never have a status object in them at the root level. */
 export function isError(obj: any): obj is SRCError {
-	return !!obj && typeof obj === "object"
-		&& 'status' in obj;
+	return !!obj && typeof obj === "object" && Object.keys(obj).length === 3
+		&& 'status' in obj && typeof obj.status === "number"
+		&& 'message'in obj && typeof obj.message === "string"
+		&& 'links' in obj && Array.isArray(obj.links) && obj.links.length === 2;
 }
 
 /** Decapsulates a data object if it is one, otherwise returns the error. */
