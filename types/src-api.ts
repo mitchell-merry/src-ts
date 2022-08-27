@@ -581,7 +581,7 @@ export interface Run {
 	 * 	Not all runs have a known date, so unfortunately this sometimes is `null`.
 	 */
 	date: string | null;
-	/** The date and time when the run was added on speedrun.com and can also be `null` for old runs. */
+	/** The date and time when the run was added on speedrun.com. Can be `null` for old runs. */
 	submitted: string | null;
 	/** A structure that contains a lot of information and a lot of redundant stuff.
 	 * 
