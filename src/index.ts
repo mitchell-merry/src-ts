@@ -11,14 +11,15 @@ export * from './variables';
 
 const BASE_URL = "https://www.speedrun.com/api/v1";
 
-const fetchSRC = new Bottleneck({
+const bn = new Bottleneck({
 	reservoir: 100,
 	reservoirRefreshAmount: 100,
 	reservoirRefreshInterval: 60 * 1000,
    
 	maxConcurrent: 1,
 	minTime: 333
-}).wrap(fetch);
+});
+const fetchSRC = bn.wrap(fetch);
 
 /** Configuration options to use for the project. Change as soon as you can in your project. */
 export const CONFIG = {
@@ -59,6 +60,25 @@ export async function rawGet<Response>(url: string) {
 	if(CONFIG.log) console.log(`[src-ts] Fetching "${url}"`);
 
 	return fetchSRC(url).then(res => res.json()) as Promise<Response | SRCError>;
+}
+
+export async function post<Response>(url: string, body: any, key: string) {
+	url = `${BASE_URL}${url}`;
+
+	return rawPost(url, body, {
+		'Host': 'www.speedrun.com',
+		'Content-Type': 'application/json',
+		'X-API-Key': key
+	});
+}
+
+export async function rawPost<Response>(url: string, body: any, headers: Record<string, string> = {}) {
+	if(CONFIG.log) console.log(`[src-ts] Posting to "${url}..."`);
+
+	return await bn.schedule(() => fetch(url, { 
+		method: 'post', headers,
+		body: JSON.stringify(body),
+	})).then(res => res.json()) as Promise<Response | SRCError>;
 }
 
 /** Checks if the given object is an SRCError or not. SRC responses will never have a status object in them at the root level. */
