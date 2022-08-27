@@ -1,5 +1,5 @@
-import { paginatedGet } from '.';
-import { Run, RunsParams, RunsResponse } from '../types';
+import { errorOrData, get, paginatedGet, post, rawPost } from '.';
+import { PostRun, PostRunResponse, Run, RunResponse, RunsParams, RunsResponse } from '../types';
 
 /** This will return a list of all runs.
  * 
@@ -11,7 +11,28 @@ export async function getAllRuns(options?: RunsParams) {
 	return paginatedGet<RunsResponse>(`/runs`, options);
 }
 
+/** This will return a single run based on id.
+ * 
+ * GET /runs/id https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runsid
+ * 
+ * @param id ID of the run to get.
+ */
+ export async function getRun(id: string) {
+	return get<RunResponse>(`/runs/${id}`).then(errorOrData);
+}
+
 /** Filter a list of runs by variables, as key-value pairs. */
 export function filterRuns(runs: Run[], variables: Record<string, string> = {}) {
 	return runs.filter(run => !Object.entries(variables).some(([variable, value]) => !(variable in run.values) || run.values[variable] !== value));
+}
+
+/** Submit a run to speedrun.com. Only super moderators can auto-verify.
+ * 
+ * POST /runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#post-runs
+ * 
+ * @param run The run to submit.
+ * @param key THe API key of the account to submit with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
+*/
+export function submitRun(run: PostRun, key: string) {
+	return post<PostRunResponse>('/runs', { run }, key);
 }
