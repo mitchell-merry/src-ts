@@ -52,10 +52,14 @@ export async function paginatedGet<T extends Paginated<any>>(url: string, option
 export async function get<Response>(url: string, options: Record<string, any> = {}): Promise<Response | SRCError> {
 	url = `${BASE_URL}${url}`;
 	
+	// https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+	// to prevent caching
+	options["__cache__"] = (Math.random() + 1).toString(36).substring(7);
+
 	if(Object.entries(options).length != 0) {
 		url += `?${Object.entries(options).map(([k, v]) => `${k}=${v}`).join('&')}`;
 	}
-	return rawGet(url);
+	return rawGet<Response>(url);
 }
 
 export async function rawGet<Response>(url: string) {
