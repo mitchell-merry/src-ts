@@ -24,7 +24,9 @@ const fetchSRC = bn.wrap(fetch);
 /** Configuration options to use for the project. Change as soon as you can in your project. */
 export const CONFIG = {
 	/** Whether or not to log the queries performed by src-ts. */
-	log: true
+	log: true,
+	/** Whether the library should throw an error when a request fails. */
+	throw: false,
 };
 
 /** GET from url and paginate through results to return entire dataset */
@@ -89,5 +91,8 @@ export function isError(obj: any): obj is SRCError {
 
 /** Decapsulates a data object if it is one, otherwise returns the error. */
 export function errorOrData<T>(obj: Data<T> | SRCError) {
-	return isError(obj) ? obj : obj.data;
+	const err = isError(obj);
+	if(CONFIG.throw && err) throw new Error(`SRCError ${obj.status}: ${obj.message}`);
+
+	return err ? obj : obj.data;
 }
