@@ -67,7 +67,7 @@ export async function rawGet<Response>(url: string) {
 export async function post<Response>(url: string, body: any, key: string) {
 	url = `${BASE_URL}${url}`;
 
-	return rawPost(url, body, {
+	return rawPost<Response>(url, body, {
 		'Host': 'www.speedrun.com',
 		'Content-Type': 'application/json',
 		'X-API-Key': key
@@ -82,6 +82,26 @@ export async function rawPost<Response>(url: string, body: any, headers: Record<
 		body: JSON.stringify(body),
 	})).then(res => res.json()) as Promise<Response | SRCError>;
 }
+
+export async function del<Response>(url: string, body: any, key: string) {
+	url = `${BASE_URL}${url}`;
+
+	return rawDelete<Response>(url, body, {
+		'Host': 'www.speedrun.com',
+		'Content-Type': 'application/json',
+		'X-API-Key': key
+	});
+}
+
+export async function rawDelete<Response>(url: string, body: any, headers: Record<string, string> = {}) {
+	if(CONFIG.log) console.log(`[src-ts] Deleting "${url}..."`);
+
+	return await bn.schedule(() => fetch(url, { 
+		method: 'delete', headers,
+		body: JSON.stringify(body),
+	})).then(res => res.json()) as Promise<Response | SRCError>;
+}
+
 
 /** Checks if the given object is an SRCError or not. SRC responses will never have a status object in them at the root level. */
 export function isError(obj: any): obj is SRCError {
