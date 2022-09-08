@@ -1,3 +1,3 @@
-export * from './util';
+export * from './other';
 export * from './resources';
 export * from './endpoints';

@@ -1,6 +1,6 @@
 import { Callback, Embed, Paginated, PaginatedParams, SortParams } from "./util";
 import { Category, Leaderboard, Level, Variable } from "../resources";
-import { Data } from "../util";
+import { Data } from "../other";
 
 /** GET /levels/{id} https://github.com/speedruncomorg/api/blob/master/version1/levels.md#get-levelsid */
 export type LevelResponse<E extends string = ""> = Data<Level<E>>;

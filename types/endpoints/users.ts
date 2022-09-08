@@ -1,6 +1,6 @@
 import { Callback, Embed, Paginated, PaginatedParams, SortParams } from "./util";
 import { RankedRun, User } from "../resources";
-import { Data } from "../util";
+import { Data } from "../other";
 
 /** GET /users - This query returns a 400 response unless you provide filters. https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-users */
 export type UsersResponse = Paginated<User>;

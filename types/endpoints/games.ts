@@ -1,6 +1,6 @@
 import { Callback, Embed, Paginated, PaginatedParams, SortParams } from "./util";
 import { BulkGame, Category, Game, Leaderboard, Level, Variable } from "../resources";
-import { Data } from "../util";
+import { Data } from "../other";
 
 /** GET /games https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-games */
 export type GamesResponse<E extends string = ""> = Paginated<Game<E>>;

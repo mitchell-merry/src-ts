@@ -1,6 +1,6 @@
 import { Callback, Paginated, PaginatedParams, SortParams } from "./util";
 import { Platform } from "../resources";
-import { Data } from "../util";
+import { Data } from "../other";
 
 /** GET /platforms https://github.com/speedruncomorg/api/blob/master/version1/platforms.md#get-platforms */
 export type PlatformsResponse = Paginated<Platform>;

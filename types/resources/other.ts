@@ -1,5 +1,5 @@
 import { Embeddable } from "../embed";
-import { Assets, Data, ModeratorType, Names, RelLink } from "../util";
+import { Assets, Data, ModeratorType, Names, RelLink } from "../other";
 import { User } from "./User";
 
 export interface Series<Embed extends string = ""> {

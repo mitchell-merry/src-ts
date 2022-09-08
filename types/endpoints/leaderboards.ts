@@ -1,6 +1,6 @@
 import { Callback, Embed } from "./util";
 import { Leaderboard } from "../resources";
-import { Data } from "../util";
+import { Data } from "../other";
 
 /** **Full-game**: GET /leaderboards/{game}/category/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamecategorycategory
  * 

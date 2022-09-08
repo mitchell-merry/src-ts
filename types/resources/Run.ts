@@ -1,5 +1,5 @@
 import { AdditionalEmbed, Embeddable, SubEmbeds } from "../embed";
-import { Data, RelLink } from "../util";
+import { Data, RelLink } from "../other";
 import { Category } from "./Category";
 import { Game } from "./Game";
 import { Level } from "./Level";

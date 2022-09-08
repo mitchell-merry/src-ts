@@ -1,6 +1,6 @@
 import { Callback, Paginated, PaginatedParams, SortParams } from "./util";
 import { Publisher } from "../resources";
-import { Data } from "../util";
+import { Data } from "../other";
 
 /** GET /publishers https://github.com/speedruncomorg/api/blob/master/version1/publishers.md#get-publishers */
 export type PublishersResponse = Paginated<Publisher>;

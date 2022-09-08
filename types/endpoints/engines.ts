@@ -1,6 +1,6 @@
 import { Callback, Paginated, PaginatedParams, SortParams } from "./util";
 import { Engine } from "../resources";
-import { Data } from "../util";
+import { Data } from "../other";
 
 /** GET /engines https://github.com/speedruncomorg/api/blob/master/version1/engines.md#get-engines */
 export type EnginesResponse = Paginated<Engine>;

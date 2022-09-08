@@ -1,5 +1,5 @@
 import { AdditionalEmbed, Embeddable, SubEmbeds } from '../embed';
-import { Assets, Data, ModeratorType, Names, RelLink } from '../util';
+import { Assets, Data, ModeratorType, Names, RelLink } from '../other';
 import { Category } from './Category';
 import { Level } from './Level';
 import { Developer, Engine, GameType, Genre, Platform, Publisher, Region } from './other';

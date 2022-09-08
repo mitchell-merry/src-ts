@@ -1,4 +1,4 @@
-import { RelLink } from "../util";
+import { RelLink } from "../other";
 
 export interface Variable {
 	id: string;

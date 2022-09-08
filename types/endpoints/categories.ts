@@ -1,6 +1,6 @@
 import { Callback, Embed, Paginated, PaginatedParams, SortParams } from "./util";
 import { Category, Leaderboard, Variable } from "../resources";
-import { Data } from "../util";
+import { Data } from "../other";
 
 /** GET /categories/{id} https://github.com/speedruncomorg/api/blob/master/version1/categories.md#get-categoriesid */
 export type CategoryResponse<E extends string = ""> = Data<Category<E>>;

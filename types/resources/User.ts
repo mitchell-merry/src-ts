@@ -1,4 +1,4 @@
-import { Asset, Link, Names, NullableAsset, RelLink } from "../util";
+import { Asset, Link, Names, NullableAsset, RelLink } from "../other";
 
 export interface User {
 	id: string;

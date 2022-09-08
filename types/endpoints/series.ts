@@ -1,6 +1,6 @@
 import { Callback, Embed, Paginated, PaginatedParams, SortParams } from "./util";
 import { Game, Series } from "../resources";
-import { Data } from "../util";
+import { Data } from "../other";
 import { GamesParams } from "./games";
 
 /** GET /series https://github.com/speedruncomorg/api/blob/master/version1/series.md#get-series */

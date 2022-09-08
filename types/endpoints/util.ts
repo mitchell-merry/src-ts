@@ -1,4 +1,4 @@
-import { RelLink } from "../util";
+import { RelLink } from "../other";
 
 /** https://github.com/speedruncomorg/api/blob/master/version1/pagination.md */
 export interface Pagination {
