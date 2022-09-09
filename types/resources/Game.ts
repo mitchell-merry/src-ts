@@ -78,7 +78,7 @@ import { Variable } from './Variable';
 	 */
 	links: RelLink<"self" | "runs" | "levels" | "categories" | "variables" | "records" | "series" | "base-game" | "derived-games" | "romhacks" | "leaderboard">[];
 }
-& AdditionalEmbed<Embed, "levels", { categories: Data<Level<SubEmbeds<Embed, "levels">>[]> }>
+& AdditionalEmbed<Embed, "levels", { levels: Data<Level<SubEmbeds<Embed, "levels">>[]> }>
 & AdditionalEmbed<Embed, "categories", { categories: Data<Category<SubEmbeds<Embed, "categories">>[]> }>
 & AdditionalEmbed<Embed, "variables", { variables: Data<Variable[]> }>;
 
