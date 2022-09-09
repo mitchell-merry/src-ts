@@ -8,6 +8,6 @@ import { get } from "../http";
  * @param level The level's ID.
  * @param queryParams Optional query paramters to pass to the GET request.
  */
- export async function getLevelCategories(level: string, queryParams?: LevelCategoriesParams) {
-	return get<LevelCategoriesResponse>(`/levels/${level}/categories`, queryParams);
+ export async function getLevelCategories<Embed extends string = "">(level: string, queryParams?: LevelCategoriesParams) {
+	return get<LevelCategoriesResponse<Embed>>(`/levels/${level}/categories`, queryParams);
 }

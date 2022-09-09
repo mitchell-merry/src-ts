@@ -7,8 +7,8 @@ import { get, http, paginatedGet, shimData } from "../http";
  * 
  * @param options Optional query paramters to pass to the GET request.
  */
- export async function getAllRuns(options?: RunsParams) {
-	return paginatedGet<RunsResponse>(`/runs`, options);
+ export async function getAllRuns<Embed extends string = "">(options?: RunsParams) {
+	return paginatedGet<RunsResponse<Embed>>(`/runs`, options);
 }
 
 /** This will return a single run based on id.
@@ -17,8 +17,8 @@ import { get, http, paginatedGet, shimData } from "../http";
  * 
  * @param id ID of the run to get.
  */
- export async function getRun(id: string) {
-	return get<RunResponse>(`/runs/${id}`).then(shimData);
+ export async function getRun<Embed extends string = "">(id: string) {
+	return get<RunResponse<Embed>>(`/runs/${id}`).then(shimData);
 }
 
 /** Submit a run to speedrun.com. Only super moderators can auto-verify.

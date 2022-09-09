@@ -9,8 +9,8 @@ import { get, shimData } from "../http";
  * @param category The category's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
  */
- export async function getLeaderboard(game: string, category: string, queryParams?: LeaderboardParams) {
-	return get<LeaderboardResponse>(`/leaderboards/${game}/category/${category}`, queryParams).then(shimData);
+ export async function getLeaderboard<Embed extends string = "">(game: string, category: string, queryParams?: LeaderboardParams) {
+	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/category/${category}`, queryParams).then(shimData);
 }
 
 /** This will return a individual-level leaderboard. The same filtering options as with full-game leaderboards apply.
@@ -23,6 +23,6 @@ import { get, shimData } from "../http";
  * @param category The category's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
  */
-export async function getLevelLeaderboard(game: string, level: string, category: string, queryParams?: LeaderboardParams) {
-	return get<LeaderboardResponse>(`/leaderboards/${game}/level/${level}/${category}`, queryParams).then(shimData);
+export async function getLevelLeaderboard<Embed extends string = "">(game: string, level: string, category: string, queryParams?: LeaderboardParams) {
+	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/level/${level}/${category}`, queryParams).then(shimData);
 }
