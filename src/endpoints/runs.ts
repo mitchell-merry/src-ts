@@ -1,14 +1,14 @@
-import { DeleteRunResponse, PostRun, PostRunResponse, Run, RunError, RunResponse, RunsParams, RunsResponse } from "../../types";
+import { DeleteRunResponse, PostRun, PostRunResponse, Run, RunError, RunParams, RunResponse, RunsParams, RunsResponse } from "../../types";
 import { get, http, paginatedGet, shimData } from "../http";
 
 /** This will return a list of all runs.
  * 
  * GET /runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runs
  * 
- * @param options Optional query paramters to pass to the GET request.
+ * @param queryParams Optional query paramters to pass to the GET request.
  */
- export async function getAllRuns<Embed extends string = "">(options?: RunsParams) {
-	return paginatedGet<RunsResponse<Embed>>(`/runs`, options);
+ export async function getAllRuns<Embed extends string = "">(queryParams?: RunsParams) {
+	return paginatedGet<RunsResponse<Embed>>(`/runs`, queryParams);
 }
 
 /** This will return a single run based on id.
@@ -16,9 +16,10 @@ import { get, http, paginatedGet, shimData } from "../http";
  * GET /runs/id https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runsid
  * 
  * @param id ID of the run to get.
+ * @param queryParams Optional query paramters to pass to the GET request.
  */
- export async function getRun<Embed extends string = "">(id: string) {
-	return get<RunResponse<Embed>>(`/runs/${id}`).then(shimData);
+ export async function getRun<Embed extends string = "">(id: string, queryParams?: RunParams) {
+	return get<RunResponse<Embed>>(`/runs/${id}`, queryParams).then(shimData);
 }
 
 /** Submit a run to speedrun.com. Only super moderators can auto-verify.
