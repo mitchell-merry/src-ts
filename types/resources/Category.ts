@@ -35,6 +35,8 @@ import { Variable } from "./Variable";
 	/** A set of associated resource links. */
 	links: RelLink<"self" | "game" | "variables" | "records" | "runs" | "leaderboard">[];
 }
+// TODO WORKAROUND TO FIX EMBED TYPE HINTS
+& { id: string }
 & AdditionalEmbed<Embed, "game", { categories: Data<Game<SubEmbeds<Embed, "game">>[]> }>
 & AdditionalEmbed<Embed, "variables", { variables: Data<Variable[]> }>;
 

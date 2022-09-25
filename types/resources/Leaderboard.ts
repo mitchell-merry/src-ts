@@ -31,6 +31,8 @@ export type Leaderboard<Embed extends string = ""> = {
 	/** Related links to other resources. */
 	links: RelLink<"game" | "category" | "level">[];
 }
+// TODO WORKAROUND TO FIX EMBED TYPE HINTS
+& { id: string }
 & AdditionalEmbed<Embed, "players", { players: Data<User[]> }>
 & AdditionalEmbed<Embed, "regions", { regions: Data<Region[]> }>
 & AdditionalEmbed<Embed, "platforms", { platforms: Data<Platform[]> }>

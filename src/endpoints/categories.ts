@@ -1,4 +1,4 @@
-import { Category, CategoryParams, CategoryRecordsParams, CategoryRecordsResponse, CategoryResponse, CategoryVariablesParams, CategoryVariablesResponse } from "../../types";
+import { Category, CategoryParams, CategoryRecordsParams, CategoryRecordsResponse, CategoryResponse, CategoryType, CategoryVariablesParams, CategoryVariablesResponse, Variable } from "../../types";
 import { get, shimData } from "../http";
 
 /** This will retrieve a single category, identified by its ID.
@@ -8,7 +8,7 @@ import { get, shimData } from "../http";
  * @param category The category's ID.
  * @param options Optional query paramters to pass to the GET request.
  */
-export async function getCategory<Embed extends string = "">(category: string, queryParams?: CategoryParams) {
+export async function getCategory<Embed extends string = "">(category: string, queryParams?: CategoryParams): Promise<Category<Embed, CategoryType>> {
 	return get<CategoryResponse<Embed>>(`/categories/${category}`, queryParams).then(shimData);
 }
 
@@ -19,7 +19,7 @@ export async function getCategory<Embed extends string = "">(category: string, q
  * @param category The category's ID.
  * @param queryParams Optional query paramters to pass to the GET request.
 */
-export async function getCategoryVariables(category: string, queryParams?: CategoryVariablesParams) {
+export async function getCategoryVariables(category: string, queryParams?: CategoryVariablesParams): Promise<Variable[]> {
 	return get<CategoryVariablesResponse>(`/categories/${category}/variables`, queryParams).then(shimData);
 }
 
@@ -30,7 +30,7 @@ export async function getCategoryVariables(category: string, queryParams?: Categ
  * @param category The category's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
  */
-export async function getCategoryRecords<Embed extends string = "">(category: string, queryParams?: CategoryRecordsParams) {
+export async function getCategoryRecords<Embed extends string = "">(category: string, queryParams?: CategoryRecordsParams): Promise<CategoryRecordsResponse<Embed>> {
 	return get<CategoryRecordsResponse<Embed>>(`/categories/${category}/records`, queryParams);
 }
 

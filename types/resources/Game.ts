@@ -78,6 +78,8 @@ import { Variable } from './Variable';
 	 */
 	links: RelLink<"self" | "runs" | "levels" | "categories" | "variables" | "records" | "series" | "base-game" | "derived-games" | "romhacks" | "leaderboard">[];
 }
+// TODO WORKAROUND TO FIX EMBED TYPE HINTS
+& { id: string }
 & AdditionalEmbed<Embed, "levels", { levels: Data<Level<SubEmbeds<Embed, "levels">>[]> }>
 & AdditionalEmbed<Embed, "categories", { categories: Data<Category<SubEmbeds<Embed, "categories">>[]> }>
 & AdditionalEmbed<Embed, "variables", { variables: Data<Variable[]> }>;

@@ -67,6 +67,8 @@ export type Run<Embed extends string = ""> = {
 	values: Record<string, string>;
 	links: RelLink<"self" | "game" | "category" | "level" | "platform" | "region" | "examiner">[];
 }
+// TODO WORKAROUND TO FIX EMBED TYPE HINTS
+& { id: string }
 & AdditionalEmbed<Embed, "region", { region: Data<Region | []> }>
 & AdditionalEmbed<Embed, "platform", { platform: Data<Platform | []> }>;
 

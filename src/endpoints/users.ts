@@ -1,4 +1,4 @@
-import { UserResponse, UsersParams, UsersResponse } from "../../types";
+import { User, UserResponse, UsersParams, UsersResponse } from "../../types";
 import { get, paginatedGet, shimData } from "../http";
 
 /** This will retrieve a single user, identified by their ID. Instead of the ID, the username can be used as well
@@ -11,7 +11,7 @@ import { get, paginatedGet, shimData } from "../http";
  * 
  * @param user The ID or username of the respective user.
  */
- export async function getUser(user: string) {
+ export async function getUser(user: string): Promise<User> {
 	return get<UserResponse>(`/users/${user}`).then(shimData);
 }
 
@@ -23,7 +23,7 @@ import { get, paginatedGet, shimData } from "../http";
  * 
  * @param queryParams Optional query paramters to pass to the GET request.
  */
- export async function getUsers(queryParams?: UsersParams) {
+ export async function getUsers(queryParams?: UsersParams): Promise<UsersResponse> {
 	return get<UsersResponse>(`/users`, queryParams);
 }
 
@@ -35,6 +35,6 @@ import { get, paginatedGet, shimData } from "../http";
  * 
  * @param queryParams Optional query paramters to pass to the GET request.
  */
-export async function getAllUsers(queryParams?: UsersParams) {
+export async function getAllUsers(queryParams?: UsersParams): Promise<User[]> {
 	return paginatedGet<UsersResponse>(`/users`, queryParams);
 }

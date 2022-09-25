@@ -10,5 +10,7 @@ export type Level<Embed extends string = ""> = {
 	rules: string | null;
 	links: RelLink<"self" | "game" | "categories" | "variables" | "records" | "runs" | "leaderboard">[];
 } 
+// TODO WORKAROUND TO FIX EMBED TYPE HINTS
+& { id: string }
 & AdditionalEmbed<Embed, "categories", { categories: Data<Category<SubEmbeds<Embed, "categories">, "per-level">[]> }>
 & AdditionalEmbed<Embed, "variables", { variables: Data<Variable[]> }>;

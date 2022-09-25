@@ -8,7 +8,7 @@ import SRCError from "../SRCError";
  * 
  * @param queryParams Optional query paramters to pass to the GET request.
  */
- export async function getAllRuns<Embed extends string = "">(queryParams?: RunsParams) {
+ export async function getAllRuns<Embed extends string = "">(queryParams?: RunsParams): Promise<Run<Embed>[]> {
 	return paginatedGet<RunsResponse<Embed>>(`/runs`, queryParams);
 }
 
@@ -19,7 +19,7 @@ import SRCError from "../SRCError";
  * @param id ID of the run to get.
  * @param queryParams Optional query paramters to pass to the GET request.
  */
- export async function getRun<Embed extends string = "">(id: string, queryParams?: RunParams) {
+ export async function getRun<Embed extends string = "">(id: string, queryParams?: RunParams): Promise<Run<Embed>> {
 	return get<RunResponse<Embed>>(`/runs/${id}`, queryParams).then(shimData);
 }
 
@@ -30,7 +30,7 @@ import SRCError from "../SRCError";
  * @param run The run to submit.
  * @param key The API key of the account to submit with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
 */
-export function submitRun(run: PostRun, key: string) {
+export function submitRun(run: PostRun, key: string): Promise<PostRunResponse> {
 	return http<PostRunResponse, RunError>('/runs', 'post', key, { body: { run } });
 }
 
@@ -44,7 +44,7 @@ export function submitRun(run: PostRun, key: string) {
  * @param status The new status of the run.
  * @param key The API key of the account to do the action with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
 */
-export async function setRunStatus(id: string, status: PutRunStatus['status'], key: string) {
+export async function setRunStatus(id: string, status: PutRunStatus['status'], key: string): Promise<PutRunStatusResponse> {
 	return http<PutRunStatusResponse, RunError>(`/runs/${id}/status`, 'put', key, { body: { status }});
 }
 
@@ -64,13 +64,13 @@ export async function setRunStatus(id: string, status: PutRunStatus['status'], k
  * @param key The API key of the account to submit with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
  * @param ignore500 Whether or not to ignore the 500 error (which is always returned).
 */
-export async function deleteRun(id: string, key: string, ignore500 = true) {
+export async function deleteRun(id: string, key: string, ignore500 = true): Promise<RunError | Run> {
 	try {
 		// await to catch the error
 		return await http<DeleteRunResponse>(`/runs/${id}`, 'delete', key).then(shimData);
 	} catch (e) {
 		// Ignore the 500 error if it occurs (erroneous)
-		if (ignore500 && e instanceof SRCError && e.error.status === 500) return e.error;
+		if (ignore500 && e instanceof SRCError && e.error.status === 500) return e.error as RunError;
 
 		throw e;
 	}
