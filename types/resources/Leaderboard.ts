@@ -44,5 +44,3 @@ export interface RankedRun {
 	/** The run object */
 	run: Omit<Run, 'links'>;
 }
-
-const a = {} as RankedRun
