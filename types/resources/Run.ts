@@ -1,5 +1,5 @@
 import { AdditionalEmbed, Embeddable, SubEmbeds } from "../embed";
-import { Data, RelLink } from "../other";
+import { Data, Link, RelLink } from "../other";
 import { Category } from "./Category";
 import { Game } from "./Game";
 import { Level } from "./Level";
@@ -39,7 +39,7 @@ export type Run<Embed extends string = ""> = {
 	status: RunStatus;
 	/** The list of players that participated in the run. Each player can either be a registered user (in that case, the `rel` value is `user` and there is an `id` present) or a guest of whom we only have a name, but no user account  (in that case, `rel` is `guest` and the `name` is present). In both cases, a `uri` is present that links to the player resource.
 	 *  Alternatively, when embedded, a list of Player (User / Guest) resources. These resources contain the `rel` object as well. */
-	players: Embeddable<Embed, "players", RunPlayer[], Data<Player[]>>;
+	players: Embeddable<Embed, "players", PlayerPartial[], Data<Player[]>>;
 	/** When the run was played. Shows up in the "Played on" section. Not all runs have a known date, so unfortunately this sometimes is `null`. */
 	date: string | null;
 	/** The date and time when the run was added on speedrun.com. Can be `null` for old runs. */
@@ -73,44 +73,70 @@ export type Run<Embed extends string = ""> = {
 & AdditionalEmbed<Embed, "platform", { platform: Data<Platform | []> }>;
 
 export interface RunVideos {
-	links: { uri: string; }[];
+	/** An array of links to the videos of the run. Auto-generated from the video field and the comment/description of the run. */
+	links: Link[];
 }
 
 export interface RunStatusVerified {
+	/** * `verified` means the run is verified and appears on speedrun.com in leaderboards and profiles. */
 	status: "verified";
+	/** The user ID of the user that verified this run. May not be a current moderator of the leaderboard. */
 	examiner: string;
+	/** An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) encoded datetime of when the run was verified. May be null for old runs. */
 	"verify-date": string | null;
 }
 
 export interface RunStatusNew {
+	/** * `new` means the run is pending / awaiting verification. */
 	status: "new";
 }
 
 export interface RunStatusRejected {
+	/** * `rejected` means the run has been reviewed and rejected by a moderator, and does not appear on leaderboards and profiles. */
 	status: "rejected";
+	/** The user ID of the user that rejected this run. May not be a current moderator of the leaderboard. */
 	examiner: string;
+	/** The reason the user who rejected this run provided on why the run was rejected. */
 	reason: string;
 }
 
 export type RunStatus = RunStatusVerified | RunStatusNew | RunStatusRejected;
 
-export type UserRel = { rel: "user"; }
-export type GuestRel = { rel: "guest"; }
-
-export type RunPlayerUser = {
+export type UserRel = { 
+	/** * `user` means the player is a user on speedrun.com with an account and an `id`. */
 	rel: "user";
-	id: string;
-	uri: string;
 }
 
-export type RunPlayerGuest = {
+export type GuestRel = { 
+	/** * `guest` means the player is a guest and has no account on speedrun.com, identified only by a `name`. */
 	rel: "guest";
+}
+
+export type PlayerUserPartial = UserRel & {
+	/** The id of the user on speedrun.com. */
+	id: string;
+	/** A link to the player's resource in the speedrun.com API. */
+	uri: string;
+}
+/** @deprecated - Use PlayerUserPartial instead! This is an alias for it now. */
+export type RunPlayerUser = PlayerUserPartial;
+
+export type PlayerGuestPartial = GuestRel & {
+	/** The name of the guest on speedrun.com. */
 	name: string;
 	uri: string;
 }
+/** @deprecated - Use PlayerGuestPartial instead! This is an alias for it now. */
+export type RunPlayerGuest = PlayerGuestPartial;
 
-export type RunPlayer = RunPlayerUser | RunPlayerGuest;
-export type Player = (UserRel & User) | (GuestRel & Guest);
+export type PlayerPartial = PlayerUserPartial | PlayerGuestPartial;
+/** @deprecated - Use PlayerPartial instead! This is an alias for it now. */
+export type RunPlayer = PlayerPartial;
+
+export type PlayerUser = UserRel & User;
+export type PlayerGuest = GuestRel & Guest;
+
+export type Player = PlayerUser | PlayerGuest;
 
 
 export interface RunSystem {

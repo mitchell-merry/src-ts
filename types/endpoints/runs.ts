@@ -1,5 +1,5 @@
 import { Callback, Embed, Paginated, PaginatedParams, SortParams, ResponseError } from "./util";
-import { Run, RunPlayer, RunPlayerGuest, RunPlayerUser } from "../resources";
+import { Run } from "../resources";
 import { Data } from "../other";
 
 /** GET /runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runs */

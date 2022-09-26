@@ -4,7 +4,7 @@ import { Category } from "./Category";
 import { Game, TimingMethod } from "./Game";
 import { Level } from "./Level";
 import { Platform, Region } from "./other";
-import { Run, RunPlayer } from "./Run";
+import { Run } from "./Run";
 import { User } from "./User";
 import { Variable } from "./Variable";
 

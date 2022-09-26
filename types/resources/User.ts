@@ -100,6 +100,7 @@ export interface NameStyleGradient {
 export type NameStyle = NameStyleSolid | NameStyleGradient;
 
 export interface Guest {
+	/** The name of the guest. */
 	name: string;
 	links: RelLink<"self" | "runs">[];
 }

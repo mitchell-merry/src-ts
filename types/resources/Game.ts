@@ -85,9 +85,13 @@ import { Variable } from './Variable';
 & AdditionalEmbed<Embed, "variables", { variables: Data<Variable[]> }>;
 
 export type BulkGame = {
+	/** ID values can vary in length, and uniquely represent a game. */
 	id: string;
+	/** Assigned names for the game. */
 	names: Names;
+	/** Abbreviation of the game name. For example, Super Mario Sunshine = sms. */
 	abbreviation: string;
+	/** The URL to the game on speedrun.com. */
 	weblink: string;
 }
 
@@ -96,6 +100,11 @@ export type GameNames = Names & {
 	twitch: string;
 }
 
+/** The timing methods available on speedrun.com.
+ * * `realtime` (a.k.a RTA, or Real Time Attack) is the real-world time passed from the beginning to the end of the run.
+ * * `realtime_noloads` is the RTA time of the run minus all loading screens in the game, usually timed with a load remover.
+ * * `ingame` is the time of the run usually using statistics that are available within the game itself, i.e. a built-in level timer or such.
+ */
 export type TimingMethod = "realtime" | "realtime_noloads" | "ingame";
 
 /**
