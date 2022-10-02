@@ -19,23 +19,34 @@ type HTTPOptions = {
 	headers?: Record<string, string>
 }
 
-type GetOptions = HTTPOptions & { cache?: boolean }
 type HTTPType = 'get' | 'post' | 'put' | 'delete';
 
+type GetOptions = HTTPOptions & {
+	/** Whether or not to allow a cached response */
+	cache?: boolean;
+};
+type PaginatedGetOptions = GetOptions & {
+	/** The max number of elements to fetch. */
+	max?: number;
+};
+
 /** GET from url and paginate through results to return entire dataset */
-export async function paginatedGet<T extends Paginated<any>>(url: string, queryParams?: PaginatedParams & Record<string, any>, options: GetOptions = {}): Promise<PaginatedData<T>[]> {
+export async function paginatedGet<T extends Paginated<any>>(url: string, queryParams?: PaginatedParams & Record<string, any>, options: PaginatedGetOptions = {}): Promise<PaginatedData<T>[]> {
 	let data: PaginatedData<T>[] = [];
 	let next, response;
-	const { cache, ...opts } = options;
+	const { max, ...getOpts } = options;
+	const { cache, ...opts } = getOpts;
+
+	if (max && max < 1) return [];
 
 	do {
 		response = next 
 			? await rawHTTP<T>(next, 'get', opts)
-			: await get<T>(url, queryParams, options); // initial request
+			: await get<T>(url, queryParams, getOpts); // initial request
 		
-		if(isError(response)) throw new SRCError(response);
-
 		data = [...data, ...response.data];
+
+		if (!!max && data.length >= max) return data.slice(0, max);
 	}
 	while(next = response.pagination.links.find(link => link.rel === 'next')?.uri);
 
