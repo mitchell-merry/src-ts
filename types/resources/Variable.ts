@@ -1,5 +1,12 @@
 import { RelLink } from "../other";
 
+/**
+ * https://github.com/speedruncomorg/api/blob/master/version1/variables.md
+ * 
+ * Variables are custom criteria to distinguish between [runs](https://github.com/speedruncomorg/api/blob/master/version1/runs.md) done in the same [category](https://github.com/speedruncomorg/api/blob/master/version1/categories.md) or [level](https://github.com/speedruncomorg/api/blob/master/version1/levels.md). The speed in Mario Kart games (which can be 50cc, 100cc or 150cc) is an example for a variable that has 3 possible values.
+ * 
+ * Variables are defined per-game and can be applicable to either all runs for this game or just full-game or individual-level (IL) runs. Variables can also be restricted to a category.
+ */
 export interface Variable {
 	/** The id of the variable. */
 	id: string;

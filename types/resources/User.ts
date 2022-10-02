@@ -1,5 +1,10 @@
 import { Asset, Link, Names, NullableAsset, RelLink } from "../other";
 
+/**
+ * https://github.com/speedruncomorg/api/blob/master/version1/users.md
+ * 
+ * Users are the individuals who have registered an account on speedrun.com. Users submit (their) [runs](https://github.com/speedruncomorg/api/blob/master/version1/runs.md) and moderate [games](https://github.com/speedruncomorg/api/blob/master/version1/games.md), besides other things that are not covered by this API (like writing posts in the forums).
+ */
 export interface User {
 	/** The id of the user */
 	id: string;

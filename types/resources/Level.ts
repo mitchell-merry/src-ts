@@ -3,6 +3,11 @@ import { Data, RelLink } from "../other";
 import { Category } from "./Category";
 import { Variable } from "./Variable";
 
+/**
+ * https://github.com/speedruncomorg/api/blob/master/version1/levels.md
+ * 
+ * Levels are the stages/worlds/maps within a game. Not all [games](https://github.com/speedruncomorg/api/blob/master/version1/games.md) have levels.
+ */
 export type Level<Embed extends string = ""> = {
 	/** The id of the level. */
 	id: string;

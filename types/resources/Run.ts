@@ -6,6 +6,11 @@ import { Level } from "./Level";
 import { Platform, Region } from "./other";
 import { Guest, User } from "./User";
 
+/**
+ * https://github.com/speedruncomorg/api/blob/master/version1/runs.md
+ * 
+ * Runs are the meat of our business at speedrun.com. A run is a finished attempt to play a [game](https://github.com/speedruncomorg/api/blob/master/version1/games.md), adhering to that game's ruleset. Invalid attempts (use of cheats etc) or obsolete runs (the ones superseded by a better time by the same player(s) in the same ruleset) still count as runs and are available via API.
+ */
 export type Run<Embed extends string = ""> = {
 	/** ID values can vary in length, and uniquely represent a run. */
 	id: string;
