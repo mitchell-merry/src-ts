@@ -7,11 +7,13 @@ import { get, GetOptions, shimData } from "../http";
  * 
  * @param game The game's ID or abbreviation.
  * @param category The category's ID or abbreviation.
+ * @param variables A mapping of variable IDs to values to filter the runs on the leaderboard.
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getLeaderboard<Embed extends string = "">(game: string, category: string, queryParams?: LeaderboardParams, options?: GetOptions): Promise<Leaderboard<Embed>> {
-	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/category/${category}`, queryParams).then(shimData);
+ export async function getLeaderboard<Embed extends string = "">(game: string, category: string, variables: Record<string, string> = {}, queryParams?: LeaderboardParams, options?: GetOptions): Promise<Leaderboard<Embed>> {
+	const varQueryParams = Object.fromEntries(Object.entries(variables).map(([variable, value]) => [`var-${variable}`, value]));
+	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/category/${category}`, { ...varQueryParams, ...queryParams }).then(shimData);
 }
 
 /** This will return a individual-level leaderboard. The same filtering options as with full-game leaderboards apply.
@@ -22,9 +24,11 @@ import { get, GetOptions, shimData } from "../http";
  * @param game The game's ID or abbreviation.
  * @param level The level's ID or abbreviation.
  * @param category The category's ID or abbreviation.
+ * @param variables A mapping of variable IDs to values to filter the runs on the leaderboard.
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getLevelLeaderboard<Embed extends string = "">(game: string, level: string, category: string, queryParams?: LeaderboardParams, options?: GetOptions): Promise<Leaderboard<Embed>> {
-	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/level/${level}/${category}`, queryParams, options).then(shimData);
+export async function getLevelLeaderboard<Embed extends string = "">(game: string, level: string, variables: Record<string, string> = {}, category: string, queryParams?: LeaderboardParams, options?: GetOptions): Promise<Leaderboard<Embed>> {
+	const varQueryParams = Object.fromEntries(Object.entries(variables).map(([variable, value]) => [`var-${variable}`, value]));
+	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/level/${level}/${category}`, { ...varQueryParams, ...queryParams }, options).then(shimData);
 }
