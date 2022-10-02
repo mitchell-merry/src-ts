@@ -57,7 +57,8 @@ export async function get<Response, Err extends ResponseError = ResponseError>(u
 	const { cache, ...opts } = options;
 	// https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
 	// to prevent caching
-	if(!!cache) queryParams["__cache__"] = (Math.random() + 1).toString(36).substring(7);
+	// undefined/null should be treated as true here!
+	if(cache === false) queryParams["__cache__"] = (Math.random() + 1).toString(36).substring(7);
 	
 	if(Object.entries(queryParams).length != 0) {
 		url += `?${Object.entries(queryParams).map(([k, v]) => `${k}=${v}`).join('&')}`;
