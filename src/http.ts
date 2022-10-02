@@ -85,7 +85,7 @@ export async function http<Response, Err extends ResponseError = ResponseError>(
 export async function rawHTTP<Response, Err extends ResponseError = ResponseError>(url: string, method: HTTPType, options: HTTPOptions = {}) {
 	if (options.log ?? true) console.log(`[src-ts] '${method.toUpperCase()}'ing ${url}...`);
 
-	const body = method === 'get' ? undefined : JSON.stringify(options.body ?? {});
+	const body = (method === 'get' || !options.body) ? undefined : JSON.stringify(options.body);
 
 	const res = await bn.schedule(() => fetch(url, {
 		method,
