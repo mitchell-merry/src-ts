@@ -32,3 +32,15 @@ export async function getLevelLeaderboard<Embed extends string = "">(game: strin
 	const varQueryParams = Object.fromEntries(Object.entries(variables).map(([variable, value]) => [`var-${variable}`, value]));
 	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/level/${level}/${category}`, { ...varQueryParams, ...queryParams }, options).then(shimData);
 }
+
+/** This will return a leaderboard from a LeaderboardPartial. This function wraps `getLeaderboard` and `getLevelLeaderboard`.
+ * 
+ * @param partial An object representing a leaderboard.
+ * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
+ */
+export async function getLeaderboardFromPartial<Embed extends string = "">(partial: LeaderboardPartial, queryParams?: LeaderboardParams, options?: GetOptions) {
+	return partial.level
+	    ? getLevelLeaderboard<Embed>(partial.game, partial.level, partial.category, partial.variables, queryParams, options)
+	    : getLeaderboard<Embed>(partial.game, partial.category, partial.variables, queryParams, options);
+}
