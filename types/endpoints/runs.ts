@@ -1,5 +1,5 @@
 import { Callback, Embed, Paginated, PaginatedParams, SortParams, ResponseError } from "./util";
-import { Run } from "../resources";
+import { GuestRel, PlayerGuestPartial, PlayerPartial, PlayerPartialUri, PlayerUserPartial, Run, UserRel } from "../resources";
 import { Data } from "../other";
 
 /** GET /runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runs */
@@ -31,13 +31,12 @@ export type RunsParams = {
 export type RunResponse<E extends string = ""> = Data<Run<E>>;
 export type RunParams = Embed & Callback;
 
-export type SendPlayer = {
-	rel: "user";
-	id: string;
-} | {
-	rel: "guest";
-	name: string;
-};
+/** @deprecated Use `PlayerUserPartial` instead. */
+export type SendUser = PlayerUserPartial;
+/** @deprecated Use `PlayerGuestPartial` instead. */
+export type SendGuest = PlayerGuestPartial;
+/** @deprecated Use `PlayerPartial` instead. */
+export type SendPlayer = PlayerPartial;
 
 export interface PostRun {
 	category: string;
@@ -52,7 +51,7 @@ export interface PostRun {
 		realtime_noloads?: number;
 		ingame?: number;
 	};
-	players?: SendPlayer[];
+	players?: PlayerPartial[];
 	emulated?: boolean;
 	video?: string;
 	comment?: string;

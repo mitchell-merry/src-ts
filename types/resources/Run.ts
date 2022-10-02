@@ -39,7 +39,7 @@ export type Run<Embed extends string = ""> = {
 	status: RunStatus;
 	/** The list of players that participated in the run. Each player can either be a registered user (in that case, the `rel` value is `user` and there is an `id` present) or a guest of whom we only have a name, but no user account  (in that case, `rel` is `guest` and the `name` is present). In both cases, a `uri` is present that links to the player resource.
 	 *  Alternatively, when embedded, a list of Player (User / Guest) resources. These resources contain the `rel` object as well. */
-	players: Embeddable<Embed, "players", PlayerPartial[], Data<Player[]>>;
+	players: Embeddable<Embed, "players", PlayerPartialUri[], Data<Player[]>>;
 	/** When the run was played. Shows up in the "Played on" section. Not all runs have a known date, so unfortunately this sometimes is `null`. */
 	date: string | null;
 	/** The date and time when the run was added on speedrun.com. Can be `null` for old runs. */
@@ -115,29 +115,30 @@ export type GuestRel = {
 export type PlayerUserPartial = UserRel & {
 	/** The id of the user on speedrun.com. */
 	id: string;
-	/** A link to the player's resource in the speedrun.com API. */
-	uri: string;
 }
-/** @deprecated - Use PlayerUserPartial instead! This is an alias for it now. */
-export type RunPlayerUser = PlayerUserPartial;
 
 export type PlayerGuestPartial = GuestRel & {
 	/** The name of the guest on speedrun.com. */
 	name: string;
-	uri: string;
 }
-/** @deprecated - Use PlayerGuestPartial instead! This is an alias for it now. */
-export type RunPlayerGuest = PlayerGuestPartial;
 
 export type PlayerPartial = PlayerUserPartial | PlayerGuestPartial;
-/** @deprecated - Use PlayerPartial instead! This is an alias for it now. */
-export type RunPlayer = PlayerPartial;
+export type PlayerPartialUri = PlayerPartial & {
+	/** A link to the player's resource in the speedrun.com API. */
+	uri: string;
+}
 
 export type PlayerUser = UserRel & User;
 export type PlayerGuest = GuestRel & Guest;
 
 export type Player = PlayerUser | PlayerGuest;
 
+/** @deprecated - Use PlayerGuestPartial instead! This is an alias for it now. */
+export type RunPlayerGuest = PlayerGuestPartial;
+/** @deprecated - Use PlayerUserPartial instead! This is an alias for it now. */
+export type RunPlayerUser = PlayerUserPartial;
+/** @deprecated - Use PlayerPartial instead! This is an alias for it now. */
+export type RunPlayer = PlayerPartialUri;
 
 export interface RunSystem {
 	/** The id of the platform played. */
