@@ -8,7 +8,7 @@ import { Variable } from "./Variable";
  * 
  * Categories are the different rulesets for speedruns.
  */
- export type Category<Embed extends string = "", CType = CategoryType> = {
+ export type Category<Embed extends string = "", CType extends CategoryType = CategoryType> = {
 	/** ID values can vary in length, and uniquely represent a category. */
 	id: string;
 	/** The name of the category. */
@@ -20,7 +20,7 @@ import { Variable } from "./Variable";
 	 */
 	weblink: string;
 	/** Either "per-game" (for full game categories) or "per-level" (for level categories). */
-	type: CategoryType;
+	type: CType;
 	/**  Freeform text with some basic, undocumented speedrun.com markup. */
 	rules: string | null;
 	/** The number of participants per run in this category. */
