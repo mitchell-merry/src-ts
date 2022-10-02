@@ -43,7 +43,18 @@ export interface SortParams<orderby> {
 // comma-separated list of embeds. Unfortunately, there are 11 options
 // for Game and thus I can't support it.
 export interface Embed {
-	/** embed resources into the response - https://github.com/speedruncomorg/api/blob/master/version1/embedding.md */
+	/** embed resources into the response - https://github.com/speedruncomorg/api/blob/master/version1/embedding.md 
+	 * 
+	 * (TypeScript): Make sure to specify the "Embed" parameter on resources that can embed as well to get the correct type! (Available on types and all function endpoints).
+	 * 
+	 * Example:
+	 * 
+	 * ```ts
+	 * const game = SRC.getGame<"categories">("wys", { embed: "categories" });
+	 * // Type: Game<"categories">
+	 * game.categories; // available
+	 * ```
+	*/
 	embed?: string;
 }
 
