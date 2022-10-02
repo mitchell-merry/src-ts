@@ -1,5 +1,5 @@
 import { User, UserResponse, UsersParams, UsersResponse } from "../../types";
-import { get, paginatedGet, shimData } from "../http";
+import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "../http";
 
 /** This will retrieve a single user, identified by their ID. Instead of the ID, the username can be used as well
  * (but this is only recommended for quick lookups, as usernames can change over time), so GET /users/Pac is possible
@@ -11,8 +11,8 @@ import { get, paginatedGet, shimData } from "../http";
  * 
  * @param user The ID or username of the respective user.
  */
- export async function getUser(user: string): Promise<User> {
-	return get<UserResponse>(`/users/${user}`).then(shimData);
+ export async function getUser(user: string, options?: GetOptions): Promise<User> {
+	return get<UserResponse>(`/users/${user}`, {}, options).then(shimData);
 }
 
 /** This will return a page of users, with the pagination data.
@@ -22,9 +22,10 @@ import { get, paginatedGet, shimData } from "../http";
  * GET /users  https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-users
  * 
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
- export async function getUsers(queryParams?: UsersParams): Promise<UsersResponse> {
-	return get<UsersResponse>(`/users`, queryParams);
+ export async function getUsers(queryParams?: UsersParams, options?: GetOptions): Promise<UsersResponse> {
+	return get<UsersResponse>(`/users`, queryParams, options);
 }
 
 /** This will return a list of users.
@@ -34,7 +35,8 @@ import { get, paginatedGet, shimData } from "../http";
  * GET /users  https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-users
  * 
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
-export async function getAllUsers(queryParams?: UsersParams): Promise<User[]> {
-	return paginatedGet<UsersResponse>(`/users`, queryParams);
+export async function getAllUsers(queryParams?: UsersParams, options?: PaginatedGetOptions): Promise<User[]> {
+	return paginatedGet<UsersResponse>(`/users`, queryParams, options);
 }

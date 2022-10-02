@@ -1,5 +1,5 @@
 import { DeleteRunResponse, PostRun, PostRunResponse, PutRunStatus, PutRunStatusResponse, Run, RunError, RunParams, RunResponse, RunsParams, RunsResponse } from "../../types";
-import { get, http, paginatedGet, shimData } from "../http";
+import { get, GetOptions, http, paginatedGet, PaginatedGetOptions, shimData } from "../http";
 import SRCError from "../SRCError";
 
 /** This will return a list of all runs.
@@ -7,9 +7,10 @@ import SRCError from "../SRCError";
  * GET /runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runs
  * 
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
- export async function getAllRuns<Embed extends string = "">(queryParams?: RunsParams): Promise<Run<Embed>[]> {
-	return paginatedGet<RunsResponse<Embed>>(`/runs`, queryParams);
+ export async function getAllRuns<Embed extends string = "">(queryParams?: RunsParams, options?: PaginatedGetOptions): Promise<Run<Embed>[]> {
+	return paginatedGet<RunsResponse<Embed>>(`/runs`, queryParams, options);
 }
 
 /** This will return a single run based on id.
@@ -18,9 +19,10 @@ import SRCError from "../SRCError";
  * 
  * @param id ID of the run to get.
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
- export async function getRun<Embed extends string = "">(id: string, queryParams?: RunParams): Promise<Run<Embed>> {
-	return get<RunResponse<Embed>>(`/runs/${id}`, queryParams).then(shimData);
+ export async function getRun<Embed extends string = "">(id: string, queryParams?: RunParams, options?: GetOptions): Promise<Run<Embed>> {
+	return get<RunResponse<Embed>>(`/runs/${id}`, queryParams, options).then(shimData);
 }
 
 /** Submit a run to speedrun.com. Only super moderators can auto-verify.

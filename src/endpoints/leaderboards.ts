@@ -1,5 +1,5 @@
 import { Leaderboard, LeaderboardParams, LeaderboardResponse } from "../../types";
-import { get, shimData } from "../http";
+import { get, GetOptions, shimData } from "../http";
 
 /** This will return a full-game leaderboard. The game and category can be either IDs (e.g. xldev513) or the respective abbreviations.
  * 
@@ -8,8 +8,9 @@ import { get, shimData } from "../http";
  * @param game The game's ID or abbreviation.
  * @param category The category's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
- export async function getLeaderboard<Embed extends string = "">(game: string, category: string, queryParams?: LeaderboardParams): Promise<Leaderboard<Embed>> {
+ export async function getLeaderboard<Embed extends string = "">(game: string, category: string, queryParams?: LeaderboardParams, options?: GetOptions): Promise<Leaderboard<Embed>> {
 	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/category/${category}`, queryParams).then(shimData);
 }
 
@@ -22,7 +23,8 @@ import { get, shimData } from "../http";
  * @param level The level's ID or abbreviation.
  * @param category The category's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
-export async function getLevelLeaderboard<Embed extends string = "">(game: string, level: string, category: string, queryParams?: LeaderboardParams): Promise<Leaderboard<Embed>> {
-	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/level/${level}/${category}`, queryParams).then(shimData);
+export async function getLevelLeaderboard<Embed extends string = "">(game: string, level: string, category: string, queryParams?: LeaderboardParams, options?: GetOptions): Promise<Leaderboard<Embed>> {
+	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/level/${level}/${category}`, queryParams, options).then(shimData);
 }
