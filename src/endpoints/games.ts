@@ -1,5 +1,6 @@
 import { Category, CategoryType, Game, GameCategoriesParams, GameCategoriesResponse, GameDerivedGamesParams, GameDerivedGamesResponse, GameLevelsParams, GameLevelsResponse, GameParams, GameRecordsParams, GameRecordsResponse, GameResponse, GamesParams, GamesResponse, GameVariablesParams, GameVariablesResponse, Leaderboard, Level, Variable } from "../../types";
 import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "../http";
+import { categoryIsFullGame } from "./categories";
 
 /** This will return a page of games, with the pagination data.
  *
@@ -39,7 +40,7 @@ export async function getGame<Embed extends string = "">(game: string, queryPara
 	return get<GameResponse<Embed>>(`/games/${game}`, queryParams, options).then(shimData);
 }
 
-/** This will retrieve all categories of a given game (the `id` can be either the game ID or its abbreviation). If you need only those applicable to certain levels, use `getLevelCategories`.
+/** This will retrieve all categories of a given game (the `id` can be either the game ID or its abbreviation). If you need only those applicable to certain levels, use `getLevelCategories`. If you want all full-game categories of a game, use `getFullGameCategories`.
  * 
  * GET /games/{id}/categories https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidcategories
  * 
@@ -47,8 +48,20 @@ export async function getGame<Embed extends string = "">(game: string, queryPara
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getGameCategories<Embed extends string = "">(game: string, queryParams?: GameCategoriesParams, options?: GetOptions): Promise<Category<Embed, CategoryType>[]> {
+export async function getGameCategories<Embed extends string = "">(game: string, queryParams?: GameCategoriesParams, options?: GetOptions): Promise<Category<Embed>[]> {
 	return get<GameCategoriesResponse<Embed>>(`/games/${game}/categories`, queryParams, options).then(shimData);
+}
+
+/** This will retrieve all full-game categories of a given game (the `id` can be either the game ID or its abbreviation). If you need only those applicable to certain levels, use `getLevelCategories`. If you need all categories of a game, use `getGameCategories`.
+ * 
+ * GET /games/{id}/categories https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidcategories
+ * 
+ * @param game The game's ID or abbreviation.
+ * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
+ */
+ export async function getFullGameCategories<Embed extends string = "">(game: string, queryParams?: GameCategoriesParams, options?: GetOptions): Promise<Category<Embed, "per-game">[]> {
+	return getGameCategories<Embed>(game, queryParams, options).then(l => l.filter(categoryIsFullGame));
 }
 
 /** This will retrieve all levels of a given game (the `id` can be either the game ID or its abbreviation).

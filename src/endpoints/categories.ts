@@ -38,6 +38,6 @@ export async function getCategoryRecords<Embed extends string = "">(category: st
 }
 
 /** Type guard for category type */
-export function categoryIsFullGame(category: Category): category is Category & { type: 'per-game' } {
+export function categoryIsFullGame<E extends string>(category: Category<E>): category is Category<E, "per-game"> {
 	return category.type === 'per-game';
 }
