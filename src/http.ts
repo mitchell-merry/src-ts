@@ -16,21 +16,29 @@ const bn = new Bottleneck({
 });
 
 export type HTTPOptions = {
+	/** Body to be sent in the HTTP request to the server, as stringified JSON. */
 	body?: any;
+	/** Additional headers to be sent in the request.
+	 * 
+	 * By default, the following headers are sent. You can override any of them if you choose.
+	 * * `Host`: `speedrun.com`
+	 * * `Content-Type`: `application/json`
+	 * * `User-Agent`: `src-ts/<VERSION>`
+	 */
 	headers?: Record<string, string>;
-	/** Whether or not to log the HTTP request in console. */
+	/** Whether or not to log the HTTP request in console. Defaults to true. */
 	log?: boolean;
 }
 
 export type HTTPType = 'get' | 'post' | 'put' | 'delete';
 
 export type GetOptions = HTTPOptions & {
-	/** Whether or not to allow a cached response */
+	/** Whether or not to allow a cached response. Defaults to false.*/
 	cache?: boolean;
 };
 
 export type PaginatedGetOptions = GetOptions & {
-	/** The max number of elements to fetch. */
+	/** The max number of elements to fetch. Defaults to all elements.*/
 	max?: number;
 };
 
