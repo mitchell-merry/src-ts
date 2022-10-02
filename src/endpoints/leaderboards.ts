@@ -1,4 +1,4 @@
-import { Leaderboard, LeaderboardParams, LeaderboardResponse } from "../../types";
+import { Leaderboard, LeaderboardParams, LeaderboardPartial, LeaderboardResponse } from "../../types";
 import { get, GetOptions, shimData } from "../http";
 
 /** This will return a full-game leaderboard. The game and category can be either IDs (e.g. xldev513) or the respective abbreviations.
