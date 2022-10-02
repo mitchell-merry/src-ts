@@ -2,6 +2,7 @@ import Bottleneck from 'bottleneck';
 import fetch from 'node-fetch';
 import { Data, Paginated, PaginatedData, PaginatedParams, ResponseError } from '../types';
 import SRCError from './SRCError';
+const VERSION = require('root-require')('package.json').version;
 
 const BASE_URL = "https://www.speedrun.com/api/v1";
 
@@ -80,7 +81,7 @@ export async function rawHTTP<Response, Err extends ResponseError = ResponseErro
 		headers: {
 			'Host': 'www.speedrun.com',
 			'Content-Type': 'application/json',
-			'User-Agent': `src-ts/1.5.0`,
+			'User-Agent': `src-ts/${VERSION}`,
 			...options.headers
 		},
 		body: JSON.stringify(options.body)
