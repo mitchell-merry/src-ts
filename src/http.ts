@@ -14,18 +14,19 @@ const bn = new Bottleneck({
 	minTime: 333
 });
 
-type HTTPOptions = {
+export type HTTPOptions = {
 	body?: any,
 	headers?: Record<string, string>
 }
 
-type HTTPType = 'get' | 'post' | 'put' | 'delete';
+export type HTTPType = 'get' | 'post' | 'put' | 'delete';
 
-type GetOptions = HTTPOptions & {
+export type GetOptions = HTTPOptions & {
 	/** Whether or not to allow a cached response */
 	cache?: boolean;
 };
-type PaginatedGetOptions = GetOptions & {
+
+export type PaginatedGetOptions = GetOptions & {
 	/** The max number of elements to fetch. */
 	max?: number;
 };
