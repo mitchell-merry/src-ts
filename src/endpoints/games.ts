@@ -1,5 +1,5 @@
 import { Category, CategoryType, Game, GameCategoriesParams, GameCategoriesResponse, GameDerivedGamesParams, GameDerivedGamesResponse, GameLevelsParams, GameLevelsResponse, GameParams, GameRecordsParams, GameRecordsResponse, GameResponse, GamesParams, GamesResponse, GameVariablesParams, GameVariablesResponse, Leaderboard, Level, Variable } from "../../types";
-import { get, paginatedGet, shimData } from "../http";
+import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "../http";
 
 /** This will return a page of games, with the pagination data.
  *
@@ -8,9 +8,10 @@ import { get, paginatedGet, shimData } from "../http";
  * GET /games https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-games
  * 
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
 */
-export async function getGames<Embed extends string = "">(queryParams?: GamesParams): Promise<GamesResponse<Embed>> {
-	return get<GamesResponse<Embed>>(`/games`, queryParams);
+export async function getGames<Embed extends string = "">(queryParams?: GamesParams, options?: GetOptions): Promise<GamesResponse<Embed>> {
+	return get<GamesResponse<Embed>>(`/games`, queryParams, options);
 }
 
 /** This will return a list of all games.
@@ -20,9 +21,10 @@ export async function getGames<Embed extends string = "">(queryParams?: GamesPar
  * GET /games https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-games
  * 
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
 */
-export async function getAllGames<Embed extends string = "">(queryParams?: GamesParams): Promise<Game<Embed>[]> {
-	return paginatedGet<GamesResponse<Embed>>(`/games`, queryParams);
+export async function getAllGames<Embed extends string = "">(queryParams?: GamesParams, options?: PaginatedGetOptions): Promise<Game<Embed>[]> {
+	return paginatedGet<GamesResponse<Embed>>(`/games`, queryParams, options);
 }
 
 /** This will retrieve a single game, identified by its ID. Instead of the game's ID, you can also specify the game's abbreviation.
@@ -31,9 +33,10 @@ export async function getAllGames<Embed extends string = "">(queryParams?: Games
  * 
  * @param game The game's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
-export async function getGame<Embed extends string = "">(game: string, queryParams?: GameParams): Promise<Game<Embed>> {
-	return get<GameResponse<Embed>>(`/games/${game}`, queryParams).then(shimData);
+export async function getGame<Embed extends string = "">(game: string, queryParams?: GameParams, options?: GetOptions): Promise<Game<Embed>> {
+	return get<GameResponse<Embed>>(`/games/${game}`, queryParams, options).then(shimData);
 }
 
 /** This will retrieve all categories of a given game (the `id` can be either the game ID or its abbreviation). If you need only those applicable to certain levels, use getGameLevels.
@@ -42,9 +45,10 @@ export async function getGame<Embed extends string = "">(game: string, queryPara
  * 
  * @param game The game's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
-export async function getGameCategories<Embed extends string = "">(game: string, queryParams?: GameCategoriesParams): Promise<Category<Embed, CategoryType>[]> {
-	return get<GameCategoriesResponse<Embed>>(`/games/${game}/categories`, queryParams).then(shimData);
+export async function getGameCategories<Embed extends string = "">(game: string, queryParams?: GameCategoriesParams, options?: GetOptions): Promise<Category<Embed, CategoryType>[]> {
+	return get<GameCategoriesResponse<Embed>>(`/games/${game}/categories`, queryParams, options).then(shimData);
 }
 
 /** This will retrieve all levels of a given game (the `id` can be either the game ID or its abbreviation).
@@ -53,9 +57,10 @@ export async function getGameCategories<Embed extends string = "">(game: string,
  * 
  * @param game The game's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
-export async function getGameLevels<Embed extends string = "">(game: string, queryParams?: GameLevelsParams): Promise<Level<Embed>[]> {
-	return get<GameLevelsResponse<Embed>>(`/games/${game}/levels`, queryParams).then(shimData);
+export async function getGameLevels<Embed extends string = "">(game: string, queryParams?: GameLevelsParams, options?: GetOptions): Promise<Level<Embed>[]> {
+	return get<GameLevelsResponse<Embed>>(`/games/${game}/levels`, queryParams, options).then(shimData);
 }
 
 /** This will retrieve all variables of a given game (the `id` can be either the game ID or its abbreviation).
@@ -64,9 +69,10 @@ export async function getGameLevels<Embed extends string = "">(game: string, que
  * 
  * @param game The game's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
-export async function getGameVariables(game: string, queryParams?: GameVariablesParams): Promise<Variable[]> {
-	return get<GameVariablesResponse>(`/games/${game}/variables`, queryParams).then(shimData);
+export async function getGameVariables(game: string, queryParams?: GameVariablesParams, options?: GetOptions): Promise<Variable[]> {
+	return get<GameVariablesResponse>(`/games/${game}/variables`, queryParams, options).then(shimData);
 }
 
 /** This will retrieve all games that have the given game (the `id` can be either the game ID or its abbreviation) set as their base game.
@@ -75,9 +81,10 @@ export async function getGameVariables(game: string, queryParams?: GameVariables
  * 
  * @param game The game's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
-export async function getGameDerivedGames<Embed extends string = "">(game: string, queryParams?: GameDerivedGamesParams): Promise<Game<Embed>[]> {
-	return get<GameDerivedGamesResponse<Embed>>(`/games/${game}/derived-games`, queryParams).then(shimData);
+export async function getGameDerivedGames<Embed extends string = "">(game: string, queryParams?: GameDerivedGamesParams, options?: GetOptions): Promise<Game<Embed>[]> {
+	return get<GameDerivedGamesResponse<Embed>>(`/games/${game}/derived-games`, queryParams, options).then(shimData);
 }
 
 /** This will retrieve the records (first three places) for every (category,level) combination of the given game. 
@@ -86,7 +93,8 @@ export async function getGameDerivedGames<Embed extends string = "">(game: strin
  * 
  * @param game The game's ID or abbreviation.
  * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
  */
-export async function getGameRecords<Embed extends string = "">(game: string, queryParams?: GameRecordsParams): Promise<Leaderboard<Embed>[]> {
-	return get<GameRecordsResponse<Embed>>(`/games/${game}/records`, queryParams).then(shimData);
+export async function getGameRecords<Embed extends string = "">(game: string, queryParams?: GameRecordsParams, options?: GetOptions): Promise<Leaderboard<Embed>[]> {
+	return get<GameRecordsResponse<Embed>>(`/games/${game}/records`, queryParams, options).then(shimData);
 }
