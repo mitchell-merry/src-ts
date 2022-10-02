@@ -43,7 +43,7 @@ export interface SortParams<orderby> {
 // comma-separated list of embeds. Unfortunately, there are 11 options
 // for Game and thus I can't support it.
 export interface Embed {
-	/** embed resources into the response - https://github.com/speedruncomorg/api/blob/master/version1/embedding.md 
+	/** Embed resources into the response - https://github.com/speedruncomorg/api/blob/master/version1/embedding.md 
 	 * 
 	 * (TypeScript): Make sure to specify the "Embed" parameter on resources that can embed as well to get the correct type! (Available on types and all function endpoints).
 	 * 
@@ -59,13 +59,15 @@ export interface Embed {
 }
 
 export interface ResponseError {
+	/** The HTTP status code of the response. */
 	status: number;
+	/** The provided message for why the error occured. */
 	message: string;
 	links: [ RelLink<"support">, RelLink<"report-issues"> ];
 }
 
 export interface Callback {
-	/** retrieve the response as JavaScript instead of JSON (for example, do ?callback=foo to get the data as a foo({....}) function call) */
+	/** Retrieve the response as JavaScript instead of JSON (for example, do `?callback=foo` to get the data as a `foo({....})` function call) */
 	callback?: boolean;
 }
 
