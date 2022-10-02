@@ -16,8 +16,10 @@ const bn = new Bottleneck({
 });
 
 export type HTTPOptions = {
-	body?: any,
-	headers?: Record<string, string>
+	body?: any;
+	headers?: Record<string, string>;
+	/** Whether or not to log the HTTP request in console. */
+	log?: boolean;
 }
 
 export type HTTPType = 'get' | 'post' | 'put' | 'delete';
@@ -59,8 +61,7 @@ export async function get<Response, Err extends ResponseError = ResponseError>(u
 	const { cache, ...opts } = options;
 	// https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
 	// to prevent caching
-	// undefined/null should be treated as true here!
-	if(cache === false) queryParams["__cache__"] = (Math.random() + 1).toString(36).substring(7);
+	if(cache ?? false) queryParams["__cache__"] = (Math.random() + 1).toString(36).substring(7);
 	
 	if(Object.entries(queryParams).length != 0) {
 		url += `?${Object.entries(queryParams).map(([k, v]) => `${k}=${v}`).join('&')}`;
@@ -73,8 +74,8 @@ export async function http<Response, Err extends ResponseError = ResponseError>(
 	return rawHTTP<Response, Err>(`${BASE_URL}${url}`, method, { ...options, headers: { 'X-API-Key': key, ...options.headers } })
 }
 
-export async function rawHTTP<Response, Err extends ResponseError = ResponseError>(url: string, method: HTTPType, options: HTTPOptions = { headers: {}, body: {} }) {
-	console.log(`[src-ts] '${method.toUpperCase()}'ing ${url}...`);
+export async function rawHTTP<Response, Err extends ResponseError = ResponseError>(url: string, method: HTTPType, options: HTTPOptions = {}) {
+	if (options.log ?? true) console.log(`[src-ts] '${method.toUpperCase()}'ing ${url}...`);
 
 	const res = await bn.schedule(() => fetch(url, {
 		method,
@@ -82,9 +83,9 @@ export async function rawHTTP<Response, Err extends ResponseError = ResponseErro
 			'Host': 'www.speedrun.com',
 			'Content-Type': 'application/json',
 			'User-Agent': `src-ts/${VERSION}`,
-			...options.headers
+			...(options.headers ?? {})
 		},
-		body: JSON.stringify(options.body)
+		body: JSON.stringify(options.body ?? {})
 	})).then(res => res.json()) as Response | Err;
 
 	if(isError(res)) throw new SRCError(res);
