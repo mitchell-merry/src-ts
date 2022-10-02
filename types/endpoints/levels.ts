@@ -7,7 +7,7 @@ export type LevelResponse<E extends string = ""> = Data<Level<E>>;
 export type LevelParams = Embed & Callback;
 
 /** GET /levels/{id}/categories https://github.com/speedruncomorg/api/blob/master/version1/levels.md#get-levelsidcategories */
-export type LevelCategoriesResponse<E extends string = ""> = Data<Category<E>[]>;
+export type LevelCategoriesResponse<E extends string = ""> = Data<Category<E, "per-level">[]>;
 export type LevelCategoriesParams = {
 	/** when given, filters (out) misc categories */
 	miscellaneous?: boolean;

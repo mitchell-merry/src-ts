@@ -39,7 +39,7 @@ export async function getGame<Embed extends string = "">(game: string, queryPara
 	return get<GameResponse<Embed>>(`/games/${game}`, queryParams, options).then(shimData);
 }
 
-/** This will retrieve all categories of a given game (the `id` can be either the game ID or its abbreviation). If you need only those applicable to certain levels, use getGameLevels.
+/** This will retrieve all categories of a given game (the `id` can be either the game ID or its abbreviation). If you need only those applicable to certain levels, use `getLevelCategories`.
  * 
  * GET /games/{id}/categories https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidcategories
  * 
