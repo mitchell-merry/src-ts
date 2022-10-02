@@ -16,7 +16,7 @@ const bn = new Bottleneck({
 });
 
 export type HTTPOptions = {
-	/** Body to be sent in the HTTP request to the server, as stringified JSON. */
+	/** Body to be sent in the HTTP request to the server, as stringified JSON. Ignored on GET requests! */
 	body?: any;
 	/** Additional headers to be sent in the request.
 	 * 
@@ -32,7 +32,7 @@ export type HTTPOptions = {
 
 export type HTTPType = 'get' | 'post' | 'put' | 'delete';
 
-export type GetOptions = HTTPOptions & {
+export type GetOptions = Omit<HTTPOptions, 'body'> & {
 	/** Whether or not to allow a cached response. Defaults to false.*/
 	cache?: boolean;
 };
@@ -85,6 +85,8 @@ export async function http<Response, Err extends ResponseError = ResponseError>(
 export async function rawHTTP<Response, Err extends ResponseError = ResponseError>(url: string, method: HTTPType, options: HTTPOptions = {}) {
 	if (options.log ?? true) console.log(`[src-ts] '${method.toUpperCase()}'ing ${url}...`);
 
+	const body = method === 'get' ? undefined : JSON.stringify(options.body ?? {});
+
 	const res = await bn.schedule(() => fetch(url, {
 		method,
 		headers: {
@@ -93,7 +95,7 @@ export async function rawHTTP<Response, Err extends ResponseError = ResponseErro
 			'User-Agent': `src-ts/${VERSION}`,
 			...(options.headers ?? {})
 		},
-		body: JSON.stringify(options.body ?? {})
+		body
 	})).then(res => res.json()) as Response | Err;
 
 	if(isError(res)) throw new SRCError(res);
