@@ -39,13 +39,13 @@ export async function paginatedGet<T extends Paginated<any>>(url: string, queryP
 	let data: PaginatedData<T>[] = [];
 	let next, response;
 	const { max, ...getOpts } = options;
-	const { cache, ...opts } = getOpts;
+	const { cache, ...httpOpts } = getOpts;
 
 	if (max && max < 1) return [];
 
 	do {
 		response = next 
-			? await rawHTTP<T>(next, 'get', opts)
+			? await rawHTTP<T>(next, 'get', httpOpts)
 			: await get<T>(url, queryParams, getOpts); // initial request
 		
 		data = [...data, ...response.data];
