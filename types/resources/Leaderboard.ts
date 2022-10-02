@@ -8,6 +8,11 @@ import { Run } from "./Run";
 import { User } from "./User";
 import { Variable } from "./Variable";
 
+/**
+ * https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md
+ * 
+ * Leaderboards contain non-obsolete [runs](https://github.com/speedruncomorg/api/blob/master/version1/runs.md), sorted by time descending. In contrast to raw runs, leaderboards are automatically grouped according to the game/category/level rules that the moderators have defined.
+ */
 export type Leaderboard<Embed extends string = ""> = {
 	/** A link to the leaderboard on speedrun.com */
 	weblink: string;
@@ -21,8 +26,17 @@ export type Leaderboard<Embed extends string = ""> = {
 	platform: string | null;
 	/** region ID, when set. `null` otherwise */
 	region: string | null;
+	/** When null, real devices and emulators are included in `runs`. When set to a `true` value, only emulators are included, else only real devices are included.
+	 * 
+	 * (A query paramater for the `GET /leaderboards` endpoints.)
+	 */
 	emulators: boolean | null;
+	/** Whether or not only runs with a video are included.
+	 * 
+	 * (A query paramater for the `GET /leaderboards` endpoints.)
+	 */
 	"video-only": boolean;
+	/** The timing method the runs are ranked by. */
 	timing: TimingMethod;
 	/** A mapping between variable ID and value ID applicable to this leaderbord. */
 	values: Record<string, string>;
