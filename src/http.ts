@@ -15,7 +15,7 @@ const bn = new Bottleneck({
 	minTime: 333
 });
 
-export type HTTPOptions = {
+export type RawHTTPOptions = {
 	/** Body to be sent in the HTTP request to the server, as stringified JSON. Ignored on GET requests! */
 	body?: any;
 	/** Additional headers to be sent in the request.
@@ -32,7 +32,9 @@ export type HTTPOptions = {
 
 export type HTTPType = 'get' | 'post' | 'put' | 'delete';
 
-export type GetOptions = Omit<HTTPOptions, 'body'> & {
+export type HTTPOptions = Omit<RawHTTPOptions, 'body'>;
+
+export type GetOptions = HTTPOptions & {
 	/** Whether or not to allow a cached response. Defaults to false.*/
 	cache?: boolean;
 };
@@ -78,11 +80,11 @@ export async function get<Response, Err extends ResponseError = ResponseError>(u
 	return rawHTTP<Response, Err>(`${BASE_URL}${url}`, 'get', opts);
 }
 
-export async function http<Response, Err extends ResponseError = ResponseError>(url: string, method: Exclude<HTTPType, 'get'>, key: string, options: HTTPOptions = {}) {
+export async function http<Response, Err extends ResponseError = ResponseError>(url: string, method: Exclude<HTTPType, 'get'>, key: string, options: RawHTTPOptions = {}) {
 	return rawHTTP<Response, Err>(`${BASE_URL}${url}`, method, { ...options, headers: { 'X-API-Key': key, ...options.headers } })
 }
 
-export async function rawHTTP<Response, Err extends ResponseError = ResponseError>(url: string, method: HTTPType, options: HTTPOptions = {}) {
+export async function rawHTTP<Response, Err extends ResponseError = ResponseError>(url: string, method: HTTPType, options: RawHTTPOptions = {}) {
 	if (options.log ?? true) console.log(`[src-ts] '${method.toUpperCase()}'ing ${url}...`);
 
 	const body = (method === 'get' || !options.body) ? undefined : JSON.stringify(options.body);

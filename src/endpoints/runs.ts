@@ -1,5 +1,5 @@
 import { DeleteRunResponse, PostRun, PostRunResponse, PutRunStatus, PutRunStatusResponse, Run, RunError, RunParams, RunResponse, RunsParams, RunsResponse } from "../../types";
-import { get, GetOptions, http, paginatedGet, PaginatedGetOptions, shimData } from "../http";
+import { get, GetOptions, http, HTTPOptions, paginatedGet, PaginatedGetOptions, shimData } from "../http";
 import SRCError from "../SRCError";
 
 /** This will return a list of all runs.
@@ -31,9 +31,10 @@ import SRCError from "../SRCError";
  * 
  * @param run The run to submit.
  * @param key The API key of the account to submit with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
+ * @param options Options for the HTTP request itself.
 */
-export function submitRun(run: PostRun, key: string): Promise<PostRunResponse> {
-	return http<PostRunResponse, RunError>('/runs', 'post', key, { body: { run } });
+export function submitRun(run: PostRun, key: string, options: HTTPOptions = {}): Promise<PostRunResponse> {
+	return http<PostRunResponse, RunError>('/runs', 'post', key, { body: { run }, ...options });
 }
 
 /** Change the status of a run.
@@ -45,9 +46,10 @@ export function submitRun(run: PostRun, key: string): Promise<PostRunResponse> {
  * @param id The id of the run to change.
  * @param status The new status of the run.
  * @param key The API key of the account to do the action with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
+ * @param options Options for the HTTP request itself.
 */
-export async function setRunStatus(id: string, status: PutRunStatus['status'], key: string): Promise<PutRunStatusResponse> {
-	return http<PutRunStatusResponse, RunError>(`/runs/${id}/status`, 'put', key, { body: { status }});
+export async function setRunStatus(id: string, status: PutRunStatus['status'], key: string, options: HTTPOptions = {}): Promise<PutRunStatusResponse> {
+	return http<PutRunStatusResponse, RunError>(`/runs/${id}/status`, 'put', key, { body: { status }, ...options });
 }
 
 /** This method allows an authenticated user to delete a run. Regular users can only delete their
@@ -64,12 +66,13 @@ export async function setRunStatus(id: string, status: PutRunStatus['status'], k
  * 
  * @param id The id of the run to delete.
  * @param key The API key of the account to submit with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
+ * @param options Options for the HTTP request itself.
  * @param ignore500 Whether or not to ignore the 500 error (which is always returned).
 */
-export async function deleteRun(id: string, key: string, ignore500 = true): Promise<RunError | Run> {
+export async function deleteRun(id: string, key: string, options: HTTPOptions = {}, ignore500 = true): Promise<RunError | Run> {
 	try {
 		// await to catch the error
-		return await http<DeleteRunResponse>(`/runs/${id}`, 'delete', key).then(shimData);
+		return await http<DeleteRunResponse>(`/runs/${id}`, 'delete', key, options).then(shimData);
 	} catch (e) {
 		// Ignore the 500 error if it occurs (erroneous)
 		if (ignore500 && e instanceof SRCError && e.error.status === 500) return e.error as RunError;
