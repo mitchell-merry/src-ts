@@ -1,4 +1,4 @@
-import { Player, Run, User, UserLocation, Variable } from "../types";
+import { GuestRel, Leaderboard, Player, Run, User, UserLocation, UserRel, Variable } from "../types";
 
 /** Build the name of a leaderboard from the name of the game, category, and if applicable, variables and levels. */
 export function buildLeaderboardName(gameName: string, categoryName: string, variableNames: string[] = [], levelName?: string) {
@@ -26,9 +26,14 @@ export function variableIsSubcategory (variable: Variable): variable is Variable
 	return variable['is-subcategory'];
 }
 
-/** Type guard to determine if a Player object is embedded from a Leaderboard resource. */
-export function playerIsUser (player: Player): player is User & { rel: "user" } {
-	return 'id' in player;
+/** Type guard to determine if an object with a rel object is a User. */
+export function playerIsUser<T extends UserRel | GuestRel>(player: T): player is Exclude<T, GuestRel> {
+	return player.rel === 'user';
+}
+
+/** Type guard to determine if an object with a rel object is a Guest. */
+export function playerIsGuest<T extends UserRel | GuestRel>(player: T): player is Exclude<T, UserRel> {
+	return player.rel === 'guest';
 }
 
 /** Type guard to check if user.location is null or not. */
