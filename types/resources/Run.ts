@@ -127,11 +127,16 @@ export type PlayerGuestPartial = GuestRel & {
 	name: string;
 }
 
-export type PlayerPartial = PlayerUserPartial | PlayerGuestPartial;
-export type PlayerPartialUri = PlayerPartial & {
+export type PlayerURI = {
 	/** A link to the player's resource in the speedrun.com API. */
 	uri: string;
 }
+
+export type PlayerUserPartialURI = PlayerUserPartial & PlayerURI;
+export type PlayerGuestPartialURI = PlayerGuestPartial & PlayerURI;
+
+export type PlayerPartial = PlayerUserPartial | PlayerGuestPartial;
+export type PlayerPartialUri = PlayerUserPartialURI | PlayerGuestPartialURI;
 
 export type PlayerUser = UserRel & User;
 export type PlayerGuest = GuestRel & Guest;
