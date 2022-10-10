@@ -85,7 +85,7 @@ export async function http<Response, Err extends ResponseError = ResponseError>(
 }
 
 export async function rawHTTP<Response, Err extends ResponseError = ResponseError>(url: string, method: HTTPType, options: RawHTTPOptions = {}) {
-	if (options.log ?? true) console.log(`[src-ts] '${method.toUpperCase()}'ing ${url}...`);
+	if (options.log ?? true) console.log(`[src-ts] Requesting ${method.toUpperCase()} ${url}`);
 
 	const body = (method === 'get' || !options.body) ? undefined : JSON.stringify(options.body);
 
@@ -98,7 +98,10 @@ export async function rawHTTP<Response, Err extends ResponseError = ResponseErro
 			...(options.headers ?? {})
 		},
 		body
-	})).then(res => res.json()) as Response | Err;
+	})).then(res => res.json()).then(res => {
+		if (options.log ?? true) console.log(`[src-ts] Completed ${method.toUpperCase()} ${url}`);
+		return res;
+	}) as Response | Err;
 
 	if(isError(res)) throw new SRCError(res);
 
