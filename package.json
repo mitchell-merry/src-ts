@@ -5,7 +5,8 @@
   "type": "commonjs",
   "scripts": {
     "build": "rimraf ./lib && tsc",
-    "build:pack": "npm run build && npm pack"
+    "build:pack": "npm run build && npm pack",
+	"deploy": "npm run build && npm publish"
   },
   "main": "./lib/index.js",
   "files": [
