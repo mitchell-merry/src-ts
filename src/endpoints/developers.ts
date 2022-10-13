@@ -1,5 +1,16 @@
-import { Developer, DeveloperResponse } from "../../types";
-import { get, GetOptions, shimData } from "../http";
+import { Developer, DeveloperResponse, DevelopersParams, DevelopersResponse } from "../../types";
+import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "../http";
+
+/** This will return all developers.
+ * 
+ * GET /developers https://github.com/speedruncomorg/api/blob/master/version1/developers.md#get-developers
+ * 
+ * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
+ */
+ export async function getAllDevelopers(queryParams?: DevelopersParams, options?: PaginatedGetOptions): Promise<Developer[]> {
+	return paginatedGet<DevelopersResponse>(`/developers`, queryParams, options);
+}
 
 /** This will retrieve a single developer, identified by its ID.
  * 
