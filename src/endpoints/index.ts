@@ -1,4 +1,5 @@
 export * from './categories';
+export * from './developers';
 export * from './games';
 export * from './leaderboards';
 export * from './levels';
