@@ -9,7 +9,7 @@ beforeEach(() => { mockedFetch.mockClear(); });
 
 test('makes GET /games/:id request correctly', async () => {
 	// @ts-ignore
-	mockedFetch.mockResolvedValue(new Promise.resolve({ json: () => Promise.resolve({"data": { 'id":"w6jmm26j' }})} as Response));
+	mockedFetch.mockResolvedValue(Promise.resolve({ json: () => Promise.resolve({"data": { 'id': 'w6jmm26j' }})} as Response));
 	const id = "cuphead";
 	const game = await getGame(id);
 
