@@ -16,7 +16,9 @@ S extends `${infer H},${infer T}`       // if we have multiple embeds at the top
 export type SubEmbeds<S extends string, E extends string> = 
 S extends `${infer H},${infer T}`       // if there are multiple top-level embeds
 	? H extends `${E}.${infer SE}`      // check if the first begins with our embed
-		? `${SE},${SubEmbeds<T, E>}`    // if it does, add the rest of the embed to the list and get the rest
+		? SubEmbeds<T, E> extends ''    // if it does, add the rest of the embed to the list and get the rest
+			? SE                        // avoid trailing comma ,
+			: `${SE},${SubEmbeds<T, E>}`
 		: SubEmbeds<T, E>               // otherwise just the rest
 	: S extends `${E}.${infer SE}`      // similar logic if there's only one top level
 		? SE
