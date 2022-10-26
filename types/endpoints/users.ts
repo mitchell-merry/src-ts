@@ -17,17 +17,17 @@ export type UsersParams = {
 	twitter?: string;
 	/** searches for SpeedRunsLive usernames */
 	speedrunslive?: string;
-} & SortParams<"name.int" | "name.jap" | "signup" | "role"> & Embed & PaginatedParams & Callback;
+} & SortParams<"name.int" | "name.jap" | "signup" | "role"> & PaginatedParams & Callback;
 
 /** GET /users/{id} https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-usersid */
 export type UserResponse = Data<User>;
 /** GET /users/{id}/personal-bests https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-usersidpersonal-bests */
-export type UserPersonalBestsResponse = Data<RankedRun[]>;
-export type UserPersonalBestsParams = {
+export type UserPersonalBestsResponse<E extends string = ""> = Data<RankedRun<E>[]>;
+export type UserPersonalBestsParams<E extends string = ""> = {
 	/** when given, only PBs with a place equal or better than this value (e.g. top=1 returns all World Records of the given user) */
 	top?: number;
 	/** when given, restricts the result to games and romhacks in that series; can be either a series ID or abbreviation */
 	series?: string;
 	/** when given, restricts the result to that game; can be either a game ID or abbreviation */
 	game?: string;
-} & Embed & Callback;
+} & Embed<E> & Callback;
