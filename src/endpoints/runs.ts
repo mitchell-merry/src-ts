@@ -9,7 +9,7 @@ import SRCError from "../SRCError";
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getAllRuns<Embed extends string = "">(queryParams?: RunsParams, options?: PaginatedGetOptions): Promise<Run<Embed>[]> {
+ export async function getAllRuns<Embed extends string = "">(queryParams?: RunsParams<Embed>, options?: PaginatedGetOptions): Promise<Run<Embed>[]> {
 	return paginatedGet<RunsResponse<Embed>>(`/runs`, queryParams, options);
 }
 
@@ -21,7 +21,7 @@ import SRCError from "../SRCError";
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getRun<Embed extends string = "">(id: string, queryParams?: RunParams, options?: GetOptions): Promise<Run<Embed>> {
+ export async function getRun<Embed extends string = "">(id: string, queryParams?: RunParams<Embed>, options?: GetOptions): Promise<Run<Embed>> {
 	return get<RunResponse<Embed>>(`/runs/${id}`, queryParams, options).then(shimData);
 }
 

@@ -9,7 +9,7 @@ import { get, GetOptions, shimData } from "../http";
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getCategory<Embed extends string = "">(category: string, queryParams?: CategoryParams, options?: GetOptions): Promise<Category<Embed, CategoryType>> {
+export async function getCategory<Embed extends string = "">(category: string, queryParams?: CategoryParams<Embed>, options?: GetOptions): Promise<Category<Embed, CategoryType>> {
 	return get<CategoryResponse<Embed>>(`/categories/${category}`, queryParams, options).then(shimData);
 }
 
@@ -33,7 +33,7 @@ export async function getCategoryVariables(category: string, queryParams?: Categ
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getCategoryRecords<Embed extends string = "">(category: string, queryParams?: CategoryRecordsParams, options?: GetOptions): Promise<CategoryRecordsResponse<Embed>> {
+export async function getCategoryRecords<Embed extends string = "">(category: string, queryParams?: CategoryRecordsParams<Embed>, options?: GetOptions): Promise<CategoryRecordsResponse<Embed>> {
 	return get<CategoryRecordsResponse<Embed>>(`/categories/${category}/records`, queryParams, options);
 }
 
