@@ -32,7 +32,7 @@ export type GamesFilter = {
 	/** enable bulk access */
 	_bulk?: false;
 }
-export type GamesParams = GamesFilter & Embed & SortParams<"name.int" | "name.jap" | "abbreviation" | "released" | "created" | "similarity"> & PaginatedParams & Callback;
+export type GamesParams<E extends string = ""> = GamesFilter & Embed<E> & SortParams<"name.int" | "name.jap" | "abbreviation" | "released" | "created" | "similarity"> & PaginatedParams & Callback;
 
 /** GET /games?_bulk=yes https://github.com/speedruncomorg/api/blob/master/version1/games.md#bulk-access */
 export type BulkGamesResponse = Paginated<BulkGame>;
@@ -47,26 +47,26 @@ export type GameParams<E extends string = ""> = Embed<E> & Callback;
 
 /** GET /games/{id}/categories https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidcategories */
 export type GameCategoriesResponse<E extends string = ""> = Data<Category<E>[]>;
-export type GameCategoriesParams = {
+export type GameCategoriesParams<E extends string = ""> = {
 	/** when given, filters (out) misc categories */
 	miscellaneous?: boolean;
-} & Embed & SortParams<"name" | "miscellaneous" | "pos"> & Callback;
+} & Embed<E> & SortParams<"name" | "miscellaneous" | "pos"> & Callback;
 
 /** GET /games/{id}/levels https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidlevels */
 export type GameLevelsResponse<E extends string = ""> = Data<Level<E>[]>;
-export type GameLevelsParams = SortParams<"name" | "pos"> & Embed & Callback;
+export type GameLevelsParams<E extends string = ""> = SortParams<"name" | "pos"> & Embed<E> & Callback;
 
 /** GET /games/{id}/variables https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidvariables */
 export type GameVariablesResponse = Data<Variable[]>;
-export type GameVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos" > & Embed & Callback;
+export type GameVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos" > & Callback;
 
 /** GET /games/{id}/derived-games https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidderived-games */
 export type GameDerivedGamesResponse<E extends string = ""> = Paginated<Game<E>>;
-export type GameDerivedGamesParams = Omit<GamesParams, 'romhack'> & PaginatedParams & Callback;
+export type GameDerivedGamesParams<E extends string = ""> = Omit<GamesParams<E>, 'romhack'> & PaginatedParams & Callback;
 
 /** GET /games/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidrecords */
 export type GameRecordsResponse<E extends string = ""> = Paginated<Leaderboard<E>>;
-export type GameRecordsParams = {
+export type GameRecordsParams<E extends string = ""> = {
 	/** only return the top N places (this can result in more than N runs!); this is set to 3 by default */
 	top?: number;
 	/**  	when set to full-game, only full-game categories will be included; when set to levels, only individual levels are returned; default is all */
@@ -75,4 +75,4 @@ export type GameRecordsParams = {
 	miscellaneous?: boolean;
 	/** when set to a true value, empty leaderboards will not show up in the result */
 	"skip-empty"?: boolean;
-} & Embed & PaginatedParams & Callback;
+} & Embed<E> & PaginatedParams & Callback;
