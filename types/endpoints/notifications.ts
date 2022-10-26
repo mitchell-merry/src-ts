@@ -1,3 +1,4 @@
+import { Notification } from "../resources";
 import { Callback, SortParams } from "./util";
 import { Data } from "../other";
 

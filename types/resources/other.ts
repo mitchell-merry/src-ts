@@ -56,3 +56,15 @@ export interface Publisher {
 	name: string;
 	links: RelLink<"self" | "games">[];
 }
+
+/** Notifications are system-generated messages sent to [users](https://github.com/speedruncomorg/api/blob/master/version1/users.md) when
+ *  certain events concerning them happen on the site, like somebody liking a post or a [run](https://github.com/speedruncomorg/api/blob/master/version1/runs.md) being verified.
+ */
+export interface Notification {
+	id: string;
+	created: string;
+	status: "read" | "unread";
+	text: string;
+	item: RelLink<"post" | "run" | "game" | "guide">;
+	links?: [ RelLink<"run" | "game"> ];
+}
