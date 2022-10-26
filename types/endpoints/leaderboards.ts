@@ -8,7 +8,7 @@ import { Data } from "../other";
  */
  export type LeaderboardResponse<E extends string = ""> = Data<Leaderboard<E>>;
  /** To filter by custom variables, name the query string parameter var-[variable ID here] and use the value ID as the value (for example, 'var-m5ly6jn4': 'p12z471x'). */
- export type LeaderboardParams = {
+ export type LeaderboardParams<E extends string = ""> = {
 	 /** only return the top N places (this can result in more than N runs!) */
 	 top?: number;
 	 /** platform ID; when given, only returns runs done on that particular platform */
@@ -23,11 +23,11 @@ import { Data } from "../other";
 	 timing?: string;
 	 /** [ISO 8601 date string](https://en.wikipedia.org/wiki/ISO_8601#Dates); when given, only returns runs done before or on this date */
 	 date?: string;
- } & Record<`var-${string}`, string> & Embed & Callback;
+ } & Record<`var-${string}`, string> & Embed<E> & Callback;
  
  /** GET /leaderboards/{game}/level/{level}/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamelevellevelcategory 
  * @deprecated Use LeaderboardResponse instead. They are the same type.
  */
  export type LeaderboardLevelResponse<E extends string = ""> = Data<Leaderboard<E>>;
  /** @deprecated Use LeaderboardParams instead. They are the same type. */
- export type LeaderboardLevelParams = LeaderboardParams;
+ export type LeaderboardLevelParams<E extends string = ""> = LeaderboardParams<E>;
