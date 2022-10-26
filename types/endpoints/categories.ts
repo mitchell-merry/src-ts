@@ -8,7 +8,7 @@ export type CategoryParams<E extends string = ""> = Embed<E> & Callback;
 
 /** GET /categories/{id}/variables https://github.com/speedruncomorg/api/blob/master/version1/categories.md#get-categoriesidvariables */
 export type CategoryVariablesResponse = Data<Variable[]>;
-export type CategoryVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos"> & Embed & Callback;
+export type CategoryVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos"> & Callback;
 
 /** GET /categories/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/categories.md#get-categoriesidrecords */
 export type CategoryRecordsResponse<E extends string = ""> = Paginated<Leaderboard<E>>;
