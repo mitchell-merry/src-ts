@@ -4,7 +4,7 @@ import { Data } from "../other";
 
 /** GET /runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runs */
 export type RunsResponse<E extends string = ""> = Paginated<Run<E>>;
-export type RunsParams = {
+export type RunsParams<E extends string = ""> = {
 	/** user ID; when given, only returns runs played by that user */
 	user?: string;
 	/** when given, only returns runs done by that guest */
@@ -25,11 +25,11 @@ export type RunsParams = {
 	emulated?: boolean | "yes" | 1;
 	/** filters by run status */
 	status?: "new" | "verified" | "rejected";
-} & SortParams<"game" | "category" | "level" | "platform" | "region" | "emulated" | "date" | "submitted" | "status" | "verify-date"> & Embed & PaginatedParams & Callback;
+} & SortParams<"game" | "category" | "level" | "platform" | "region" | "emulated" | "date" | "submitted" | "status" | "verify-date"> & Embed<E> & PaginatedParams & Callback;
 
 /** GET /runs/{id} https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runsid */
 export type RunResponse<E extends string = ""> = Data<Run<E>>;
-export type RunParams = Embed & Callback;
+export type RunParams<E extends string = ""> = Embed<E> & Callback;
 
 /** @deprecated Use `PlayerUserPartial` instead. */
 export type SendUser = PlayerUserPartial;
