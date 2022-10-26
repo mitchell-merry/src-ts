@@ -43,7 +43,7 @@ export type BulkGamesParams = Omit<GamesParams, "_bulk" | "embed"> & {
 
 /** GET /games/{id} https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesid */
 export type GameResponse<E extends string = ""> = Data<Game<E>>;
-export type GameParams = Embed & Callback;
+export type GameParams<E extends string = ""> = Embed<E> & Callback;
 
 /** GET /games/{id}/categories https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidcategories */
 export type GameCategoriesResponse<E extends string = ""> = Data<Category<E>[]>;
