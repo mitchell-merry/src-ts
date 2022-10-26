@@ -42,7 +42,7 @@ export interface SortParams<orderby> {
 // I'd really like to make this more complex for each possible
 // comma-separated list of embeds. Unfortunately, there are 11 options
 // for Game and thus I can't support it.
-export interface Embed {
+export interface Embed<E extends string = ""> {
 	/** Embed resources into the response - https://github.com/speedruncomorg/api/blob/master/version1/embedding.md 
 	 * 
 	 * (TypeScript): Make sure to specify the "Embed" parameter on resources that can embed as well to get the correct type! (Available on types and all function endpoints).
@@ -55,7 +55,7 @@ export interface Embed {
 	 * game.categories; // available
 	 * ```
 	*/
-	embed?: string;
+	embed?: E;
 }
 
 export interface ResponseError {
