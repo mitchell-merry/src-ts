@@ -36,7 +36,7 @@ export async function getAllGames<Embed extends string = "">(queryParams?: Games
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getGame<Embed extends string = "">(game: string, queryParams?: GameParams, options?: GetOptions): Promise<Game<Embed>> {
+export async function getGame<Embed extends string = "">(game: string, queryParams?: GameParams<Embed>, options?: GetOptions): Promise<Game<Embed>> {
 	return get<GameResponse<Embed>>(`/games/${game}`, queryParams, options).then(shimData);
 }
 
