@@ -52,9 +52,16 @@ export type Leaderboard<Embed extends string = ""> = {
 & AdditionalEmbed<Embed, "platforms", { platforms: Data<Platform[]> }>
 & AdditionalEmbed<Embed, "variables", { variables: Data<Variable[]> }>;
 
-export interface RankedRun {
+export type RankedRun<Embed extends string = ""> = {
 	/** The place this run has on the related leaderbord. */
 	place: number;
 	/** The run object */
 	run: Omit<Run, 'links'>;
 }
+& { place: number }
+& AdditionalEmbed<Embed, "game", { game: Data<Game<SubEmbeds<Embed, "game">> | []> }>
+& AdditionalEmbed<Embed, "category", { category: Data<Category<SubEmbeds<Embed, "category">> | []> }>
+& AdditionalEmbed<Embed, "level", { level: Data<Level<SubEmbeds<Embed, "level">> | []> }>
+& AdditionalEmbed<Embed, "players", { players: Data<User[]> }>
+& AdditionalEmbed<Embed, "region", { region: Data<Region | []> }>
+& AdditionalEmbed<Embed, "platform", { platform: Data<Platform | []> }>;
