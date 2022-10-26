@@ -13,7 +13,7 @@ import { get, GetOptions, shimData } from "../http";
  */
  export async function getLeaderboard<Embed extends string = "">(game: string, category: string, variables: Record<string, string> = {}, queryParams?: LeaderboardParams, options?: GetOptions): Promise<Leaderboard<Embed>> {
 	const varQueryParams = Object.fromEntries(Object.entries(variables).map(([variable, value]) => [`var-${variable}`, value]));
-	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/category/${category}`, { ...varQueryParams, ...queryParams }).then(shimData);
+	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/category/${category}`, { ...varQueryParams, ...queryParams }, options).then(shimData);
 }
 
 /** This will return a individual-level leaderboard. The same filtering options as with full-game leaderboards apply.
