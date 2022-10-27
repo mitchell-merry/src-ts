@@ -1,6 +1,17 @@
 import { Developer, DeveloperResponse, DevelopersParams, DevelopersResponse } from "../../types";
 import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "../http";
 
+/** This will return a page of developers, with the pagination data.
+ * 
+ * GET /developers https://github.com/speedruncomorg/api/blob/master/version1/developers.md#get-developers
+ * 
+ * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
+ */
+ export async function getDevelopers(queryParams?: DevelopersParams, options?: PaginatedGetOptions): Promise<DevelopersResponse> {
+	return get<DevelopersResponse>(`/developers`, queryParams, options);
+}
+
 /** This will return all developers.
  * 
  * GET /developers https://github.com/speedruncomorg/api/blob/master/version1/developers.md#get-developers
