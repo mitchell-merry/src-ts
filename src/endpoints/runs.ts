@@ -30,7 +30,7 @@ import SRCError from "../SRCError";
  * POST /runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#post-runs
  * 
  * @param run The run to submit.
- * @param key The API key of the account to submit with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
+ * @param key The API key of the account to submit with. Get it from <https://www.speedrun.com/settings/apikey>. Protect it.
  * @param options Options for the HTTP request itself.
 */
 export function submitRun(run: PostRun, key: string, options: HTTPOptions = {}): Promise<PostRunResponse> {
@@ -45,7 +45,7 @@ export function submitRun(run: PostRun, key: string, options: HTTPOptions = {}):
  * 
  * @param id The id of the run to change.
  * @param status The new status of the run.
- * @param key The API key of the account to do the action with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
+ * @param key The API key of the account to do the action with. Get it from <https://www.speedrun.com/settings/apikey>. Protect it.
  * @param options Options for the HTTP request itself.
 */
 export async function setRunStatus(id: string, status: PutRunStatus['status'], key: string, options: HTTPOptions = {}): Promise<PutRunStatusResponse> {
@@ -65,7 +65,7 @@ export async function setRunStatus(id: string, status: PutRunStatus['status'], k
  * DELETE /runs https://github.com/speedruncomorg/api/blob/master/version1/runs.md#delete-runs
  * 
  * @param id The id of the run to delete.
- * @param key The API key of the account to submit with. Get it from <https://www.speedrun.com/user/USERNAMEHERE/settings/apikey>. Protect it.
+ * @param key The API key of the account to delete with. Get it from <https://www.speedrun.com/settings/apikey>. Protect it.
  * @param options Options for the HTTP request itself.
  * @param ignore500 Whether or not to ignore the 500 error (which is always returned).
 */
