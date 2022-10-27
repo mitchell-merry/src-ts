@@ -18,10 +18,15 @@ export type LevelVariablesResponse = Data<Variable[]>
 export type LevelVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos"> & Callback;
 
 /** GET /levels/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/levels.md#get-levelsidrecords */
-export type LevelLeaderboardResponse<E extends string = ""> = Paginated<Leaderboard<E>>;
-export type LevelLeaderboardParams<E extends string = ""> = {
+export type LevelRecordsResponse<E extends string = ""> = Paginated<Leaderboard<E>>;
+export type LevelRecordsParams<E extends string = ""> = {
 	/** only return the top N places (this can result in more than N runs!); this is set to 3 by default */
 	top?: number;
 	/** when set to a true value, empty leaderboards will not show up in the result */
 	"skip-empty"?: boolean;
 } & Embed<E> & PaginatedParams & Callback;
+
+/** @deprecated Use {@linkcode LevelRecordsResponse} instead */
+export type LevelLeaderboardResponse<E extends string = ""> = LevelRecordsResponse<E>;
+/** @deprecated Use {@linkcode LevelRecordsParams} instead */
+export type LevelLeaderboardParams<E extends string = ""> = LevelRecordsParams<E>;
