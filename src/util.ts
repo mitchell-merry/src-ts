@@ -27,17 +27,11 @@ export function variableIsSubcategory (variable: Variable): variable is Variable
 }
 
 /** Type guard to determine if an object with a rel object is a User. */
-export function playerIsUser(player: Player): player is PlayerUser;
-export function playerIsUser(player: PlayerPartial): player is PlayerUserPartial;
-export function playerIsUser(player: PlayerPartialUri): player is PlayerUserPartialURI;
 export function playerIsUser<T extends UserRel | GuestRel>(player: T): player is Exclude<T, GuestRel> {
 	return player.rel === 'user';
 }
 
 /** Type guard to determine if an object with a rel object is a Guest. */
-export function playerIsGuest(player: Player): player is PlayerGuest;
-export function playerIsGuest(player: PlayerPartial): player is PlayerGuestPartial;
-export function playerIsGuest(player: PlayerPartialUri): player is PlayerGuestPartialURI;
 export function playerIsGuest<T extends UserRel | GuestRel>(player: T): player is Exclude<T, UserRel> {
 	return player.rel === 'guest';
 }
@@ -46,3 +40,25 @@ export function playerIsGuest<T extends UserRel | GuestRel>(player: T): player i
 export function userLocationNotNull (user: User): user is User & { location: UserLocation } { 
 	return user.location !== null; 
 }
+
+
+type PU = UserRel & {
+	d: string;
+}
+
+type PG = GuestRel & {
+	d: string;
+}
+
+type P = PU | PG;
+
+// const a = {} as Player;
+
+// // const d = playerIsUser(a);
+// // if (d) {
+// // 	a;
+// // }
+// const b = [a]
+// const d = b.filter((p): p is PlayerUser => p.rel === "user");
+// const e = b.filter(playerIsUser);
+// const f = b.filter<PlayerUser>(playerIsUser);
