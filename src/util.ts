@@ -15,7 +15,7 @@ export function buildLeaderboardName(gameName: string, categoryName: string, var
 }
 
 /** Filter a list of runs by variables, as key-value pairs. */
-export function filterRuns(runs: Run[], variables: Record<string, string> = {}) {
+export function filterRuns<Embed extends string = "">(runs: Run<Embed>[], variables: Record<string, string> = {}) {
 	return runs.filter(run => !Object.entries(variables).some(([variable, value]) => !(variable in run.values) || run.values[variable] !== value));
 }
 
