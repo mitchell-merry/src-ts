@@ -100,7 +100,7 @@ export async function getGameDerivedGames<Embed extends string = "">(game: strin
 	return get<GameDerivedGamesResponse<Embed>>(`/games/${game}/derived-games`, queryParams, options).then(shimData);
 }
 
-/** This will retrieve the records (first three places) for every (category,level) combination of the given game. 
+/** This will retrieve the first page records (first three places) for every (category,level) combination of the given game. 
  * 
  * GET /games/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidrecords
  * 
@@ -108,6 +108,18 @@ export async function getGameDerivedGames<Embed extends string = "">(game: strin
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getGameRecords<Embed extends string = "">(game: string, queryParams?: GameRecordsParams<Embed>, options?: GetOptions): Promise<Leaderboard<Embed>[]> {
-	return get<GameRecordsResponse<Embed>>(`/games/${game}/records`, queryParams, options).then(shimData);
+export async function getGameRecords<Embed extends string = "">(game: string, queryParams?: GameRecordsParams<Embed>, options?: GetOptions): Promise<GameRecordsResponse<Embed>> {
+	return get<GameRecordsResponse<Embed>>(`/games/${game}/records`, queryParams, options);
+}
+
+/** This will retrieve all of the records (first three places) for every (category,level) combination of the given game. 
+ * 
+ * GET /games/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/games.md#get-gamesidrecords
+ * 
+ * @param game The game's ID or abbreviation.
+ * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
+ */
+ export async function getAllGameRecords<Embed extends string = "">(game: string, queryParams?: GameRecordsParams<Embed>, options?: PaginatedGetOptions): Promise<Leaderboard<Embed>[]> {
+	return paginatedGet<GameRecordsResponse<Embed>>(`/games/${game}/records`, queryParams, options);
 }
