@@ -1,4 +1,4 @@
-import { DeleteRunResponse, PostRun, PostRunResponse, PutRunStatus, PutRunStatusResponse, Run, RunError, RunParams, RunResponse, RunsParams, RunsResponse } from "../../types";
+import { DeleteRunResponse, PostRun, PostRunResponse, PutRunPlayers, PutRunPlayersResponse, PutRunStatus, PutRunStatusResponse, Run, RunError, RunParams, RunResponse, RunsParams, RunsResponse } from "../../types";
 import { get, GetOptions, http, HTTPOptions, paginatedGet, PaginatedGetOptions, shimData } from "../http";
 import SRCError from "../SRCError";
 
@@ -41,7 +41,7 @@ export function submitRun(run: PostRun, key: string, options: HTTPOptions = {}):
  * 
  * Does not send notifications to users: https://github.com/speedruncomorg/api/issues/124
  * 
- * PUT /runs/{id}/status https://github.com/speedruncomorg/api/blob/master/version1/runs.md#post-runs
+ * PUT /runs/{id}/status https://github.com/speedruncomorg/api/blob/master/version1/runs.md#put-runsidstatus
  * 
  * @param id The id of the run to change.
  * @param status The new status of the run.
@@ -50,6 +50,23 @@ export function submitRun(run: PostRun, key: string, options: HTTPOptions = {}):
 */
 export async function setRunStatus(id: string, status: PutRunStatus['status'], key: string, options: HTTPOptions = {}): Promise<PutRunStatusResponse> {
 	return http<PutRunStatusResponse, RunError>(`/runs/${id}/status`, 'put', key, { body: { status }, ...options });
+}
+
+/** Change the list of players that participated in a run.
+ * 
+ * The submitted list of players will replace the old list completely, i.e. you cannot simply add a player without also submitting the existing ones.
+ * 
+ * Must be authenticated with a user with sufficient permissions (global mods or game mods).
+ * 
+ * PUT /runs/{id}/players https://github.com/speedruncomorg/api/blob/master/version1/runs.md#put-runsidplayers
+ * 
+ * @param id The id of the run to change.
+ * @param players The new list of players.
+ * @param key The API key of the account to do the action with. Get it from <https://www.speedrun.com/settings/apikey>. Protect it.
+ * @param options Options for the HTTP request itself.
+*/
+export async function setRunPlayers(id: string, players: PutRunPlayers['players'], key: string, options: HTTPOptions = {}): Promise<PutRunPlayersResponse> {
+	return http<PutRunPlayersResponse, RunError>(`/runs/${id}/players`, 'put', key, { body: { players }, ...options });
 }
 
 /** This method allows an authenticated user to delete a run. Regular users can only delete their
