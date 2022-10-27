@@ -8,7 +8,7 @@ import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "..
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getDevelopers(queryParams?: DevelopersParams, options?: PaginatedGetOptions): Promise<DevelopersResponse> {
+ export async function getDevelopers(queryParams?: DevelopersParams, options?: GetOptions): Promise<DevelopersResponse> {
 	return get<DevelopersResponse>(`/developers`, queryParams, options);
 }
 
