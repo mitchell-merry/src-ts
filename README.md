@@ -1,4 +1,6 @@
 # src-ts
+[![version][npm-version]][npm-url]
+
 A TypeScript library providing functions to interface with and to describe the shape of the [public speedrun.com REST API](https://github.com/speedruncomorg/api) (v1).
 
 - Types are defined under `/types`.
