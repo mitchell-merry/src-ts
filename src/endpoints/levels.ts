@@ -1,5 +1,5 @@
-import { Category, Level, LevelCategoriesParams, LevelCategoriesResponse, LevelParams, LevelResponse, LevelVariablesParams, LevelVariablesResponse, Variable } from "../../types";
-import { get, GetOptions, shimData } from "../http";
+import { Category, Leaderboard, Level, LevelCategoriesParams, LevelCategoriesResponse, LevelParams, LevelRecordsParams, LevelRecordsResponse, LevelResponse, LevelVariablesParams, LevelVariablesResponse, Variable } from "../../types";
+import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "../http";
 
 /** This will retrieve a single level, identified by its ID.
  * 
@@ -35,4 +35,28 @@ import { get, GetOptions, shimData } from "../http";
  */
  export async function getLevelVariables(level: string, queryParams?: LevelVariablesParams, options?: GetOptions): Promise<Variable[]> {
 	return get<LevelVariablesResponse>(`/levels/${level}/variables`, queryParams, options).then(shimData);
+}
+
+/** This will retrieve the first page of records (first three places) of the given level for all available categories.
+ * 
+ * GET /levels/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/levels.md#get-levelsidrecords
+ * 
+ * @param level The level's ID.
+ * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
+ */
+export async function getLevelRecords<Embed extends string = "">(level: string, queryParams?: LevelRecordsParams<Embed>, options?: GetOptions): Promise<LevelRecordsResponse<Embed>> {
+	return get<LevelRecordsResponse<Embed>>(`/levels/${level}/records`, queryParams, options);
+}
+
+/** This will retrieve all of the records (first three places) of the given level for all available categories.
+ * 
+ * GET /levels/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/levels.md#get-levelsidrecords
+ * 
+ * @param level The level's ID.
+ * @param queryParams Optional query paramters to pass to the GET request.
+ * @param options Options for the HTTP request itself.
+ */
+ export async function getAllLevelRecords<Embed extends string = "">(level: string, queryParams?: LevelRecordsParams<Embed>, options?: PaginatedGetOptions): Promise<Leaderboard<Embed>[]> {
+	return paginatedGet<LevelRecordsResponse<Embed>>(`/levels/${level}/records`, queryParams, options);
 }
