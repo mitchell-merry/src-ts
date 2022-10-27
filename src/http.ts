@@ -67,7 +67,7 @@ export async function paginatedGet<T extends Paginated<any>>(url: string, queryP
 	return data;
 }
 
-export async function get<Response, Err extends ResponseError = ResponseError>(url: string, queryParams: Record<string, any> = {}, options: GetOptions = {}) {
+export async function get<Response, Err extends ResponseError = ResponseError>(url: string, queryParams: Record<string, any> = {}, options: GetOptions = {}, key?: string) {
 	const { cache, ...opts } = options;
 	// https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
 	// to prevent caching
@@ -77,7 +77,7 @@ export async function get<Response, Err extends ResponseError = ResponseError>(u
 		url += `?${Object.entries(queryParams).map(([k, v]) => `${k}=${v}`).join('&')}`;
 	}
 
-	return rawHTTP<Response, Err>(`${BASE_URL}${url}`, 'get', opts);
+	return rawHTTP<Response, Err>(`${BASE_URL}${url}`, 'get', { ...opts, headers: { ...(key ? { 'X-API-Key': key } : {}), ...opts.headers}});
 }
 
 export async function http<Response, Err extends ResponseError = ResponseError>(url: string, method: Exclude<HTTPType, 'get'>, key: string, options: RawHTTPOptions = {}) {
