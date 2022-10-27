@@ -41,6 +41,8 @@ export function submitRun(run: PostRun, key: string, options: HTTPOptions = {}):
  * 
  * Does not send notifications to users: https://github.com/speedruncomorg/api/issues/124
  * 
+ * Must be authenticated with a user with sufficient permissions (global mods or game mods).
+ * 
  * PUT /runs/{id}/status https://github.com/speedruncomorg/api/blob/master/version1/runs.md#put-runsidstatus
  * 
  * @param id The id of the run to change.
