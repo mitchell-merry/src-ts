@@ -1,14 +1,14 @@
-import { Callback, Embed, Paginated, PaginatedParams, SortParams } from "./util";
+import { Embed, Paginated, PaginatedParams, SortParams } from "./util";
 import { Category, Leaderboard, Variable } from "../resources";
 import { Data } from "../other";
 
 /** GET /categories/{id} https://github.com/speedruncomorg/api/blob/master/version1/categories.md#get-categoriesid */
 export type CategoryResponse<E extends string = ""> = Data<Category<E>>;
-export type CategoryParams<E extends string = ""> = Embed<E> & Callback;
+export type CategoryParams<E extends string = ""> = Embed<E>;
 
 /** GET /categories/{id}/variables https://github.com/speedruncomorg/api/blob/master/version1/categories.md#get-categoriesidvariables */
 export type CategoryVariablesResponse = Data<Variable[]>;
-export type CategoryVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos"> & Callback;
+export type CategoryVariablesParams = SortParams<"name" | "mandatory" | "user-defined" | "pos">;
 
 /** GET /categories/{id}/records https://github.com/speedruncomorg/api/blob/master/version1/categories.md#get-categoriesidrecords */
 export type CategoryRecordsResponse<E extends string = ""> = Paginated<Leaderboard<E>>;
@@ -17,4 +17,4 @@ export type CategoryRecordsParams<E extends string = ""> = {
 	top?: number;
 	/** when set to a true value, empty leaderboards will not show up in the result */
 	"skip-empty"?: boolean;
-} & Embed<E> & PaginatedParams & Callback;
+} & Embed<E> & PaginatedParams;

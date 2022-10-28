@@ -1,4 +1,4 @@
-import { Callback, Embed } from "./util";
+import { Embed } from "./util";
 import { Leaderboard } from "../resources";
 import { Data } from "../other";
 
@@ -23,7 +23,7 @@ import { Data } from "../other";
 	 timing?: string;
 	 /** [ISO 8601 date string](https://en.wikipedia.org/wiki/ISO_8601#Dates); when given, only returns runs done before or on this date */
 	 date?: string;
- } & Record<`var-${string}`, string> & Embed<E> & Callback;
+ } & Record<`var-${string}`, string> & Embed<E>;
  
  /** GET /leaderboards/{game}/level/{level}/{category} https://github.com/speedruncomorg/api/blob/master/version1/leaderboards.md#get-leaderboardsgamelevellevelcategory 
  * @deprecated Use LeaderboardResponse instead. They are the same type.

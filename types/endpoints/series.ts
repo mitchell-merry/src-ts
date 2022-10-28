@@ -1,4 +1,4 @@
-import { Callback, Embed, Paginated, PaginatedParams, SortParams } from "./util";
+import { Embed, Paginated, PaginatedParams, SortParams } from "./util";
 import { Game, Series } from "../resources";
 import { Data } from "../other";
 import { GamesParams } from "./games";
@@ -12,11 +12,11 @@ export type SeriesAllParams<E extends string = ""> = {
 	abbreviation?: string;
 	/** moderator ID; when given, only series moderated by that user will be returned */
 	moderator?: string;
-} & SortParams<"name.int" | "name.jap" | "abbreviation" | "created"> & Embed<E> & PaginatedParams & Callback;
+} & SortParams<"name.int" | "name.jap" | "abbreviation" | "created"> & Embed<E> & PaginatedParams;
 
 /** GET /series/{id} https://github.com/speedruncomorg/api/blob/master/version1/series.md#get-seriesid */
 export type SeriesResponse<E extends string = ""> = Data<Series<E>>;
-export type SeriesParams<E extends string = ""> = Embed<E> & Callback;
+export type SeriesParams<E extends string = ""> = Embed<E>;
 
 /** GET /series/{id}/games https://github.com/speedruncomorg/api/blob/master/version1/series.md#get-seriesidgames */
 export type SeriesGamesResponse<E extends string = ""> = Paginated<Game<E>>;

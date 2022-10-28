@@ -1,4 +1,4 @@
-import { Callback, Embed, Paginated, PaginatedParams, SortParams, ResponseError } from "./util";
+import { Embed, Paginated, PaginatedParams, SortParams, ResponseError } from "./util";
 import { GuestRel, PlayerGuestPartial, PlayerPartial, PlayerPartialUri, PlayerUserPartial, Run, UserRel } from "../resources";
 import { Data } from "../other";
 
@@ -25,11 +25,11 @@ export type RunsParams<E extends string = ""> = {
 	emulated?: boolean | "yes" | 1;
 	/** filters by run status */
 	status?: "new" | "verified" | "rejected";
-} & SortParams<"game" | "category" | "level" | "platform" | "region" | "emulated" | "date" | "submitted" | "status" | "verify-date"> & Embed<E> & PaginatedParams & Callback;
+} & SortParams<"game" | "category" | "level" | "platform" | "region" | "emulated" | "date" | "submitted" | "status" | "verify-date"> & Embed<E> & PaginatedParams;
 
 /** GET /runs/{id} https://github.com/speedruncomorg/api/blob/master/version1/runs.md#get-runsid */
 export type RunResponse<E extends string = ""> = Data<Run<E>>;
-export type RunParams<E extends string = ""> = Embed<E> & Callback;
+export type RunParams<E extends string = ""> = Embed<E>;
 
 /** @deprecated Use `PlayerUserPartial` instead. */
 export type SendUser = PlayerUserPartial;
