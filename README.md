@@ -3,7 +3,7 @@
 
 A TypeScript library providing functions to interface with and to describe the shape of the [public speedrun.com REST API](https://github.com/speedruncomorg/api) (v1).
 
-- Types are defined under `/types`.****
+- Types are defined under `/types`.
 - Other utilities are defined under `/src`.
 
 Find the package on npmjs.com [here](https://www.npmjs.com/package/src-ts).
