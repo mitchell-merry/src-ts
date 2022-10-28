@@ -1,4 +1,4 @@
-import { Callback, Embed, Paginated, PaginatedParams, SortParams } from "./util";
+import { Embed, Paginated, PaginatedParams, SortParams } from "./util";
 import { RankedRun, User } from "../resources";
 import { Data } from "../other";
 
@@ -17,7 +17,7 @@ export type UsersParams = {
 	twitter?: string;
 	/** searches for SpeedRunsLive usernames */
 	speedrunslive?: string;
-} & SortParams<"name.int" | "name.jap" | "signup" | "role"> & PaginatedParams & Callback;
+} & SortParams<"name.int" | "name.jap" | "signup" | "role"> & PaginatedParams;
 
 /** GET /users/{id} https://github.com/speedruncomorg/api/blob/master/version1/users.md#get-usersid */
 export type UserResponse = Data<User>;
@@ -30,4 +30,4 @@ export type UserPersonalBestsParams<E extends string = ""> = {
 	series?: string;
 	/** when given, restricts the result to that game; can be either a game ID or abbreviation */
 	game?: string;
-} & Embed<E> & Callback;
+} & Embed<E>;

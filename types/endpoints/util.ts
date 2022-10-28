@@ -65,9 +65,3 @@ export interface ResponseError {
 	message: string;
 	links: [ RelLink<"support">, RelLink<"report-issues"> ];
 }
-
-export interface Callback {
-	/** Retrieve the response as JavaScript instead of JSON (for example, do `?callback=foo` to get the data as a `foo({....})` function call) */
-	callback?: boolean;
-}
-
