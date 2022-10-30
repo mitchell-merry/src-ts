@@ -58,7 +58,7 @@ export async function paginatedGet<T extends Paginated<any>>(url: string, queryP
 			? await rawHTTP<T>(next, 'get', httpOpts)
 			: await get<T>(url, queryParams, getOpts); // initial request
 		
-		data = [...data, ...response.data];
+		data.push(...response.data);
 
 		if (!!max && data.length >= max) return data.slice(0, max);
 	}
