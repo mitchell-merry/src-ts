@@ -43,7 +43,7 @@ export type PaginatedGetOptions<D, S = D> = GetOptions & {
 	/** The max number of elements to fetch. Defaults to all elements.*/
 	max?: number;
 
-	mutator?: (r: D) => S;
+	map?: (r: D) => S;
 };
 
 /** GET from url and paginate through results to return entire dataset */
@@ -52,20 +52,20 @@ export async function paginatedGet<T extends Paginated<any>, S = PaginatedData<T
 	queryParams?: PaginatedParams & Record<string, any>,
 	options: PaginatedGetOptions<PaginatedData<T>, S> = {}
 ): Promise<S[]> {
-	let { max, mutator, ...getOpts } = options;
+	let { max, map, ...getOpts } = options;
 	const { cache, ...httpOpts } = getOpts;
 	const data: S[] = [];
 	let next, response: T;
 	
 	if (max && max < 1) return [];
-	mutator ??= r => r;
+	map ??= r => r;
 
 	do {
 		response = next 
 			? await rawHTTP<T>(next, 'get', httpOpts)
 			: await get<T>(url, queryParams, getOpts); // initial request
 		
-		data.push(...response.data.map(mutator));
+		data.push(...response.data.map(map));
 
 		if (!!max && data.length >= max) return data.slice(0, max);
 	}
