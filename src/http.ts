@@ -51,7 +51,7 @@ export async function paginatedGet<T extends Paginated<any>>(
 	options: PaginatedGetOptions = {}
 ): Promise<PaginatedData<T>[]> {
 	let data: PaginatedData<T>[] = [];
-	let next, response;
+	let next, response: T;
 	const { max, ...getOpts } = options;
 	const { cache, ...httpOpts } = getOpts;
 
