@@ -19,8 +19,8 @@ export async function getPublishers(queryParams?: PublishersParams, options?: Ge
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllPublishers(queryParams?: PublishersParams, options?: PaginatedGetOptions): Promise<Publisher[]> {
-	return paginatedGet<PublishersResponse>(`/publishers`, queryParams, options);
+export async function getAllPublishers<S = Publisher>(queryParams?: PublishersParams, options?: PaginatedGetOptions<Publisher, S>): Promise<S[]> {
+	return paginatedGet<PublishersResponse, S>(`/publishers`, queryParams, options);
 }
 
 /** This will retrieve a single publisher, identified by its ID.

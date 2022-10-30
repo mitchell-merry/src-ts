@@ -24,8 +24,8 @@ export async function getGames<Embed extends string = "">(queryParams?: GamesPar
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
 */
-export async function getAllGames<Embed extends string = "">(queryParams?: GamesParams<Embed>, options?: PaginatedGetOptions): Promise<Game<Embed>[]> {
-	return paginatedGet<GamesResponse<Embed>>(`/games`, queryParams, options);
+export async function getAllGames<Embed extends string = "", S = Game<Embed>>(queryParams?: GamesParams<Embed>, options?: PaginatedGetOptions<Game<Embed>, S>): Promise<S[]> {
+	return paginatedGet<GamesResponse<Embed>, S>(`/games`, queryParams, options);
 }
 
 /** This will retrieve a single game, identified by its ID. Instead of the game's ID, you can also specify the game's abbreviation.
@@ -60,7 +60,7 @@ export async function getGameCategories<Embed extends string = "">(game: string,
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getFullGameCategories<Embed extends string = "">(game: string, queryParams?: GameCategoriesParams<Embed>, options?: GetOptions): Promise<Category<Embed, "per-game">[]> {
+export async function getFullGameCategories<Embed extends string = "">(game: string, queryParams?: GameCategoriesParams<Embed>, options?: GetOptions): Promise<Category<Embed, "per-game">[]> {
 	return getGameCategories<Embed>(game, queryParams, options).then(l => l.filter(categoryIsFullGame));
 }
 
@@ -120,6 +120,6 @@ export async function getGameRecords<Embed extends string = "">(game: string, qu
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getAllGameRecords<Embed extends string = "">(game: string, queryParams?: GameRecordsParams<Embed>, options?: PaginatedGetOptions): Promise<Leaderboard<Embed>[]> {
-	return paginatedGet<GameRecordsResponse<Embed>>(`/games/${game}/records`, queryParams, options);
+export async function getAllGameRecords<Embed extends string = "", S = Leaderboard<Embed>>(game: string, queryParams?: GameRecordsParams<Embed>, options?: PaginatedGetOptions<Leaderboard<Embed>, S>): Promise<S[]> {
+	return paginatedGet<GameRecordsResponse<Embed>, S>(`/games/${game}/records`, queryParams, options);
 }

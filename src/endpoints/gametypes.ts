@@ -19,8 +19,8 @@ export async function getGameTypes(queryParams?: GameTypesParams, options?: GetO
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllGameTypes(queryParams?: GameTypesParams, options?: PaginatedGetOptions): Promise<GameType[]> {
-	return paginatedGet<GameTypesResponse>(`/gametypes`, queryParams, options);
+export async function getAllGameTypes<S = GameType>(queryParams?: GameTypesParams, options?: PaginatedGetOptions<GameType, S>): Promise<S[]> {
+	return paginatedGet<GameTypesResponse, S>(`/gametypes`, queryParams, options);
 }
 
 /** This will retrieve a single game type, identified by its ID.

@@ -9,7 +9,7 @@ import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "..
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getLevel<Embed extends string = "">(level: string, queryParams?: LevelParams<Embed>, options?: GetOptions): Promise<Level<Embed>> {
+export async function getLevel<Embed extends string = "">(level: string, queryParams?: LevelParams<Embed>, options?: GetOptions): Promise<Level<Embed>> {
 	return get<LevelResponse<Embed>>(`/levels/${level}`, queryParams, options).then(shimData);
 }
 
@@ -21,7 +21,7 @@ import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "..
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getLevelCategories<Embed extends string = "">(level: string, queryParams?: LevelCategoriesParams<Embed>, options?: GetOptions): Promise<Category<Embed, "per-level">[]> {
+export async function getLevelCategories<Embed extends string = "">(level: string, queryParams?: LevelCategoriesParams<Embed>, options?: GetOptions): Promise<Category<Embed, "per-level">[]> {
 	return get<LevelCategoriesResponse<Embed>>(`/levels/${level}/categories`, queryParams, options).then(shimData);
 }
 
@@ -33,7 +33,7 @@ import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "..
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getLevelVariables(level: string, queryParams?: LevelVariablesParams, options?: GetOptions): Promise<Variable[]> {
+export async function getLevelVariables(level: string, queryParams?: LevelVariablesParams, options?: GetOptions): Promise<Variable[]> {
 	return get<LevelVariablesResponse>(`/levels/${level}/variables`, queryParams, options).then(shimData);
 }
 
@@ -57,6 +57,6 @@ export async function getLevelRecords<Embed extends string = "">(level: string, 
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getAllLevelRecords<Embed extends string = "">(level: string, queryParams?: LevelRecordsParams<Embed>, options?: PaginatedGetOptions): Promise<Leaderboard<Embed>[]> {
-	return paginatedGet<LevelRecordsResponse<Embed>>(`/levels/${level}/records`, queryParams, options);
+export async function getAllLevelRecords<Embed extends string = "", S = Leaderboard<Embed>>(level: string, queryParams?: LevelRecordsParams<Embed>, options?: PaginatedGetOptions<Leaderboard<Embed>, S>): Promise<S[]> {
+	return paginatedGet<LevelRecordsResponse<Embed>, S>(`/levels/${level}/records`, queryParams, options);
 }

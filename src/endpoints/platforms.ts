@@ -19,8 +19,8 @@ export async function getPlatforms(queryParams?: PlatformsParams, options?: GetO
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllPlatforms(queryParams?: PlatformsParams, options?: PaginatedGetOptions): Promise<Platform[]> {
-	return paginatedGet<PlatformsResponse>(`/platforms`, queryParams, options);
+export async function getAllPlatforms<S = Platform>(queryParams?: PlatformsParams, options?: PaginatedGetOptions<Platform, S>): Promise<S[]> {
+	return paginatedGet<PlatformsResponse, S>(`/platforms`, queryParams, options);
 }
 
 /** This will retrieve a single platform, identified by its ID.

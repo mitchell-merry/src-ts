@@ -19,8 +19,8 @@ export async function getSeriesPage<Embed extends string = "">(queryParams?: Ser
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllSeries<Embed extends string = "">(queryParams?: SeriesAllParams<Embed>, options?: PaginatedGetOptions): Promise<Series<Embed>[]> {
-	return paginatedGet<SeriesAllResponse<Embed>>(`/series`, queryParams, options);
+export async function getAllSeries<Embed extends string = "", S = Series<Embed>>(queryParams?: SeriesAllParams<Embed>, options?: PaginatedGetOptions<Series<Embed>, S>): Promise<S[]> {
+	return paginatedGet<SeriesAllResponse<Embed>, S>(`/series`, queryParams, options);
 }
 
 /** This will retrieve a single series, identified by its ID.
@@ -56,6 +56,6 @@ export async function getSeriesGames<Embed extends string = "">(series: string, 
  *  
  *  GET /series/{id}/games https://github.com/speedruncomorg/api/blob/master/version1/series.md#get-seriesidgames
  */
-export async function getAllSeriesGames<Embed extends string = "">(series: string, queryParams?: SeriesGamesParams<Embed>, options?: GetOptions): Promise<Game<Embed>[]> {
-	return paginatedGet<SeriesGamesResponse<Embed>>(`/series/${series}/games`, queryParams, options);
+export async function getAllSeriesGames<Embed extends string = "", S = Game<Embed>>(series: string, queryParams?: SeriesGamesParams<Embed>, options?: PaginatedGetOptions<Game<Embed>, S>): Promise<S[]> {
+	return paginatedGet<SeriesGamesResponse<Embed>, S>(`/series/${series}/games`, queryParams, options);
 }

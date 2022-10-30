@@ -19,8 +19,8 @@ export async function getEngines(queryParams?: EnginesParams, options?: GetOptio
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllEngines(queryParams?: EnginesParams, options?: PaginatedGetOptions): Promise<Engine[]> {
-	return paginatedGet<EnginesResponse>(`/engines`, queryParams, options);
+export async function getAllEngines<S = Engine>(queryParams?: EnginesParams, options?: PaginatedGetOptions<Engine, S>): Promise<S[]> {
+	return paginatedGet<EnginesResponse, S>(`/engines`, queryParams, options);
 }
 
 /** This will retrieve a single engine, identified by its ID.

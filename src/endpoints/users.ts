@@ -23,8 +23,8 @@ export async function getUsers(queryParams?: UsersParams, options?: GetOptions):
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllUsers(queryParams?: UsersParams, options?: PaginatedGetOptions): Promise<User[]> {
-	return paginatedGet<UsersResponse>(`/users`, queryParams, options);
+export async function getAllUsers<S = User>(queryParams?: UsersParams, options?: PaginatedGetOptions<User, S>): Promise<S[]> {
+	return paginatedGet<UsersResponse, S>(`/users`, queryParams, options);
 }
 
 /** This will retrieve a single user, identified by their ID. Instead of the ID, the username can be used as well
