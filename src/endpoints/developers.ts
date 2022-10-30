@@ -8,7 +8,7 @@ import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "..
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getDevelopers(queryParams?: DevelopersParams, options?: GetOptions): Promise<DevelopersResponse> {
+export async function getDevelopers(queryParams?: DevelopersParams, options?: GetOptions): Promise<DevelopersResponse> {
 	return get<DevelopersResponse>(`/developers`, queryParams, options);
 }
 
@@ -19,8 +19,8 @@ import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "..
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getAllDevelopers(queryParams?: DevelopersParams, options?: PaginatedGetOptions): Promise<Developer[]> {
-	return paginatedGet<DevelopersResponse>(`/developers`, queryParams, options);
+export async function getAllDevelopers<S = Developer>(queryParams?: DevelopersParams, options?: PaginatedGetOptions<Developer, S>): Promise<S[]> {
+	return paginatedGet<DevelopersResponse, S>(`/developers`, queryParams, options);
 }
 
 /** This will retrieve a single developer, identified by its ID.
@@ -30,6 +30,6 @@ import { get, GetOptions, paginatedGet, PaginatedGetOptions, shimData } from "..
  * @param developer The developer's ID.
  * @param options Options for the HTTP request itself.
  */
- export async function getDeveloper(developer: string, options?: GetOptions): Promise<Developer> {
+export async function getDeveloper(developer: string, options?: GetOptions): Promise<Developer> {
 	return get<DeveloperResponse>(`/developers/${developer}`, {}, options).then(shimData);
 }
