@@ -45,7 +45,11 @@ export type PaginatedGetOptions = GetOptions & {
 };
 
 /** GET from url and paginate through results to return entire dataset */
-export async function paginatedGet<T extends Paginated<any>>(url: string, queryParams?: PaginatedParams & Record<string, any>, options: PaginatedGetOptions = {}): Promise<PaginatedData<T>[]> {
+export async function paginatedGet<T extends Paginated<any>>(
+	url: string,
+	queryParams?: PaginatedParams & Record<string, any>,
+	options: PaginatedGetOptions = {}
+): Promise<PaginatedData<T>[]> {
 	let data: PaginatedData<T>[] = [];
 	let next, response;
 	const { max, ...getOpts } = options;
