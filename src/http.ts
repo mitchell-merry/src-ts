@@ -42,7 +42,7 @@ export type GetOptions = HTTPOptions & {
 export type PaginatedGetOptions<D, S = D> = GetOptions & {
 	/** The max number of elements to fetch. Defaults to all elements.*/
 	max?: number;
-
+	/** A mapper function to map each retrieved element. */
 	map?: (r: D) => S;
 };
 
