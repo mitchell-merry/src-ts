@@ -11,7 +11,7 @@ import { get, GetOptions, shimData } from "../http";
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
- export async function getLeaderboard<Embed extends string = "">(game: string, category: string, variables: Record<string, string> = {}, queryParams?: LeaderboardParams<Embed>, options?: GetOptions): Promise<Leaderboard<Embed>> {
+export async function getLeaderboard<Embed extends string = "">(game: string, category: string, variables: Record<string, string> = {}, queryParams?: LeaderboardParams<Embed>, options?: GetOptions): Promise<Leaderboard<Embed>> {
 	const varQueryParams = Object.fromEntries(Object.entries(variables).map(([variable, value]) => [`var-${variable}`, value]));
 	return get<LeaderboardResponse<Embed>>(`/leaderboards/${game}/category/${category}`, { ...varQueryParams, ...queryParams }, options).then(shimData);
 }

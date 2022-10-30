@@ -19,8 +19,8 @@ export async function getGenres(queryParams?: GenresParams, options?: GetOptions
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllGenres(queryParams?: GenresParams, options?: PaginatedGetOptions): Promise<Genre[]> {
-	return paginatedGet<GenresResponse>(`/genres`, queryParams, options);
+export async function getAllGenres<S = Genre>(queryParams?: GenresParams, options?: PaginatedGetOptions<Genre, S>): Promise<S[]> {
+	return paginatedGet<GenresResponse, S>(`/genres`, queryParams, options);
 }
 
 /** This will retrieve a single genre, identified by its ID.
