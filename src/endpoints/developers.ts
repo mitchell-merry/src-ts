@@ -19,7 +19,7 @@ export async function getDevelopers(queryParams?: DevelopersParams, options?: Ge
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllDevelopers<S = Developer>(queryParams?: DevelopersParams, options?: PaginatedGetOptions<Developer, S>): Promise<S[]> {
+export async function getAllDevelopers<S = Developer>(queryParams?: DevelopersParams, options?: PaginatedGetOptions<Developer, S>): Promise<Awaited<S>[]> {
 	return paginatedGet<DevelopersResponse, S>(`/developers`, queryParams, options);
 }
 
