@@ -24,7 +24,7 @@ export async function getGames<Embed extends string = "">(queryParams?: GamesPar
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
 */
-export async function getAllGames<Embed extends string = "", S = Game<Embed>>(queryParams?: GamesParams<Embed>, options?: PaginatedGetOptions<Game<Embed>, S>): Promise<S[]> {
+export async function getAllGames<Embed extends string = "", S = Game<Embed>>(queryParams?: GamesParams<Embed>, options?: PaginatedGetOptions<Game<Embed>, S>): Promise<Awaited<S>[]> {
 	return paginatedGet<GamesResponse<Embed>, S>(`/games`, queryParams, options);
 }
 
@@ -120,6 +120,6 @@ export async function getGameRecords<Embed extends string = "">(game: string, qu
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllGameRecords<Embed extends string = "", S = Leaderboard<Embed>>(game: string, queryParams?: GameRecordsParams<Embed>, options?: PaginatedGetOptions<Leaderboard<Embed>, S>): Promise<S[]> {
+export async function getAllGameRecords<Embed extends string = "", S = Leaderboard<Embed>>(game: string, queryParams?: GameRecordsParams<Embed>, options?: PaginatedGetOptions<Leaderboard<Embed>, S>): Promise<Awaited<S>[]> {
 	return paginatedGet<GameRecordsResponse<Embed>, S>(`/games/${game}/records`, queryParams, options);
 }

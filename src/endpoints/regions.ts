@@ -19,7 +19,7 @@ export async function getRegions(queryParams?: RegionsParams, options?: GetOptio
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllRegions<S = Region>(queryParams?: RegionsParams, options?: PaginatedGetOptions<Region, S>): Promise<S[]> {
+export async function getAllRegions<S = Region>(queryParams?: RegionsParams, options?: PaginatedGetOptions<Region, S>): Promise<Awaited<S>[]> {
 	return paginatedGet<RegionsResponse, S>(`/regions`, queryParams, options);
 }
 

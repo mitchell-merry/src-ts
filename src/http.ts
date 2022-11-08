@@ -51,10 +51,10 @@ export async function paginatedGet<T extends Paginated<any>, S = PaginatedData<T
 	url: string,
 	queryParams?: PaginatedParams & Record<string, any>,
 	options: PaginatedGetOptions<PaginatedData<T>, S> = {}
-): Promise<S[]> {
+): Promise<Awaited<S>[]> {
 	let { max, map, ...getOpts } = options;
 	const { cache, ...httpOpts } = getOpts;
-	const data: S[] = [];
+	const data: Awaited<S>[] = [];
 	let next, response: T;
 	
 	if (max && max < 1) return [];
@@ -65,7 +65,7 @@ export async function paginatedGet<T extends Paginated<any>, S = PaginatedData<T
 			? await rawHTTP<T>(next, 'get', httpOpts)
 			: await get<T>(url, queryParams, getOpts); // initial request
 		
-		data.push(...response.data.map(map));
+		data.push(...await Promise.all(response.data.map(map)));
 
 		if (!!max && data.length >= max) return data.slice(0, max);
 	}
