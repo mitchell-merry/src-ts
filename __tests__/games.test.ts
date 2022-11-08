@@ -1,6 +1,6 @@
 import fetch, { Response } from "node-fetch";
 import { getGame } from "../src";
-const VERSION = require('root-require')('package.json').version;
+import { VERSION } from "../src/http";
 
 jest.mock('node-fetch');
 const mockedFetch = jest.mocked(fetch);
