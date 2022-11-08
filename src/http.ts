@@ -42,7 +42,7 @@ export type GetOptions = HTTPOptions & {
 export type PaginatedGetOptions<D, S = D> = GetOptions & {
 	/** The max number of elements to fetch. Defaults to all elements.*/
 	max?: number;
-	/** A mapper function to map each retrieved element. If the element is mapped to an undefined value, it is filtered out from the response. */
+	/** A mapper function to map each retrieved element. */
 	map?: (r: D) => S;
 };
 
@@ -51,10 +51,10 @@ export async function paginatedGet<T extends Paginated<any>, S = PaginatedData<T
 	url: string,
 	queryParams?: PaginatedParams & Record<string, any>,
 	options: PaginatedGetOptions<PaginatedData<T>, S> = {}
-): Promise<NonNullable<Awaited<S>>[]> {
+): Promise<Awaited<S>[]> {
 	let { max, map, ...getOpts } = options;
 	const { cache, ...httpOpts } = getOpts;
-	const data: NonNullable<Awaited<S>>[] = [];
+	const data: Awaited<S>[] = [];
 	let next, response: T;
 	
 	if (max && max < 1) return [];
@@ -66,9 +66,8 @@ export async function paginatedGet<T extends Paginated<any>, S = PaginatedData<T
 			: await get<T>(url, queryParams, getOpts); // initial request
 		
 		const newData = await Promise.all(response.data.map(map));
-		const newDataFiltered = newData.filter((d): d is NonNullable<typeof d> => !!d);
 
-		data.push(...newDataFiltered);
+		data.push(...newData);
 
 		if (!!max && data.length >= max) return data.slice(0, max);
 	}
