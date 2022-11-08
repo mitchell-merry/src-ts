@@ -23,7 +23,7 @@ export async function getUsers(queryParams?: UsersParams, options?: GetOptions):
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllUsers<S = User>(queryParams?: UsersParams, options?: PaginatedGetOptions<User, S>): Promise<NonNullable<Awaited<S>>[]> {
+export async function getAllUsers<S = User>(queryParams?: UsersParams, options?: PaginatedGetOptions<User, S>) {
 	return paginatedGet<UsersResponse, S>(`/users`, queryParams, options);
 }
 

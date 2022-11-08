@@ -9,7 +9,7 @@ import SRCError from "../SRCError";
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllRuns<Embed extends string = "", S = Run<Embed>>(queryParams?: RunsParams<Embed>, options?: PaginatedGetOptions<Run<Embed>, S>): Promise<NonNullable<Awaited<S>>[]> {
+export async function getAllRuns<Embed extends string = "", S = Run<Embed>>(queryParams?: RunsParams<Embed>, options?: PaginatedGetOptions<Run<Embed>, S>) {
 	return paginatedGet<RunsResponse<Embed>, S>(`/runs`, queryParams, options);
 }
 
