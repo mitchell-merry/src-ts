@@ -19,7 +19,7 @@ export async function getGenres(queryParams?: GenresParams, options?: GetOptions
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllGenres<S = Genre>(queryParams?: GenresParams, options?: PaginatedGetOptions<Genre, S>): Promise<Awaited<S>[]> {
+export async function getAllGenres<S = Genre>(queryParams?: GenresParams, options?: PaginatedGetOptions<Genre, S>): Promise<NonNullable<Awaited<S>>[]> {
 	return paginatedGet<GenresResponse, S>(`/genres`, queryParams, options);
 }
 

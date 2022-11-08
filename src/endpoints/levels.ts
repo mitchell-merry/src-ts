@@ -57,6 +57,6 @@ export async function getLevelRecords<Embed extends string = "">(level: string, 
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllLevelRecords<Embed extends string = "", S = Leaderboard<Embed>>(level: string, queryParams?: LevelRecordsParams<Embed>, options?: PaginatedGetOptions<Leaderboard<Embed>, S>): Promise<Awaited<S>[]> {
+export async function getAllLevelRecords<Embed extends string = "", S = Leaderboard<Embed>>(level: string, queryParams?: LevelRecordsParams<Embed>, options?: PaginatedGetOptions<Leaderboard<Embed>, S>): Promise<NonNullable<Awaited<S>>[]> {
 	return paginatedGet<LevelRecordsResponse<Embed>, S>(`/levels/${level}/records`, queryParams, options);
 }

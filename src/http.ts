@@ -42,7 +42,7 @@ export type GetOptions = HTTPOptions & {
 export type PaginatedGetOptions<D, S = D> = GetOptions & {
 	/** The max number of elements to fetch. Defaults to all elements.*/
 	max?: number;
-	/** A mapper function to map each retrieved element. */
+	/** A mapper function to map each retrieved element. If the element is mapped to an undefined value, it is filtered out from the response. */
 	map?: (r: D) => S;
 };
 
@@ -51,10 +51,10 @@ export async function paginatedGet<T extends Paginated<any>, S = PaginatedData<T
 	url: string,
 	queryParams?: PaginatedParams & Record<string, any>,
 	options: PaginatedGetOptions<PaginatedData<T>, S> = {}
-): Promise<Awaited<S>[]> {
+): Promise<NonNullable<Awaited<S>>[]> {
 	let { max, map, ...getOpts } = options;
 	const { cache, ...httpOpts } = getOpts;
-	const data: Awaited<S>[] = [];
+	const data: NonNullable<Awaited<S>>[] = [];
 	let next, response: T;
 	
 	if (max && max < 1) return [];
@@ -65,7 +65,10 @@ export async function paginatedGet<T extends Paginated<any>, S = PaginatedData<T
 			? await rawHTTP<T>(next, 'get', httpOpts)
 			: await get<T>(url, queryParams, getOpts); // initial request
 		
-		data.push(...await Promise.all(response.data.map(map)));
+		const newData = await Promise.all(response.data.map(map));
+		const newDataFiltered = newData.filter((d): d is NonNullable<typeof d> => !!d);
+
+		data.push(...newDataFiltered);
 
 		if (!!max && data.length >= max) return data.slice(0, max);
 	}
