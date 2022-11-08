@@ -2,7 +2,7 @@ import Bottleneck from 'bottleneck';
 import fetch from 'node-fetch';
 import { Data, Paginated, PaginatedData, PaginatedParams, ResponseError } from '../types';
 import SRCError from './SRCError';
-export const VERSION = "2.7.1";
+export const VERSION = "2.7.2";
 
 const BASE_URL = "https://www.speedrun.com/api/v1";
 
