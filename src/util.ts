@@ -1,4 +1,4 @@
-import { GuestRel, Leaderboard, Player, PlayerGuest, PlayerGuestPartial, PlayerGuestPartialURI, PlayerPartial, PlayerPartialUri, PlayerUser, PlayerUserPartial, PlayerUserPartialURI, Run, User, UserLocation, UserRel, Variable } from "../types";
+import { Game, GuestRel, Leaderboard, LeaderboardPartial, Player, PlayerGuest, PlayerGuestPartial, PlayerGuestPartialURI, PlayerPartial, PlayerPartialUri, PlayerUser, PlayerUserPartial, PlayerUserPartialURI, Run, User, UserLocation, UserRel, Variable } from "../types";
 
 /** Build the name of a leaderboard from the name of the game, category, and if applicable, variables and levels. */
 export function buildLeaderboardName(gameName: string, categoryName: string, variableNames: string[] = [], levelName?: string) {
@@ -12,6 +12,26 @@ export function buildLeaderboardName(gameName: string, categoryName: string, var
 	}
 
 	return name;
+}
+
+export function buildLeaderboardNameFromPartial(game: Game<"categories.variables,levels">, board: LeaderboardPartial): string {
+	const level = game.levels.data.find(l => l.id === board.level);
+	const category = game.categories.data.find(c => c.id === board.category);
+	if (!category || (!!level !== !!board.level))
+		throw new Error(`One of \`category\` (${board.category}) or \`level\` (${board.level}) could not be found.`);
+	
+	const variableNames = Object.entries(board.variables).map(([vId, vVal]): string => {
+		const variable = category.variables.data.find(v => v.id === vId);
+		if (!variable) throw new Error(`Invalid variable given: ${vId}.`);
+
+		const value = Object.entries(variable.values.values).find(([valueId, _]) => valueId === vVal);
+		if (!value) throw new Error(`Invalid value given: ${vVal}`);
+		
+		const [ _, name ] = value;
+		return name.label
+	});
+
+	return buildLeaderboardName(game.names.international, category.name, variableNames, level?.name);
 }
 
 /** Filter a list of runs by variables, as key-value pairs. */
