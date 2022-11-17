@@ -82,25 +82,3 @@ export function playerIsGuest<T extends UserRel | GuestRel>(player: T): player i
 export function userLocationNotNull (user: User): user is User & { location: UserLocation } { 
 	return user.location !== null; 
 }
-
-
-type PU = UserRel & {
-	d: string;
-}
-
-type PG = GuestRel & {
-	d: string;
-}
-
-type P = PU | PG;
-
-// const a = {} as Player;
-
-// // const d = playerIsUser(a);
-// // if (d) {
-// // 	a;
-// // }
-// const b = [a]
-// const d = b.filter((p): p is PlayerUser => p.rel === "user");
-// const e = b.filter(playerIsUser);
-// const f = b.filter<PlayerUser>(playerIsUser);
