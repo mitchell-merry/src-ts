@@ -1,4 +1,4 @@
-import { Game, GuestRel, Leaderboard, LeaderboardPartial, Player, PlayerGuest, PlayerGuestPartial, PlayerGuestPartialURI, PlayerPartial, PlayerPartialUri, PlayerUser, PlayerUserPartial, PlayerUserPartialURI, Run, User, UserLocation, UserRel, Variable } from "../types";
+import { Category, CategoryType, Embed, Game, GuestRel, Leaderboard, LeaderboardPartial, Player, PlayerGuest, PlayerGuestPartial, PlayerGuestPartialURI, PlayerPartial, PlayerPartialUri, PlayerUser, PlayerUserPartial, PlayerUserPartialURI, Run, User, UserLocation, UserRel, Variable } from "../types";
 
 /** Build the name of a leaderboard from the name of the game, category, and if applicable, variables and levels. */
 export function buildLeaderboardName(gameName: string, categoryName: string, variableNames: string[] = [], levelName?: string) {
@@ -37,6 +37,11 @@ export function buildLeaderboardNameFromPartial(game: Game<"categories.variables
 /** Filter a list of runs by variables, as key-value pairs. */
 export function filterRuns<Embed extends string = "">(runs: Run<Embed>[], variables: Record<string, string> = {}) {
 	return runs.filter(run => !Object.entries(variables).some(([variable, value]) => !(variable in run.values) || run.values[variable] !== value));
+}
+
+/** Filters a list of categories by type. */
+export function filterCategoriesByType<Embed extends string, CT extends CategoryType>(categories: Category<Embed, CategoryType>[], type: CT): Category<Embed, CT>[] {
+	return categories.filter((c): c is Category<Embed, CT> => c.type === type);
 }
 
 /** Type guard for checking if the given variable is a subcategory or not.
