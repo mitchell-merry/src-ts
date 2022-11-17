@@ -44,6 +44,23 @@ export function filterCategoriesByType<Embed extends string, CT extends Category
 	return categories.filter((c): c is Category<Embed, CT> => c.type === type);
 }
 
+/** Filters a list of variables only for those applicable to the `level` (or full-game only, if `level` is not provided.) */
+export function filterVariablesForLevel(variables: Variable[], level?: string) {
+	return variables.filter(v => {
+		if (v.scope.type === "global")
+			return true;
+
+		if (v.scope.type === "full-game" && level === undefined)
+			return true;
+
+		if (v.scope.type === "all-levels" && level !== undefined)
+			return true;
+		
+		if (v.scope.type === "single-level" && v.scope.level === level)
+			return true;
+	});
+}
+
 /** Type guard for checking if the given variable is a subcategory or not.
  * Note: Not sure if this guarantees .values.default to be not null.
  */
