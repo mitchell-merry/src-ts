@@ -34,9 +34,14 @@ export function buildLeaderboardNameFromPartial(game: Game<"categories.variables
 	return buildLeaderboardName(game.names.international, category.name, variableNames, level?.name);
 }
 
+/** True if the run matches the variable/values provided, false otherwise. */
+export function runMatchesVariables<Embed extends string = "">(run: Run<Embed>, variables: Record<string, string> = {}) {
+    return !Object.entries(variables).some(([variable, value]) => !(variable in run.values) || run.values[variable] !== value);
+}
+
 /** Filter a list of runs by variables, as key-value pairs. */
 export function filterRuns<Embed extends string = "">(runs: Run<Embed>[], variables: Record<string, string> = {}) {
-	return runs.filter(run => !Object.entries(variables).some(([variable, value]) => !(variable in run.values) || run.values[variable] !== value));
+	return runs.filter(r => runMatchesVariables(r, variables));
 }
 
 /** Filters a list of categories by type. */

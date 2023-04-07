@@ -1,6 +1,7 @@
 import { DeleteRunResponse, PostRun, PostRunResponse, PutRunPlayers, PutRunPlayersResponse, PutRunStatus, PutRunStatusResponse, Run, RunError, RunParams, RunResponse, RunsParams, RunsResponse } from "../../types";
 import { get, GetOptions, http, HTTPOptions, paginatedGet, PaginatedGetOptions, shimData } from "../http";
 import SRCError from "../SRCError";
+import { runMatchesVariables } from "../util";
 
 /** This will return a list of all runs.
  * 
@@ -9,8 +10,22 @@ import SRCError from "../SRCError";
  * @param queryParams Optional query paramters to pass to the GET request.
  * @param options Options for the HTTP request itself.
  */
-export async function getAllRuns<Embed extends string = "", S = Run<Embed>>(queryParams?: RunsParams<Embed>, options?: PaginatedGetOptions<Run<Embed>, S>) {
-	return paginatedGet<RunsResponse<Embed>, S>(`/runs`, queryParams, options);
+export async function getAllRuns<Embed extends string = "", S = Run<Embed>>(
+    queryParams?: RunsParams<Embed> & { variables?: Record<string, string> },
+    options?: PaginatedGetOptions<Run<Embed>, S>,
+) {
+	return paginatedGet<RunsResponse<Embed>, S | Run<Embed> | undefined>(`/runs`, queryParams, {
+        ...options,
+        map: d => {
+            if (!runMatchesVariables(d, queryParams?.variables))
+                return undefined;
+
+            if (options?.map === undefined)
+                return d;
+
+            return options.map(d);
+        }
+    });
 }
 
 /** This will return a single run based on id.
