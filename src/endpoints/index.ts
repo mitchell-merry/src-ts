@@ -16,3 +16,5 @@ export * from './runs';
 export * from './series';
 export * from './users';
 export * from './variables';
+
+export * from './v2';
