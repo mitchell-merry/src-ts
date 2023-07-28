@@ -4,7 +4,7 @@ import { Data, Paginated, PaginatedData, PaginatedParams, ResponseError } from '
 import SRCError from './SRCError';
 export const VERSION = "2.8.0";
 
-const BASE_URL = "https://www.speedrun.com/api/v1";
+const BASE_URL = "https://www.speedrun.com/api";
 
 const bn = new Bottleneck({
 	reservoir: 100,
@@ -86,11 +86,24 @@ export async function get<Response, Err extends ResponseError = ResponseError>(u
 		url += `?${Object.entries(queryParams).map(([k, v]) => `${k}=${v}`).join('&')}`;
 	}
 
-	return rawHTTP<Response, Err>(`${BASE_URL}${url}`, 'get', { ...opts, headers: { ...(key ? { 'X-API-Key': key } : {}), ...opts.headers}});
+	return rawHTTP<Response, Err>(`${BASE_URL}/v1${url}`, 'get', { ...opts, headers: { ...(key ? { 'X-API-Key': key } : {}), ...opts.headers}});
 }
 
 export async function http<Response, Err extends ResponseError = ResponseError>(url: string, method: Exclude<HTTPType, 'get'>, key: string, options: RawHTTPOptions = {}) {
-	return rawHTTP<Response, Err>(`${BASE_URL}${url}`, method, { ...options, headers: { 'X-API-Key': key, ...options.headers } })
+	return rawHTTP<Response, Err>(`${BASE_URL}/v1${url}`, method, { ...options, headers: { 'X-API-Key': key, ...options.headers } })
+}
+
+// entirely temporary, not good, very bad
+export async function httpV2(url: string, method: HTTPType = 'get', PHPSESSID?: string, options: RawHTTPOptions = {}) {
+    const headers = {
+        'Cookie': `PHPSESSID=${PHPSESSID}`,
+        ...options.headers,
+    };
+
+    return rawHTTP<unknown, any>(`${BASE_URL}/v2${url}`, method, {
+        ...options,
+        headers,
+    })
 }
 
 export async function rawHTTP<Response, Err extends ResponseError = ResponseError>(url: string, method: HTTPType, options: RawHTTPOptions = {}) {
